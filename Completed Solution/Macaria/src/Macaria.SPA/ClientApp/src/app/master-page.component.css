@@ -1,0 +1,33 @@
+:host {
+  height: 100%;
+  position:relative;
+}
+
+mat-icon, h1 {
+  cursor: pointer;
+}
+
+mat-toolbar {
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  z-index: 2;
+  position: relative;
+}
+
+h1 {
+  margin: 0 20px;
+}
+
+.app-content-container {
+  width: 100%;
+  height: 100%;
+  max-height: calc(100% - 64px);
+}
+
+.sidenav {
+  min-width: 300px;
+}
+
+.router-outlet-container {
+  height:100%;
+}

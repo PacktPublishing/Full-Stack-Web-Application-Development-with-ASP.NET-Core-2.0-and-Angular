@@ -1,0 +1,10 @@
+<mat-card-title>
+  Set Tenant
+</mat-card-title>
+<form novalidate autocomplete="off" spellcheck="false" [formGroup]="form">
+  <mat-form-field>
+    <input matInput placeholder="Tenant Id" id="tenantId" formControlName="tenantId">
+  </mat-form-field>
+
+  <button mat-button (click)="tryToSubmit({ detail: form.value })">Submit</button>
+</form>

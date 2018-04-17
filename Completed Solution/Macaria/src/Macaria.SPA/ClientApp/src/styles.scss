@@ -1,0 +1,23 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  height: 100%;
+  width: 100%;
+}
+
+:root {
+  --primary-color: #3f51b5;
+  --secondary-color: #3f51b5;
+  --default-color: rgb(245, 245, 245);
+}
+
+$ag-mat-primary: #3f51b5;
+$ag-mat-accent: #ce5712;
+
+
+$ag-mat-icons-path: '~ag-grid/src/styles/material-icons/';
+$ag-icons-path: '~ag-grid/src/styles/icons/';
+
+@import '~ag-grid/src/styles/ag-grid';
+@import '~ag-grid/src/styles/ag-theme-material';

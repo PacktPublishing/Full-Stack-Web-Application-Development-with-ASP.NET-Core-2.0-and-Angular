@@ -1,0 +1,20 @@
+<app-primary-header>
+  Create Note
+</app-primary-header>
+
+<div class="home-content-container">
+  <mat-form-field>
+    <input matInput placeholder="Title" id="title">
+  </mat-form-field>
+
+  <app-quill-text-editor></app-quill-text-editor>
+
+  <mat-chip-list [multiple]="true">
+    <mat-chip *ngFor="let tag of tags$ | async">{{ tag.name }}</mat-chip>
+  </mat-chip-list>
+
+  <div class="actions">
+    <button mat-button>Save</button>
+    <button mat-button>Cancel</button>
+  </div>
+</div>

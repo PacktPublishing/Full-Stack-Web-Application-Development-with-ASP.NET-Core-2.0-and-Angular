@@ -1,0 +1,38 @@
+<mat-toolbar color="primary" class="mat-elevation-z6">
+  <button mat-icon-button (click)="drawer.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <h1>Macaria</h1>
+</mat-toolbar>
+
+<mat-drawer-container class="app-content-container" autosize>
+  <mat-drawer #drawer class="sidenav" mode="side">    
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Security
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <button>
+          Logout
+        </button>
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Security
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <button>
+          Logout
+        </button>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-drawer>
+
+  <div class="router-outlet-container">
+    <router-outlet></router-outlet>
+  </div>
+
+</mat-drawer-container>

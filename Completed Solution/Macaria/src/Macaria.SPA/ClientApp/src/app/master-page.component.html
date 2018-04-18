@@ -6,29 +6,12 @@
 </mat-toolbar>
 
 <mat-drawer-container class="app-content-container" autosize>
-  <mat-drawer #drawer class="sidenav" mode="side">    
-    <mat-accordion>
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Security
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <button>
-          Logout
-        </button>
-      </mat-expansion-panel>
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Security
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <button>
-          Logout
-        </button>
-      </mat-expansion-panel>
-    </mat-accordion>
+  <mat-drawer #drawer class="sidenav" mode="side">
+    <button mat-button [routerLink]="['/']"> Home</button>
+    <button mat-button [routerLink]="['/']"> Notes</button>
+    <button mat-button [routerLink]="['/']"> Tags</button>
+    <button mat-button [routerLink]="['/']"> Settings</button>
+    <button mat-button [routerLink]="['/login']"> Logout</button>
   </mat-drawer>
 
   <div class="router-outlet-container">

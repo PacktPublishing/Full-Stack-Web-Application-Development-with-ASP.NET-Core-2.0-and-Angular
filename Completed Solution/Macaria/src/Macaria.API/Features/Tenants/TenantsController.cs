@@ -1,6 +1,9 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Macaria.API.Features.Tenants
@@ -11,10 +14,12 @@ namespace Macaria.API.Features.Tenants
     public class TenantsController
     {
         private readonly IMediator _mediator;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public TenantsController(IMediator mediator)
+        public TenantsController(IMediator mediator, IHttpContextAccessor httpContextAccessor)
         {
             _mediator = mediator;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [AllowAnonymous]

@@ -6,5 +6,6 @@ export const constants = {
   MINIMUM_LOG_LEVEL: "MINIMUM_LOG_LEVEL",
   STORAGE_KEY: "[Macaria] STORAGE_KEY",
   SUPPORTS_SPEECH_RECOGNITION: 'webkitSpeechRecognition' in window,
-  TENANT_KEY: "TENANT_KEY"
+  TENANT_KEY: "TENANT_KEY",
+  CULTURE_KEY: "CULTURE_KEY"
 };

@@ -25,9 +25,22 @@ h1 {
 }
 
 .sidenav {
-  min-width: 300px;
+  max-width: 250px;
 }
 
 .router-outlet-container {
   height:100%;
+}
+
+.mat-expansion-panel-spacing {
+  margin: 0;
+}
+
+button {
+  width:100%;
+  text-align:left;
+}
+
+mat-drawer {
+  padding:20px 0px 0px;
 }

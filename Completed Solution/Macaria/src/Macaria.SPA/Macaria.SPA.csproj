@@ -32,6 +32,11 @@
 
   <ItemGroup>
     <Folder Include="ClientApp\src\app\ag-grid-components\" />
+    <Folder Include="ClientApp\src\app\settings\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\shared\headers.interceptor.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

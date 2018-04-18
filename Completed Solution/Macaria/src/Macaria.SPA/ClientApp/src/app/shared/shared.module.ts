@@ -11,6 +11,7 @@ import { PrimaryHeaderComponent } from './primary-header.component';
 import { SideNavComponent } from "./side-nav.component";
 import { SideNavItemComponent } from './side-nav-item.component';
 import { SideNavSectionComponent } from './side-nav-section.component';
+import { HeaderInterceptor } from './headers.interceptor';
 
 const declarations = [
   PrimaryHeaderComponent,
@@ -24,6 +25,11 @@ const providers = [
   {
     provide: HTTP_INTERCEPTORS,
     useClass: TenantInterceptor,
+    multi: true
+  },
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: HeaderInterceptor,
     multi: true
   },
   LocalStorageService,

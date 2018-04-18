@@ -44,7 +44,7 @@ import { AgGridModule } from "ag-grid-angular";
     UsersModule
   ],
   providers: [
-    { provide: constants.BASE_URL, useValue: "http://localhost:10370/" }
+    { provide: constants.BASE_URL, useValue: "http://localhost:10372/" }
   ],
   bootstrap: [AppComponent]
 })

@@ -8,6 +8,8 @@ using Macaria.Infrastructure.Extensions;
 using Microsoft.Extensions.Logging;
 using Macaria.Infrastructure.Middleware;
 using Macaria.Infrastructure.Behaviours;
+using System.Globalization;
+using System.Collections.Generic;
 
 namespace Macaria.API
 {
@@ -21,6 +23,16 @@ namespace Macaria.API
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("en-CA");
+                 
+                options.SupportedCultures = new List<CultureInfo> {
+                    new CultureInfo("en-CA"),
+                    new CultureInfo("fr-CA")
+                };
+            });
+
             services.AddCustomConfiguration(Configuration);
             services.AddSecurity(Configuration);            
             services.AddHttpClient();
@@ -47,7 +59,9 @@ namespace Macaria.API
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();            
+            loggerFactory.AddDebug();
+            app.UseRequestLocalization();
+
             app.UseCors("CorsPolicy");
             ConfigureAuth(app);
             ConfigureTenantIdAndUsernameResolution(app);            

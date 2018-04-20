@@ -1,0 +1,16 @@
+<app-primary-header>
+  Settings
+</app-primary-header>
+
+<section class="page-content-container">
+  <h1>Language</h1>
+
+  <mat-radio-group class="language-radio-group" [(ngModel)]="cultureCode">
+    <mat-radio-button class="language-radio-button" [value]="'en-CA'">
+      English
+    </mat-radio-button>
+    <mat-radio-button class="language-radio-button" [value]="'fr-CA'">
+      French
+    </mat-radio-button>
+  </mat-radio-group>
+</section>

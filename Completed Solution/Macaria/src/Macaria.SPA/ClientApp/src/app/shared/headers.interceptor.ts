@@ -12,12 +12,14 @@ export class HeaderInterceptor implements HttpInterceptor {
   intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this._storage.get({ name: constants.ACCESS_TOKEN_KEY });
     //const culture = this._storage.get({ name: constants.CULTURE_KEY });
-    
+    const tenantId = this._storage.get({ name: constants.TENANT_KEY });
+
     return next.handle(httpRequest.clone({
       headers: httpRequest.headers
         .set('Authorization', `Bearer ${token}`)
         .set('Content-Type', 'application/json')
-        .set('Accept-Language', 'fr-CA')
+        .set('Accept-Language', 'en-CA')
+        .set('TenantId', tenantId || "")
     }));
   }
 }

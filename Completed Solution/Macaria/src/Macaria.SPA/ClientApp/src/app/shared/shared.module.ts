@@ -5,15 +5,18 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LocalStorageService } from './local-storage.service';
 import { LoggerService } from './logger.service';
-import { TenantInterceptor } from '../tenants/tenant.interceptor';
 import { QuillTextEditorComponent } from './quill-text-editor.component';
 import { PrimaryHeaderComponent } from './primary-header.component';
 import { SideNavComponent } from "./side-nav.component";
 import { SideNavItemComponent } from './side-nav-item.component';
 import { SideNavSectionComponent } from './side-nav-section.component';
 import { HeaderInterceptor } from './headers.interceptor';
+import { HubClient } from './hub-client';
+import { NotificationComponent } from './notification.component';
+import { Notifications } from './notifications';
 
 const declarations = [
+  NotificationComponent,
   PrimaryHeaderComponent,
   QuillTextEditorComponent,
   SideNavComponent,
@@ -24,16 +27,13 @@ const declarations = [
 const providers = [
   {
     provide: HTTP_INTERCEPTORS,
-    useClass: TenantInterceptor,
-    multi: true
-  },
-  {
-    provide: HTTP_INTERCEPTORS,
     useClass: HeaderInterceptor,
     multi: true
   },
+  HubClient,
   LocalStorageService,
   LoggerService,
+  Notifications
 ];
 
 @NgModule({
@@ -46,6 +46,7 @@ const providers = [
 	  RouterModule	
   ],
   providers,
-  exports:declarations
+  exports: declarations,
+  entryComponents:[NotificationComponent]
 })
 export class SharedModule { }

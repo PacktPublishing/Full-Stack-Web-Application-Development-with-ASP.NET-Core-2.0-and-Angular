@@ -5,15 +5,21 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../material/material.module';
-import { TagManagementComponent } from './tag-management.component';
+
 import { TagsService } from './tags.service';
+import { TagsPageComponent } from './tags-page.component';
+import { AgGridComponentsModule } from '../ag-grid-components/ag-grid-components.module';
+import { AddTagOverlayComponent } from './add-tag-overlay.component';
+import { TagStore } from './tag-store';
 
 const declarations = [
-  TagManagementComponent
+  TagsPageComponent,
+  AddTagOverlayComponent
 ];
 
 const providers = [
-  TagsService
+  TagsService,
+  TagStore
 ];
 
 @NgModule({
@@ -24,10 +30,14 @@ const providers = [
     HttpClientModule,
     ReactiveFormsModule,
     RouterModule,
-    
+
+    AgGridComponentsModule,
     MaterialModule,
     SharedModule
   ],
   providers,
+  entryComponents: [
+    AddTagOverlayComponent
+  ]
 })
 export class TagsModule { }

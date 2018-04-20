@@ -13,18 +13,18 @@ import { MaterialModule } from './material/material.module';
 import { SharedModule } from './shared/shared.module';
 import { TenantsModule } from './tenants/tenants.module';
 import { UsersModule } from './users/users.module';
-import { TenantInterceptor } from './tenants/tenant.interceptor';
-import { TagsModule } from './tags';
-import { SearchModule } from './search/search.module';
 import { AnonymousMasterPageComponent } from './anonymous-master-page.component';
 import { MasterPageComponent } from './master-page.component';
 import { AgGridModule } from "ag-grid-angular";
+import { TagsModule } from './tags/tags.module';
+import { TagsPageComponent } from './tags/tags-page.component';
+import { SettingsModule } from './settings/settings.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     AnonymousMasterPageComponent,
-    MasterPageComponent
+    MasterPageComponent    
   ],
   imports: [
     AgGridModule,
@@ -38,7 +38,7 @@ import { AgGridModule } from "ag-grid-angular";
     MaterialModule,
     NotesModule,
     SharedModule,
-    SearchModule,
+    SettingsModule,
     TagsModule,
     TenantsModule,
     UsersModule

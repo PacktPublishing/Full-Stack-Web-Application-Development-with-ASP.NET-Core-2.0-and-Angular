@@ -27,16 +27,28 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\notes\tag-store.ts" />
+    <None Remove="ClientApp\src\app\shared\hub-client.ts" />
+    <None Remove="ClientApp\src\app\shared\notifications.ts" />
+    <None Remove="ClientApp\src\app\shared\overlay-ref-wrapper.ts" />
+    <None Remove="ClientApp\src\app\tags\tag-store.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="codeGeneratorSettings.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\app\ag-grid-components\" />
     <Folder Include="ClientApp\src\app\settings\" />
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\notes\tag-store.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\headers.interceptor.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\hub-client.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\notifications.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\overlay-ref-wrapper.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\tags\tag-store.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

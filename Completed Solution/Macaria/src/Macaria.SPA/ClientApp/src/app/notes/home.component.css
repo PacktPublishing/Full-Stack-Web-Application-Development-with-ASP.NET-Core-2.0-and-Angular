@@ -21,7 +21,7 @@ button {
   margin: 0 auto;
   max-width: 1080px;
   height:100%;
-  max-height:calc(100% - 80px);
+  max-height:calc(100% - 120px);
 }
 
 .actions {

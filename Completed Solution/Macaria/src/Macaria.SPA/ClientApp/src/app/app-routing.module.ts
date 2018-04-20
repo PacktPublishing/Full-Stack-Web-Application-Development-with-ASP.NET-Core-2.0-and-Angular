@@ -4,10 +4,13 @@ import { TenantGuard } from './tenants/tenant.guard';
 import { AuthGuard } from './users/auth.guard';
 import { SetTenantComponent } from './tenants/set-tenant.component';
 import { LoginComponent } from './users/login.component';
-import { TagManagementComponent } from './tags';
+
 import { MasterPageComponent } from './master-page.component';
 import { AnonymousMasterPageComponent } from './anonymous-master-page.component';
 import { NgModule } from '@angular/core';
+import { TagsPageComponent } from './tags/tags-page.component';
+import { NotesPageComponent } from './notes/notes-page.component';
+import { SettingsPageComponent } from './settings/settings-page.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -49,6 +52,34 @@ export const routes: Routes = [
     ]
   },
   {
+    path: 'notes',
+    component: MasterPageComponent,
+    canActivate: [
+      TenantGuard,
+      AuthGuard
+    ],
+    children: [
+      {
+        path: '',
+        component: NotesPageComponent
+      }
+    ]
+  },
+  {
+    path: 'settings',
+    component: MasterPageComponent,
+    canActivate: [
+      TenantGuard,
+      AuthGuard
+    ],
+    children: [
+      {
+        path: '',
+        component: SettingsPageComponent
+      }
+    ]
+  },
+  {
     path: 'tags',
     component: MasterPageComponent,
     canActivate: [
@@ -58,7 +89,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        component:TagManagementComponent
+        component: TagsPageComponent
       }
     ]
   }

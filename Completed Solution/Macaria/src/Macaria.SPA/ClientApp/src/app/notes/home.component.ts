@@ -1,18 +1,26 @@
 import { Component, ElementRef } from '@angular/core';
 import { Subject, BehaviorSubject } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NotesService } from './notes.service';
 import { Note } from "./note.model";
 import { constants } from '../shared/constants';
 import { LocalStorageService } from '../shared/local-storage.service';
-import { SpeechRecognitionService } from '../speech-recognition/speech-recognition.service';
 import { TagsService } from '../tags/tags.service';
-import { FormControl } from '@angular/forms';
-import { Tag } from '../tags';
 import { pluckOut } from '../shared/pluck-out';
 import { Observable } from 'rxjs/Observable';
 import { addOrUpdate } from '../shared/add-or-update';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, catchError, tap } from 'rxjs/operators';
+import { Tag } from '../tags/tag.model';
+import { MatSnackBar } from '@angular/material';
+import { NotificationComponent } from '../shared/notification.component';
+import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
+import { Notifications } from '../shared/notifications';
+
+import {
+  FormGroup,
+  FormControl,
+  Validators
+} from "@angular/forms";
 
 var moment: any;
 
@@ -29,40 +37,24 @@ export class HomeComponent {
     private _elementRef: ElementRef,
     private _notesService: NotesService,
     private _localStorageService: LocalStorageService,
-    private _speechRecognitionService: SpeechRecognitionService,
-    private _tagsService: TagsService
-  ) {
-
-    //_activatedRoute.params
-    //  .takeUntil(this.onDestroy)
-    //  .switchMap(params => params["slug"] != null
-    //    ? _notesService.getBySlugAndCurrentUser({ slug: params["slug"] })
-    //    : _notesService.getByTitleAndCurrentUser({ title: moment().format(constants.DATE_FORMAT) })
-    //  )
-    //  .map(x => x.note)
-    //  .subscribe(note => this.note$.next(note || this.note$.value));
-  }
+    private _notifications: Notifications,
+    private _snackBar: MatSnackBar,
+    private _tagsService: TagsService,
+    private _router: Router
+  ) { }
 
   ngAfterViewInit() {
     this._tagsService.get()
       .pipe(takeUntil(this.onDestroy))
       .subscribe(x => this.tags$.next(x.tags));
+  }
 
-    //if (constants.SUPPORTS_SPEECH_RECOGNITION)
-    //  this.startDictationBehavior();
+  public showErrorMessage(options: { message: string }) {
+    this._notifications.message$.next(options.message);
 
-    //Observable
-    //  .fromEvent(this.textEditor, "keyup")
-    //  .takeUntil(this.onDestroy)
-    //  .debounce(() => Observable.timer(300))
-    //  .switchMap(() => this._notesService.save({
-    //    note: {
-    //      noteId: this.note$.value.noteId,
-    //      title: this.note$.value.title,
-    //      body: this.quillEditorFormControl.value
-    //    }
-    //  }))
-    //  .subscribe();
+    this._snackBar.openFromComponent(NotificationComponent, {
+      duration:3000
+    });
   }
 
   public get textEditor() { return this._elementRef.nativeElement.querySelector("ce-quill-text-editor"); }
@@ -74,21 +66,20 @@ export class HomeComponent {
   public onDestroy: Subject<void> = new Subject();
 
   public quillEditorFormControl: FormControl = new FormControl('');
-
-  public startDictationBehavior() {
-    this._speechRecognitionService.start();
-
-    this._speechRecognitionService.finalTranscript$
-      .takeUntil(this.onDestroy)
-      .filter(x => x && x.length > 0)
-      .map(x => this.quillEditorFormControl.patchValue(`${this.quillEditorFormControl.value}<p>${x}</p>`))      
-      .switchMap(() => this._notesService.save({
-        note: {
-          noteId: this.note$.value.noteId,
-          title: this.note$.value.title,
-          body: this.quillEditorFormControl.value
-        },
-      }))
+  
+  public handleSave() {
+    
+    this._notesService.save({
+      note: this.form.value,
+    })
+      .pipe(
+        takeUntil(this.onDestroy),
+        tap(() => this._router.navigateByUrl("/notes")),
+        catchError((error:Error) => {
+          this.showErrorMessage({ message:  error.message });
+          return ErrorObservable.create(error);
+        })
+      )
       .subscribe();
   }
 
@@ -97,6 +88,9 @@ export class HomeComponent {
     
     if (this.note$.value.tags.find((x) => x.tagId == tag.tagId) != null) {
       this._notesService.removeTag({ noteId: this.note$.value.noteId, tagId: tag.tagId })
+        .pipe(
+          takeUntil(this.onDestroy)
+        )
         .subscribe();
 
       pluckOut({ items: this.note$.value.tags, value: tag.tagId, key: "tagId" });
@@ -106,13 +100,22 @@ export class HomeComponent {
 
     this._notesService
       .addTag({ noteId: this.note$.value.noteId, tagId: tag.tagId })
+      .pipe(
+        takeUntil(this.onDestroy)
+      )
       .subscribe();
 
     addOrUpdate({ items: this.note$.value.tags, item: tag, key:"tagId" });
   }
 
+  public note: Note = <Note>{};
+  
+  public form = new FormGroup({
+    title: new FormControl(this.note.title, [Validators.required]),
+    body: new FormControl(this.note.body, [Validators.required]),
+  });
+
   ngOnDestroy() {
     this.onDestroy.next();
-    this._speechRecognitionService.stop();
   }
 }

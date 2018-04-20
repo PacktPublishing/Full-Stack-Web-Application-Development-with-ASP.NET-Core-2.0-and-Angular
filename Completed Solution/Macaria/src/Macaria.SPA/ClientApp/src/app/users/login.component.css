@@ -5,3 +5,8 @@ mat-form-field {
 mat-card-title {
 
 }
+
+form {
+  margin:20px 0px 0px 0px;
+  text-align:right;
+}

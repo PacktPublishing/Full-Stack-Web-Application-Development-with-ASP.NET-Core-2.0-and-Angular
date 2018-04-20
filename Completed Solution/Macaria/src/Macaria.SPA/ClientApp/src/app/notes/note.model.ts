@@ -1,4 +1,4 @@
-import { Tag } from "../tags";
+import { Tag } from "../tags/tag.model";
 
 export class Note { 
   public noteId:any;

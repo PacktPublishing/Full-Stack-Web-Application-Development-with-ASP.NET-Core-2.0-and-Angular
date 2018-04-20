@@ -8,14 +8,18 @@ import { TagsModule } from '../tags/tags.module';
 import { NotesService } from './notes.service';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../material/material.module';
-import { SpeechRecognitionModule } from '../speech-recognition/speech-recognition.module';
+import { NotesPageComponent } from './notes-page.component';
+import { AgGridComponentsModule } from '../ag-grid-components/ag-grid-components.module';
+import { NoteStore } from './tag-store';
 
 const declarations = [
-  HomeComponent
+  HomeComponent,
+  NotesPageComponent
 ];
 
 const providers = [
-  NotesService
+  NotesService,
+  NoteStore
 ];
 
 @NgModule({
@@ -27,9 +31,9 @@ const providers = [
     ReactiveFormsModule,
     RouterModule,
 
+    AgGridComponentsModule,
     MaterialModule,
     SharedModule,
-    SpeechRecognitionModule,
     TagsModule
   ],
   providers,

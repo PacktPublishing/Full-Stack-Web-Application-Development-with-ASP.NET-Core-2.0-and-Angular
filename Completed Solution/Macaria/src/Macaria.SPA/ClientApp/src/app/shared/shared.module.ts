@@ -14,6 +14,7 @@ import { HeaderInterceptor } from './headers.interceptor';
 import { HubClient } from './hub-client';
 import { NotificationComponent } from './notification.component';
 import { Notifications } from './notifications';
+import { HubClientGuard } from './hub-client-guard';
 
 const declarations = [
   NotificationComponent,
@@ -31,6 +32,7 @@ const providers = [
     multi: true
   },
   HubClient,
+  HubClientGuard,
   LocalStorageService,
   LoggerService,
   Notifications

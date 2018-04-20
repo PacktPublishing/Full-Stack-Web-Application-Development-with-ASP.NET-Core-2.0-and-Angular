@@ -118,7 +118,7 @@ namespace Macaria.API.Services
                     {
                         OnMessageReceived = context =>
                         {
-                            if ((context.Request.Path.Value.StartsWith("/eventHub"))
+                            if ((context.Request.Path.Value.StartsWith("/hub"))
                                 && context.Request.Query.TryGetValue("token", out StringValues token)
                             )
                             {

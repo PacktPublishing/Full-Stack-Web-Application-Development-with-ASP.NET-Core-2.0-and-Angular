@@ -11,6 +11,7 @@ import { NgModule } from '@angular/core';
 import { TagsPageComponent } from './tags/tags-page.component';
 import { NotesPageComponent } from './notes/notes-page.component';
 import { SettingsPageComponent } from './settings/settings-page.component';
+import { HubClientGuard } from './shared/hub-client-guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -19,7 +20,8 @@ export const routes: Routes = [
     component: MasterPageComponent,
     canActivate: [
       TenantGuard,
-      AuthGuard
+      AuthGuard,
+      HubClientGuard
     ],
     children: [
       {

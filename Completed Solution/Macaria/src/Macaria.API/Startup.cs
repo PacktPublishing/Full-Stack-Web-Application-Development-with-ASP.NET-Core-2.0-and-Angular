@@ -32,7 +32,7 @@ namespace Macaria.API
                     new CultureInfo("fr-CA")
                 };
             });
-
+            services.AddSignalR();
             services.AddCustomConfiguration(Configuration);
             services.AddSecurity(Configuration);            
             services.AddHttpClient();
@@ -66,6 +66,10 @@ namespace Macaria.API
             ConfigureAuth(app);
             ConfigureTenantIdAndUsernameResolution(app);            
             app.UseMvc();
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<Macaria.API.Hubs.Hub>("/hub");
+            });
             app.UseCustomSwagger();
         }
 

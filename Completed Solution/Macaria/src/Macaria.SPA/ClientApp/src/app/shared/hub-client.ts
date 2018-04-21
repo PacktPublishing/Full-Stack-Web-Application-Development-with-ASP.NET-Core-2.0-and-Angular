@@ -25,17 +25,19 @@ export class HubClient {
 
     this._connect = new Promise((resolve) => {      
       this._connection = this._connection || new HubConnection(`${this._baseUrl}hub?token=${this._storage.get({ name: constants.ACCESS_TOKEN_KEY })}`);
-
-      this._connection.on("message", (value) => {        
+      
+      this._connection.on("message", (value) => {
         this._ngZone.run(() => this.messages$.next(value));
       });
 
       this._connection.start().then(() => resolve());
+
+      
     });
 
     return this._connect;
   }
-
+  
   public disconnect() {
     if (this._connection) {
       this._connection.stop();

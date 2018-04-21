@@ -3,7 +3,7 @@ import { Subject, pipe } from "rxjs";
 import { TagsService } from "./tags.service";
 import { Tag } from "./tag.model";
 import { Observable } from "rxjs/Observable";
-import { map, tap } from "rxjs/operators";
+import { map, tap, filter } from "rxjs/operators";
 import { ColDef } from "ag-grid";
 import { Overlay } from "@angular/cdk/overlay";
 import { OverlayRefWrapper } from "../shared/overlay-ref-wrapper";
@@ -14,6 +14,7 @@ import { takeUntil } from "rxjs/operators";
 import { MatSnackBar } from "@angular/material";
 import { Notifications } from "../shared/notifications";
 import { DeleteCellComponent } from "../ag-grid-components/delete-cell.component";
+import { HubClient } from "../shared/hub-client";
 
 @Component({
   templateUrl: "./tags-page.component.html",
@@ -24,6 +25,7 @@ export class TagsPageComponent {
   constructor(
     private _injector: Injector,
     private _overlay: Overlay,
+    private _hubClient: HubClient,
     private _tagsService: TagsService,
     public _tagStore: TagStore,
     private _snackBar: MatSnackBar,
@@ -70,18 +72,10 @@ export class TagsPageComponent {
     this.onDestroy.next();	
   }
 
-  public handleDelete($event) {
-    const tags = this._tagStore.tags$.value;
-    const deletedTagIndex = tags.findIndex(x => x.tagId == $event.data.tagId);
-
-    tags.splice(deletedTagIndex, 1);
-    
+  public handleDelete($event) {    
     this._tagsService.remove({ tagId: $event.data.tagId })
       .pipe(
-        takeUntil(this.onDestroy),
-        tap(x => {
-          this._tagStore.tags$.next([...tags]);
-        })
+        takeUntil(this.onDestroy)
       )
       .subscribe();
   }

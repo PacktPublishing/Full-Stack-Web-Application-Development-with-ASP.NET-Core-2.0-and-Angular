@@ -26,14 +26,7 @@ export class AddTagOverlayComponent {
   public handleSave(tag:Tag) {
     this._tagService.save({ tag })
       .pipe(        
-        tap((result: any) => {
-          tag.tagId = result.tagId;          
-          this._tagStore.tags$.next([
-            ...this._tagStore.tags$.value,
-            tag
-          ]),
-          this._overlay.close();
-        })
+        tap(() => this._overlay.close())
       )
       .subscribe();
   }

@@ -4,21 +4,20 @@ using Macaria.Infrastructure.Data;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Macaria.Infrastructure.Extensions;
-using Newtonsoft.Json;
+using Macaria.API.Hubs;
 
 namespace Macaria.API.Behaviors
 {
     public class EntityChangedNotificationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
     {
-        private readonly IHubContext<Hub> _hubContext;
+        private readonly IHubContext<AppHub> _hubContext;
         private readonly IMacariaContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public EntityChangedNotificationBehavior(IHubContext<Hub> hubContext, IMacariaContext context, IHttpContextAccessor httpContextAccessor)
+        public EntityChangedNotificationBehavior(IHubContext<AppHub> hubContext, IMacariaContext context, IHttpContextAccessor httpContextAccessor)
         {
             _hubContext = hubContext;
             _context = context;
@@ -29,10 +28,10 @@ namespace Macaria.API.Behaviors
         {
             var response = await next();
 
-            if (typeof(TResponse) == typeof(SaveNoteCommand.Request) || typeof(TResponse) == typeof(SaveTagCommand.Request))
+            if (typeof(TRequest) == typeof(SaveNoteCommand.Request) || typeof(TRequest) == typeof(SaveTagCommand.Request))
                 await SendSavedNotification(request, response);
 
-            if (typeof(TResponse) == typeof(RemoveNoteCommand.Request) || typeof(TRequest) == typeof(RemoveNoteCommand.Request))
+            if (typeof(TRequest) == typeof(RemoveNoteCommand.Request) || typeof(TRequest) == typeof(RemoveTagCommand.Request))
                 await SendRemovedNotification(request);
 
             return response;           
@@ -44,22 +43,22 @@ namespace Macaria.API.Behaviors
 
             if (request as SaveNoteCommand.Request != null)
             {
-                var note = _context.Notes.FindAsync((response as SaveNoteCommand.Response).NoteId);
+                var note = await _context.Notes.FindAsync((response as SaveNoteCommand.Response).NoteId);
 
                 notification = new
                 {
-                    Action = "[Note] Saved",
+                    Type = "[Note] Saved",
                     Payload = new { note }
                 };
             }
 
             if (request as SaveTagCommand.Request != null)
             {
-                var tag = _context.Tags.FindAsync((response as SaveTagCommand.Response).TagId);
+                var tag = await _context.Tags.FindAsync((response as SaveTagCommand.Response).TagId);
 
                 notification = new
                 {
-                    Action = "[Tag] Saved",
+                    Type = "[Tag] Saved",
                     Payload = new { tag }
                 };
             }
@@ -75,7 +74,7 @@ namespace Macaria.API.Behaviors
             {
                 notification = new
                 {
-                    Action = "[Note] Removed",
+                    Type = "[Note] Removed",
                     Payload = new { (request as RemoveNoteCommand.Request).NoteId }
                 };
             }
@@ -84,7 +83,7 @@ namespace Macaria.API.Behaviors
             {
                 notification = new
                 {
-                    Action = "[Tag] Removed",
+                    Type = "[Tag] Removed",
                     Payload = new { (request as RemoveTagCommand.Request).TagId }
                 };
             }
@@ -93,10 +92,11 @@ namespace Macaria.API.Behaviors
         }
 
         public async Task SendNotification(object message) {
+            
+            var tenantId = _httpContextAccessor.HttpContext.Request.GetHeaderValue("TenantId").ToLower();
 
-            var tenantId = _httpContextAccessor.HttpContext.Request.GetHeaderValue("TenantId");
-
-            await _hubContext.Clients.Group(tenantId).SendAsync("message", JsonConvert.SerializeObject(message));
-        }
+            await _hubContext.Clients.Group(tenantId).SendAsync("message", message);            
+        }        
     }
+    
 }

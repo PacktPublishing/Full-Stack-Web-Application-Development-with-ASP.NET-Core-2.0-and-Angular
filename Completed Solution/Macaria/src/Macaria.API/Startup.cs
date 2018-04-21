@@ -11,6 +11,8 @@ using Macaria.Infrastructure.Behaviours;
 using System.Globalization;
 using System.Collections.Generic;
 using Macaria.API.Behaviors;
+using Newtonsoft.Json;
+using Macaria.Infrastructure;
 
 namespace Macaria.API
 {
@@ -24,6 +26,16 @@ namespace Macaria.API
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
+            var settings = new JsonSerializerSettings();
+
+            settings.ContractResolver = new SignalRContractResolver();
+
+            var serializer = JsonSerializer.Create(settings);
+
+            services.Add(new ServiceDescriptor(typeof(JsonSerializer),
+                                               provider => serializer,
+                                               ServiceLifetime.Transient));
+
             services.Configure<RequestLocalizationOptions>(options =>
             {
                 options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("en-CA");
@@ -70,7 +82,7 @@ namespace Macaria.API
             app.UseMvc();
             app.UseSignalR(routes =>
             {
-                routes.MapHub<Macaria.API.Hubs.Hub>("/hub");
+                routes.MapHub<Macaria.API.Hubs.AppHub>("/hub");
             });
             app.UseCustomSwagger();
         }

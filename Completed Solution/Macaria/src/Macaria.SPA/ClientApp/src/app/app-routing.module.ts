@@ -58,7 +58,8 @@ export const routes: Routes = [
     component: MasterPageComponent,
     canActivate: [
       TenantGuard,
-      AuthGuard
+      AuthGuard,
+      HubClientGuard
     ],
     children: [
       {
@@ -72,7 +73,8 @@ export const routes: Routes = [
     component: MasterPageComponent,
     canActivate: [
       TenantGuard,
-      AuthGuard
+      AuthGuard,
+      HubClientGuard
     ],
     children: [
       {
@@ -86,7 +88,8 @@ export const routes: Routes = [
     component: MasterPageComponent,
     canActivate: [
       TenantGuard,
-      AuthGuard
+      AuthGuard,
+      HubClientGuard
     ],
     children: [
       {

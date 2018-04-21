@@ -11,16 +11,13 @@ import { Observable } from 'rxjs/Observable';
 import { addOrUpdate } from '../shared/add-or-update';
 import { takeUntil, catchError, tap } from 'rxjs/operators';
 import { Tag } from '../tags/tag.model';
-import { MatSnackBar } from '@angular/material';
-import { NotificationComponent } from '../shared/notification.component';
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
-import { Notifications } from '../shared/notifications';
 
 import {
   FormGroup,
   FormControl,
   Validators
 } from "@angular/forms";
+import { TagStore } from '../tags/tag-store';
 
 var moment: any;
 
@@ -37,29 +34,22 @@ export class HomeComponent {
     private _elementRef: ElementRef,
     private _notesService: NotesService,
     private _localStorageService: LocalStorageService,
-    private _notifications: Notifications,
-    private _snackBar: MatSnackBar,
     private _tagsService: TagsService,
+    private _tagStore: TagStore,
     private _router: Router
   ) { }
 
   ngAfterViewInit() {
     this._tagsService.get()
       .pipe(takeUntil(this.onDestroy))
-      .subscribe(x => this.tags$.next(x.tags));
+      .subscribe(x => this._tagStore.tags$.next(x.tags));
   }
-
-  public showErrorMessage(options: { message: string }) {
-    this._notifications.message$.next(options.message);
-
-    this._snackBar.openFromComponent(NotificationComponent, {
-      duration:3000
-    });
-  }
-
+  
   public get textEditor() { return this._elementRef.nativeElement.querySelector("ce-quill-text-editor"); }
 
-  public tags$: BehaviorSubject<Array<Tag>> = new BehaviorSubject([]);
+  public get tags$():Observable<Array<Tag>> {
+    return this._tagStore.tags$;
+  }
 
   public note$: BehaviorSubject<Note> = new BehaviorSubject(new Note());
 
@@ -74,11 +64,7 @@ export class HomeComponent {
     })
       .pipe(
         takeUntil(this.onDestroy),
-        tap(() => this._router.navigateByUrl("/notes")),
-        catchError((error:Error) => {
-          this.showErrorMessage({ message:  error.message });
-          return ErrorObservable.create(error);
-        })
+        tap(() => this._router.navigateByUrl("/notes"))
       )
       .subscribe();
   }

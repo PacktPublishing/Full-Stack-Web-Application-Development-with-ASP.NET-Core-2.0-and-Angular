@@ -8,30 +8,30 @@ using System.Threading.Tasks;
 namespace Macaria.API.Hubs
 {
     [Authorize(AuthenticationSchemes = "Bearer")]
-    public class Hub: Microsoft.AspNetCore.SignalR.Hub
+    public class AppHub: Microsoft.AspNetCore.SignalR.Hub
     {
         private readonly IMacariaContext _context;
 
-        public Hub(IMacariaContext context) => _context = context;
+        public AppHub(IMacariaContext context) => _context = context;
 
         public async Task Send(string message) {
             
             var user = await GetUser(Context.User.Identity.Name);
 
-            await Clients.OthersInGroup($"{user.Tenant.TenantId}").SendAsync("Send", message);
+            await Clients.Group($"{user.Tenant.TenantId}".ToLower()).SendAsync("message", message);
         }
 
         public override async Task OnConnectedAsync()
         {
             var user = await GetUser(Context.User.Identity.Name);
 
-            await Groups.AddAsync(user.Username, $"{user.Tenant.TenantId}");
+            await Groups.AddAsync(Context.ConnectionId, $"{user.Tenant.TenantId}".ToLower());
 
             await base.OnConnectedAsync();
         }
 
         public async Task<User> GetUser(string username)
-            => await _context.Users.Include(x => x.Tenant)
+            => await _context.Users.IgnoreQueryFilters().Include(x => x.Tenant)
                 .FirstAsync(x => x.Username == username);   
     }
 }

@@ -22,13 +22,11 @@ import { TagStore } from '../tags/tag-store';
 var moment: any;
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: [
-    './home.component.css'
-  ]
+  selector: 'app-edit-note-page',
+  templateUrl: './edit-note-page.component.html',
+  styleUrls: ['./edit-note-page.component.css']
 })
-export class HomeComponent {
+export class EditNotePageComponent {
   constructor(
     private _activatedRoute: ActivatedRoute,
     private _elementRef: ElementRef,
@@ -100,6 +98,10 @@ export class HomeComponent {
     title: new FormControl(this.note.title, [Validators.required]),
     body: new FormControl(this.note.body, [Validators.required]),
   });
+
+  public get noteId() {
+    return Number(this._activatedRoute.snapshot.params["noteId"]);  
+  }
 
   ngOnDestroy() {
     this.onDestroy.next();

@@ -1,5 +1,9 @@
-<app-primary-header>
+<app-primary-header *ngIf="!noteId">
   Create Note
+</app-primary-header>
+
+<app-primary-header *ngIf="noteId">
+  Edit Note
 </app-primary-header>
 
 <form class="home-content-container" novalidate autocomplete="off" spellcheck="false" [formGroup]="form">

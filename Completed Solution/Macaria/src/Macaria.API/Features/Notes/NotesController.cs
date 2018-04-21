@@ -23,7 +23,7 @@ namespace Macaria.API.Features.Notes
             => await _mediator.Send(request);
 
         [HttpDelete("{noteId}/tag/{tagId}")]
-        public async Task RemoveTag([FromRoute]RemoveTagCommand.Request request)
+        public async Task RemoveTag([FromRoute]RemoveNoteTagCommand.Request request)
             => await _mediator.Send(request);
 
         [HttpPost]

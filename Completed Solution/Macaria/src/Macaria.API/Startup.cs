@@ -10,6 +10,7 @@ using Macaria.Infrastructure.Middleware;
 using Macaria.Infrastructure.Behaviours;
 using System.Globalization;
 using System.Collections.Generic;
+using Macaria.API.Behaviors;
 
 namespace Macaria.API
 {
@@ -44,6 +45,7 @@ namespace Macaria.API
             services.AddSignalR();
             services.AddCustomMvc();
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(EntityChangedNotificationBehavior<,>));
         }
 
         public virtual void ConfigureDataStore(IServiceCollection services)

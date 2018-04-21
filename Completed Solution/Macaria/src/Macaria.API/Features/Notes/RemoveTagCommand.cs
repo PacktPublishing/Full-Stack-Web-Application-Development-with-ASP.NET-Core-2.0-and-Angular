@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Macaria.API.Features.Notes
 {
-    public class RemoveTagCommand
+    public class RemoveNoteTagCommand
     {
         public class Validator : AbstractValidator<Request>
         {

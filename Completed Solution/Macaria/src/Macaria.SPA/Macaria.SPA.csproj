@@ -28,6 +28,7 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\notes\tag-store.ts" />
+    <None Remove="ClientApp\src\app\shared\hub-client-guard.ts" />
     <None Remove="ClientApp\src\app\shared\hub-client.ts" />
     <None Remove="ClientApp\src\app\shared\notifications.ts" />
     <None Remove="ClientApp\src\app\shared\overlay-ref-wrapper.ts" />
@@ -45,6 +46,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\notes\tag-store.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\headers.interceptor.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\hub-client-guard.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\hub-client.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\notifications.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\overlay-ref-wrapper.ts" />

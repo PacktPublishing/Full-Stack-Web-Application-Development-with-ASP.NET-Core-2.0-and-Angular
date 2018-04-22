@@ -26,7 +26,7 @@ namespace Macaria.API.Features.Tenants
 
             public async Task Handle(Request request, CancellationToken cancellationToken)
             {
-                if ((await _context.Tenants.Where(x => x.TenantId == request.TenantId)
+                if ((await _context.Tenants.IgnoreQueryFilters().Where(x => x.TenantId == request.TenantId)
                     .SingleOrDefaultAsync()) == null)
                     throw new Exception();
             }

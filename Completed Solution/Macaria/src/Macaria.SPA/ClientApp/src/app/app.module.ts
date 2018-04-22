@@ -44,7 +44,7 @@ import { SettingsModule } from './settings/settings.module';
     UsersModule
   ],
   providers: [
-    { provide: constants.BASE_URL, useValue: "http://localhost:10372/" }
+    { provide: constants.BASE_URL, useValue: "http://localhost:50424/" }
   ],
   bootstrap: [AppComponent]
 })

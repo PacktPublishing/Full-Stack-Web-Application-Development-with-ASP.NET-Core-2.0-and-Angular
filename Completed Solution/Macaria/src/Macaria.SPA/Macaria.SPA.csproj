@@ -27,12 +27,71 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\e2e\app.e2e-spec.ts" />
+    <None Remove="ClientApp\e2e\app.po.ts" />
+    <None Remove="ClientApp\src\app\ag-grid-components\ag-grid-components.module.ts" />
+    <None Remove="ClientApp\src\app\ag-grid-components\delete-cell.component.ts" />
+    <None Remove="ClientApp\src\app\anonymous-master-page.component.ts" />
+    <None Remove="ClientApp\src\app\app-routing.module.ts" />
+    <None Remove="ClientApp\src\app\app.component.ts" />
+    <None Remove="ClientApp\src\app\app.module.ts" />
+    <None Remove="ClientApp\src\app\master-page.component.ts" />
+    <None Remove="ClientApp\src\app\material\material.module.ts" />
+    <None Remove="ClientApp\src\app\notes\edit-note-page.component.ts" />
+    <None Remove="ClientApp\src\app\notes\index.ts" />
+    <None Remove="ClientApp\src\app\notes\note.model.ts" />
+    <None Remove="ClientApp\src\app\notes\notes-page.component.ts" />
+    <None Remove="ClientApp\src\app\notes\notes.module.ts" />
+    <None Remove="ClientApp\src\app\notes\notes.service.ts" />
     <None Remove="ClientApp\src\app\notes\tag-store.ts" />
+    <None Remove="ClientApp\src\app\settings\settings-page.component.ts" />
+    <None Remove="ClientApp\src\app\settings\settings.module.ts" />
+    <None Remove="ClientApp\src\app\shared\add-or-update.ts" />
+    <None Remove="ClientApp\src\app\shared\constants.ts" />
+    <None Remove="ClientApp\src\app\shared\headers.interceptor.ts" />
     <None Remove="ClientApp\src\app\shared\hub-client-guard.ts" />
     <None Remove="ClientApp\src\app\shared\hub-client.ts" />
+    <None Remove="ClientApp\src\app\shared\local-storage.service.ts" />
+    <None Remove="ClientApp\src\app\shared\logger.service.ts" />
+    <None Remove="ClientApp\src\app\shared\notification.component.ts" />
     <None Remove="ClientApp\src\app\shared\notifications.ts" />
     <None Remove="ClientApp\src\app\shared\overlay-ref-wrapper.ts" />
+    <None Remove="ClientApp\src\app\shared\pluck-out.ts" />
+    <None Remove="ClientApp\src\app\shared\primary-header.component.ts" />
+    <None Remove="ClientApp\src\app\shared\quill-text-editor.component.ts" />
+    <None Remove="ClientApp\src\app\shared\shared.module.ts" />
+    <None Remove="ClientApp\src\app\shared\side-nav-item.component.ts" />
+    <None Remove="ClientApp\src\app\shared\side-nav-section.component.ts" />
+    <None Remove="ClientApp\src\app\shared\side-nav.component.ts" />
+    <None Remove="ClientApp\src\app\tags\add-tag-overlay.component.ts" />
     <None Remove="ClientApp\src\app\tags\tag-store.ts" />
+    <None Remove="ClientApp\src\app\tags\tag.model.ts" />
+    <None Remove="ClientApp\src\app\tags\tags-page.component.ts" />
+    <None Remove="ClientApp\src\app\tags\tags.module.ts" />
+    <None Remove="ClientApp\src\app\tags\tags.service.ts" />
+    <None Remove="ClientApp\src\app\tenants\redirect.service.ts" />
+    <None Remove="ClientApp\src\app\tenants\set-tenant.component.ts" />
+    <None Remove="ClientApp\src\app\tenants\tenant.guard.ts" />
+    <None Remove="ClientApp\src\app\tenants\tenants.module.ts" />
+    <None Remove="ClientApp\src\app\tenants\tenants.service.ts" />
+    <None Remove="ClientApp\src\app\users\auth.guard.ts" />
+    <None Remove="ClientApp\src\app\users\auth.interceptor.ts" />
+    <None Remove="ClientApp\src\app\users\auth.service.ts" />
+    <None Remove="ClientApp\src\app\users\jwt.interceptor.ts" />
+    <None Remove="ClientApp\src\app\users\login.component.ts" />
+    <None Remove="ClientApp\src\app\users\redirect.service.ts" />
+    <None Remove="ClientApp\src\app\users\users.module.ts" />
+    <None Remove="ClientApp\src\environments\environment.prod.ts" />
+    <None Remove="ClientApp\src\environments\environment.ts" />
+    <None Remove="ClientApp\src\main.ts" />
+    <None Remove="ClientApp\src\polyfills.ts" />
+    <None Remove="ClientApp\src\test.ts" />
+    <None Remove="ClientApp\src\typings.d.ts" />
+    <None Remove="ClientApp\tsconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="ClientApp\tsconfig.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,17 +99,66 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\app\settings\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\e2e\app.e2e-spec.ts" />
+    <TypeScriptCompile Include="ClientApp\e2e\app.po.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\ag-grid-components\ag-grid-components.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\ag-grid-components\delete-cell.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\anonymous-master-page.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\app-routing.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\app.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\app.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\master-page.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\material\material.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\notes\edit-note-page.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\notes\index.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\notes\note.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\notes\notes-page.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\notes\notes.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\notes\notes.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\notes\tag-store.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\settings\settings-page.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\settings\settings.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\add-or-update.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\constants.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\headers.interceptor.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\hub-client-guard.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\hub-client.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\local-storage.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\logger.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\notification.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\notifications.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\overlay-ref-wrapper.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\pluck-out.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\primary-header.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\quill-text-editor.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\shared.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\side-nav-item.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\side-nav-section.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\side-nav.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\tags\add-tag-overlay.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\tags\tag-store.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\tags\tag.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\tags\tags-page.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\tags\tags.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\tags\tags.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\tenants\redirect.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\tenants\set-tenant.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\tenants\tenant.guard.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\tenants\tenants.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\tenants\tenants.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\users\auth.guard.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\users\auth.interceptor.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\users\auth.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\users\jwt.interceptor.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\users\login.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\users\redirect.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\users\users.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\environments\environment.prod.ts" />
+    <TypeScriptCompile Include="ClientApp\src\environments\environment.ts" />
+    <TypeScriptCompile Include="ClientApp\src\main.ts" />
+    <TypeScriptCompile Include="ClientApp\src\polyfills.ts" />
+    <TypeScriptCompile Include="ClientApp\src\test.ts" />
+    <TypeScriptCompile Include="ClientApp\src\typings.d.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

@@ -10,7 +10,7 @@ import { HubClient } from "../shared/hub-client";
 export class TagsService {
   constructor(
     private _httpClient: HttpClient,
-    private _hubClient: HubClient
+    private _hubClient: HubClient,
     @Inject(constants.BASE_URL) private _baseUrl: string) {
 
     this._hubClient.messages$

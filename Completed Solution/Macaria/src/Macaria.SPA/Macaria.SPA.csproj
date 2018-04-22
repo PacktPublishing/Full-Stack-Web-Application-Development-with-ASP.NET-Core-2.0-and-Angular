@@ -51,6 +51,7 @@
     <None Remove="ClientApp\src\app\shared\headers.interceptor.ts" />
     <None Remove="ClientApp\src\app\shared\hub-client-guard.ts" />
     <None Remove="ClientApp\src\app\shared\hub-client.ts" />
+    <None Remove="ClientApp\src\app\shared\language.service.ts" />
     <None Remove="ClientApp\src\app\shared\local-storage.service.ts" />
     <None Remove="ClientApp\src\app\shared\logger.service.ts" />
     <None Remove="ClientApp\src\app\shared\notification.component.ts" />
@@ -123,6 +124,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\shared\headers.interceptor.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\hub-client-guard.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\hub-client.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\language.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\local-storage.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\logger.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\notification.component.ts" />

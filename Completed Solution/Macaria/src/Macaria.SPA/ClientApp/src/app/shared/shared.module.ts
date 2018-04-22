@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { LocalStorageService } from './local-storage.service';
 import { LoggerService } from './logger.service';
 import { QuillTextEditorComponent } from './quill-text-editor.component';
@@ -15,6 +15,9 @@ import { HubClient } from './hub-client';
 import { NotificationComponent } from './notification.component';
 import { Notifications } from './notifications';
 import { HubClientGuard } from './hub-client-guard';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { LanguageService } from './language.service';
 
 const declarations = [
   NotificationComponent,
@@ -33,10 +36,15 @@ const providers = [
   },
   HubClient,
   HubClientGuard,
+  LanguageService,
   LocalStorageService,
   LoggerService,
   Notifications
 ];
+
+export function TranslateHttpLoaderFactory(httpClient: HttpClient) {
+  return new TranslateHttpLoader(httpClient);
+}
 
 @NgModule({
   declarations: declarations,
@@ -45,10 +53,17 @@ const providers = [
     FormsModule,
     HttpClientModule,
 	  ReactiveFormsModule,
-	  RouterModule	
+    RouterModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: TranslateHttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
   providers,
-  exports: declarations,
+  exports: [TranslateModule,...declarations],
   entryComponents:[NotificationComponent]
 })
 export class SharedModule { }

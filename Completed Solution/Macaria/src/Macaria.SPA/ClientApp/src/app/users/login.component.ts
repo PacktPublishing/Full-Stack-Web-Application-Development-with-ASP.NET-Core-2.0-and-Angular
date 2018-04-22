@@ -24,6 +24,7 @@ import {
 import { constants } from "../shared/constants";
 import { AuthService } from "./auth.service";
 import { LoginRedirectService } from "./redirect.service";
+import { HubClient } from "../shared/hub-client";
 
 @Component({
     templateUrl: "./login.component.html",
@@ -32,11 +33,15 @@ import { LoginRedirectService } from "./redirect.service";
 })
 export class LoginComponent { 
   constructor(
-    public _authService: AuthService,
+    private _authService: AuthService,
     public _elementRef: ElementRef,
     public _loginRedirectService: LoginRedirectService,
     public _renderer: Renderer
   ) { }
+
+  ngOnInit() {
+    this._authService.logout()
+  }
 
   public onDestroy: Subject<void> = new Subject<void>();
 

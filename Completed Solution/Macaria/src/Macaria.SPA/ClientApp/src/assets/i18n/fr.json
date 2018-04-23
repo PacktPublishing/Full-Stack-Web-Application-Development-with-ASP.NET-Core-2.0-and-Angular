@@ -1,10 +1,12 @@
 {
+  "An error ocurr.Try it again.": "Une erreur est survenue. Essayez à nouveau.",
   "Cancel": "Annuler",
   "Create": "Créer",
   "Create Note": "Créer une note",
   "Edit Note": "Note éditée",
   "Language": "La langue",
   "Login": "S'identifier",
+  "Login Failed": "Échec de la connexion",
   "Logout": "Connectez - Out",
   "Page": "Page",
   "Name": "Prénom",

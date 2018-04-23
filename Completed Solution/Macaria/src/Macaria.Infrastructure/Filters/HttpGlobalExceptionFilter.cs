@@ -51,7 +51,7 @@ namespace Macaria.Infrastructure.Filters
             {
                 var json = new JsonErrorResponse
                 {
-                    Messages = new[] { $"An error ocurr.Try it again. {culture}"}
+                    Messages = new[] { $"An error ocurr.Try it again."}
                 };
 
                 if (env.IsDevelopment())

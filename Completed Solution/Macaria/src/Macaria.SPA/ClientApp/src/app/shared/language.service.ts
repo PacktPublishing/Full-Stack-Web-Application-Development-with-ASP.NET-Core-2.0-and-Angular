@@ -6,7 +6,7 @@ import { TranslateService } from "@ngx-translate/core";
 @Injectable()
 export class LanguageService {
   constructor(
-    private _localStorageService: LocalStorageService
+    private _localStorageService: LocalStorageService,
     private _translateService: TranslateService
   ) { }
 

@@ -15,6 +15,7 @@ import { MatSnackBar } from "@angular/material";
 import { Notifications } from "../shared/notifications";
 import { DeleteCellComponent } from "../ag-grid-components/delete-cell.component";
 import { HubClient } from "../shared/hub-client";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   templateUrl: "./tags-page.component.html",
@@ -28,17 +29,33 @@ export class TagsPageComponent {
     private _hubClient: HubClient,
     private _tagsService: TagsService,
     public _tagStore: TagStore,
+    public _translateService: TranslateService,
     private _snackBar: MatSnackBar,
     private _notifications: Notifications
   ) {
 
   }
-  
+
+  public localeText: any = {};
+
   ngOnInit() {
     this._tagsService.get()
       .pipe(
         takeUntil(this.onDestroy),
         map(x => this._tagStore.tags$.next(x.tags))
+      )
+      .subscribe();
+
+    this._translateService.get(["Name", "Page", "of", "to"])
+      .pipe(
+
+        tap((translations) => {
+          this.localeText = translations;
+          this.columnDefs = [
+            { headerName: translations["Name"], field: "name", onCellValueChanged: ($event) => this.handleChange($event), editable: true },
+            { cellRenderer: "deleteRenderer", onCellClicked: ($event) => this.handleDelete($event), width: 20 }
+          ];
+        })
       )
       .subscribe();
   }

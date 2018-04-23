@@ -8,7 +8,7 @@
 
 <form class="home-content-container" novalidate autocomplete="off" spellcheck="false" [formGroup]="form">
   <mat-form-field>
-    <input matInput placeholder="Title" id="title" formControlName="title">
+    <input matInput placeholder="{{ 'Title' | translate }}" id="title" formControlName="title">
   </mat-form-field>
 
   <app-quill-text-editor formControlName="body"></app-quill-text-editor>
@@ -18,7 +18,7 @@
   </mat-chip-list>
 
   <div class="actions">
-    <button mat-button (click)="handleSave()">Save</button>
-    <button mat-button>Cancel</button>
+    <button mat-button (click)="handleSave()">{{ "Save" | translate }}</button>
+    <button mat-button>{{ "Cancel" | translate }}</button>
   </div>
 </form>

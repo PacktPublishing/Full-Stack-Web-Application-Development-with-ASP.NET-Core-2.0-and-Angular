@@ -1,5 +1,5 @@
 <app-primary-header>
-  Notes
+  {{ "Notes" | translate }}
 </app-primary-header>
 
 <section class="page-content-container">
@@ -8,6 +8,7 @@
                    [rowData]="notes$ | async"
                    [pagination]="true"
                    [paginationPageSize]="5"
+                   [localeText]="localeText"
                    [frameworkComponents]="frameworkComponents"
                    (gridReady)="onGridReady($event)">
   </ag-grid-angular>

@@ -1,5 +1,5 @@
 <app-primary-header>
-  Tags
+  {{ "Tags" | translate }}
 </app-primary-header>
 
 <section class="page-content-container">
@@ -10,10 +10,12 @@
                    [frameworkComponents]="frameworkComponents"
                    [paginationPageSize]="5"
                    [animateRows]="true"
-                   (gridReady)="onGridReady($event)">
+                   (gridReady)="onGridReady($event)"
+                   [localeText]="localeText"
+                   >
   </ag-grid-angular>
 
   <div class="actions">
-    <button mat-button (click)="handleCreateClick()">Create</button>
+    <button mat-button (click)="handleCreateClick()"> {{ "Create" | translate }}</button>
   </div>
 </section>

@@ -8,6 +8,7 @@ import { ColDef } from "ag-grid";
 import { DeleteCellComponent } from "../ag-grid-components/delete-cell.component";
 import { NoteStore } from "./tag-store";
 import { Router } from "@angular/router";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   templateUrl: "./notes-page.component.html",
@@ -18,16 +19,32 @@ export class NotesPageComponent {
   constructor(
     private _notesService: NotesService,
     private _noteStore: NoteStore,
-    private _router: Router
+    private _router: Router,
+    private _translateService: TranslateService
   ) { }
 
   public onDestroy: Subject<void> = new Subject<void>();
+
+  public localeText: any = {};
 
   ngOnInit() {
     this._notesService.getByCurrentUser()
       .pipe(
         map(x => this._noteStore.notes$.next(x.notes))
       )
+      .subscribe();
+
+    this._translateService.get(["Title", "Page", "of", "to"])
+      .pipe(
+        
+        tap((translations) => {
+        this.localeText = translations;
+          this.columnDefs = [
+            { headerName: translations["Title"], field: "title", onCellClicked: ($event) => this.handleTitleClick($event) },
+            { cellRenderer: "deleteRenderer", onCellClicked: ($event) => this.handleDelete($event), width: 20 }
+          ];
+        })
+      ) 
       .subscribe();
   }
 
@@ -55,10 +72,7 @@ export class NotesPageComponent {
     deleteRenderer: DeleteCellComponent
   };
 
-  public columnDefs: Array<ColDef> = [
-    { headerName: "Title", field: "title", onCellClicked: ($event) => this.handleTitleClick($event) },
-    { cellRenderer: "deleteRenderer", onCellClicked: ($event) => this.handleDelete($event), width:20 }
-  ];
+  public columnDefs: Array<ColDef> = [];
 
   public onGridReady($event) { $event.api.sizeColumnsToFit(); }
 

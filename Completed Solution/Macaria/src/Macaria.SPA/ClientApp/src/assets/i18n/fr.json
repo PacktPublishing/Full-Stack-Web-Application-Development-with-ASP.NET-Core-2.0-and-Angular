@@ -1,11 +1,23 @@
 {
+  "Cancel": "Annuler",
+  "Create": "Créer",
   "Create Note": "Créer une note",
   "Edit Note": "Note éditée",
+  "Language": "La langue",
   "Login": "S'identifier",
+  "Logout": "Connectez - Out",
+  "Page": "Page",
+  "Name": "Prénom",
+  "Notes": "Remarques",
+  "of": "de",
   "Password": "Mot de passe",
+  "Save": "Sauvegarder",
   "Set Tenant": "Définir le locataire",
   "Settings": "Paramètres",
   "Submit": "Soumettre",
+  "Tags": "Mots clés",
   "Tenant Id": "Identifiant du locataire",
+  "Title": "Titre",
+  "to": "à",
   "Username": "Nom d'utilisateur"
 }

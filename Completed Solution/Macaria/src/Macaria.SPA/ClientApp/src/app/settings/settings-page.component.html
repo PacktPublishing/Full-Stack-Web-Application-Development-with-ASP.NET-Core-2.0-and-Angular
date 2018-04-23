@@ -1,15 +1,15 @@
 <app-primary-header>
-  Settings
+  {{ "Settings" | translate }}
 </app-primary-header>
 
 <section class="page-content-container">
   <h1>Language</h1>
 
-  <mat-radio-group class="language-radio-group" [(ngModel)]="cultureCode">
-    <mat-radio-button class="language-radio-button" [value]="'en-CA'">
+  <mat-radio-group class="language-radio-group" [(ngModel)]="currentLanguage">
+    <mat-radio-button class="language-radio-button" [value]="'en'">
       English
     </mat-radio-button>
-    <mat-radio-button class="language-radio-button" [value]="'fr-CA'">
+    <mat-radio-button class="language-radio-button" [value]="'fr'">
       French
     </mat-radio-button>
   </mat-radio-group>

@@ -12,7 +12,7 @@ export class AppComponent {
     private _languageService: LanguageService,
     private _translateService: TranslateService) {
     _translateService.setDefaultLang(_languageService.default);
-
+    
     _translateService.use(_languageService.current);
   }
 }

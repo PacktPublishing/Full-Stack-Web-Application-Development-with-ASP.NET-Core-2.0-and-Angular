@@ -3,13 +3,13 @@
 </mat-card-title>
 <form novalidate autocomplete="off" spellcheck="false" [formGroup]="form">
   <mat-form-field>
-    <input matInput placeholder="Username" id="username" formControlName="username">
+    <input matInput placeholder="{{ 'Username' | translate }}" id="username" formControlName="username">
   </mat-form-field>
 
   <mat-form-field>
-    <input matInput placeholder="Password" id="password" formControlName="password" type="password">
+    <input matInput placeholder="{{ 'Password' | translate }}" id="password" formControlName="password" type="password">
   </mat-form-field>
 
-  <button mat-button (click)="tryToLogin({ value: this.form.value })">Submit</button>
+  <button mat-button (click)="tryToLogin({ value: this.form.value })">{{ "Submit" | translate }}</button>
 </form>
 

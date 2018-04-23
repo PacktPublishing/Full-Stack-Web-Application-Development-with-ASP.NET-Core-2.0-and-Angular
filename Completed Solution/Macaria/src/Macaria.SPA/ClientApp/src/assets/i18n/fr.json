@@ -1,3 +1,11 @@
 {
-  "Login": "S'identifier"
+  "Create Note": "Créer une note",
+  "Edit Note": "Note éditée",
+  "Login": "S'identifier",
+  "Password": "Mot de passe",
+  "Set Tenant": "Définir le locataire",
+  "Settings": "Paramètres",
+  "Submit": "Soumettre",
+  "Tenant Id": "Identifiant du locataire",
+  "Username": "Nom d'utilisateur"
 }

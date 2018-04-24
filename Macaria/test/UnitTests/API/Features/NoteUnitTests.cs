@@ -161,6 +161,100 @@ namespace UnitTests.API.Features
                 Assert.Equal("Quinntyne", context.Notes.Single(x => x.NoteId == 1).Title);
             }
         }
-        
+
+        [Fact]
+        public async Task ShouldHandleSaveNoteTagCommandRequest()
+        {
+
+            var options = new DbContextOptionsBuilder<MacariaContext>()
+                .UseInMemoryDatabase(databaseName: "ShouldHandleSaveNoteTagCommandRequest")
+                .Options;
+
+            using (var context = new MacariaContext(options, _httpContextAccessorMock.Object))
+            {
+
+                var tenant = InsertTenantIntoInMemoryDatabase(context);
+
+                var note = new Note()
+                {
+                    NoteId = 1,
+                    Title = "My Note",
+                    Tenant = tenant
+                };
+
+                context.Notes.Add(note);
+
+                context.Tags.Add(new Tag()
+                {
+                    TagId = 1,
+                    Name = "Angular",
+                    Tenant = tenant
+                });
+
+                context.SaveChanges();
+
+                var handler = new AddNoteTagCommand.Handler(context);
+
+                await handler.Handle(new AddNoteTagCommand.Request()
+                {
+                    NoteId =1,
+                    TagId = 1
+                }, default(CancellationToken));
+
+                Assert.Single(note.NoteTags);
+            }
+        }
+
+        [Fact]
+        public async Task ShouldHandleRemoveNoteTagCommandRequest()
+        {
+
+            var options = new DbContextOptionsBuilder<MacariaContext>()
+                .UseInMemoryDatabase(databaseName: "ShouldHandleRemoveNoteTagCommandRequest")
+                .Options;
+
+            using (var context = new MacariaContext(options, _httpContextAccessorMock.Object))
+            {
+
+                var tenant = InsertTenantIntoInMemoryDatabase(context);
+
+                var note = new Note()
+                {
+                    NoteId = 1,
+                    Title = "My Note",
+                    Tenant = tenant
+                };
+
+                context.Notes.Add(note);
+                
+                context.Tags.Add(new Tag()
+                {
+                    TagId = 1,
+                    Name = "Angular",
+                    Tenant = tenant
+                });
+
+                context.SaveChanges();
+
+                note.NoteTags.Add(new NoteTag()
+                {
+                    TagId = 1,
+                    NoteId = 1,
+                    Tenant = tenant
+                });
+
+                context.SaveChanges();
+
+                var handler = new RemoveNoteTagCommand.Handler(context);
+
+                await handler.Handle(new RemoveNoteTagCommand.Request()
+                {
+                    NoteId = 1,
+                    TagId = 1
+                }, default(CancellationToken));
+
+                Assert.Empty(note.NoteTags);
+            }
+        }
     }
 }

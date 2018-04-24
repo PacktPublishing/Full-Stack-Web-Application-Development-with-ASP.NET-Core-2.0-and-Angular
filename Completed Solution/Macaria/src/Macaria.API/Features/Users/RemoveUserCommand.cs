@@ -2,23 +2,24 @@ using MediatR;
 using System.Threading.Tasks;
 using System.Threading;
 using Macaria.Infrastructure.Data;
+using Macaria.Core.Entities;
 using FluentValidation;
-using System;
 
-namespace Macaria.API.Features.Tenants
+namespace Macaria.API.Features.Users
 {
-    public class RemoveTenantCommand
+    public class RemoveUserCommand
     {
         public class Validator : AbstractValidator<Request>
         {
             public Validator()
             {
-                RuleFor(request => request.TenantId).NotEqual(default(Guid));
+                RuleFor(request => request.User.UserId).NotEqual(0);
             }
         }
+
         public class Request : IRequest
         {
-            public Guid TenantId { get; set; }
+            public User User { get; set; }
         }
 
         public class Handler : IRequestHandler<Request>
@@ -31,7 +32,7 @@ namespace Macaria.API.Features.Tenants
 
             public async Task Handle(Request request, CancellationToken cancellationToken)
             {
-                _context.Tenants.Remove(await _context.Tenants.FindAsync(request.TenantId));
+                _context.Users.Remove(await _context.Users.FindAsync(request.User.UserId));
                 await _context.SaveChangesAsync(cancellationToken);
             }
 

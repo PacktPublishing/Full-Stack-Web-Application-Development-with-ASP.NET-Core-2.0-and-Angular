@@ -9,7 +9,7 @@ import { TagsService } from '../tags/tags.service';
 import { pluckOut } from '../shared/pluck-out';
 import { Observable } from 'rxjs/Observable';
 import { addOrUpdate } from '../shared/add-or-update';
-import { takeUntil, catchError, tap } from 'rxjs/operators';
+import { takeUntil, catchError, tap, map } from 'rxjs/operators';
 import { Tag } from '../tags/tag.model';
 
 import {
@@ -18,6 +18,8 @@ import {
   Validators
 } from "@angular/forms";
 import { TagStore } from '../tags/tag-store';
+import { TranslateService } from '@ngx-translate/core';
+import { LanguageService } from '../shared/language.service';
 
 var moment: any;
 
@@ -31,11 +33,14 @@ export class EditNotePageComponent {
     private _activatedRoute: ActivatedRoute,
     private _elementRef: ElementRef,
     private _notesService: NotesService,
+    private _languageService: LanguageService,
     private _localStorageService: LocalStorageService,
     private _tagsService: TagsService,
     private _tagStore: TagStore,
     private _router: Router
-  ) { }
+  ) {    
+    this.editorPlaceholder = this._languageService.currentTranslations[this.editorPlaceholder];
+  }
 
   ngAfterViewInit() {
     this._tagsService.get()
@@ -43,8 +48,6 @@ export class EditNotePageComponent {
       .subscribe(x => this._tagStore.tags$.next(x.tags));
   }
   
-  public get textEditor() { return this._elementRef.nativeElement.querySelector("ce-quill-text-editor"); }
-
   public get tags$():Observable<Array<Tag>> {
     return this._tagStore.tags$;
   }
@@ -66,6 +69,8 @@ export class EditNotePageComponent {
       )
       .subscribe();
   }
+
+  public editorPlaceholder: string = "Compose a note...";
 
   public handleNoteTagClicked($event) {    
     const tag = <Tag>$event.tag;

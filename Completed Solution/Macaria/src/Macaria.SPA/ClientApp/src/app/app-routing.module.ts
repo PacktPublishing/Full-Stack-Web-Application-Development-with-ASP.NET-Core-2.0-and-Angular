@@ -11,6 +11,7 @@ import { NotesPageComponent } from './notes/notes-page.component';
 import { SettingsPageComponent } from './settings/settings-page.component';
 import { HubClientGuard } from './shared/hub-client-guard';
 import { EditNotePageComponent } from './notes/edit-note-page.component';
+import { LanguageGuard } from './shared/language-guard';
 
 export const routes: Routes = [
   {
@@ -42,28 +43,33 @@ export const routes: Routes = [
     canActivate: [
       TenantGuard,
       AuthGuard,
-      HubClientGuard
+      HubClientGuard      
     ],
     children: [
       {
         path: '',
-        component: EditNotePageComponent
+        component: EditNotePageComponent,
+        canActivate: [LanguageGuard]
       },
       {
         path: 'notes',
-        component: NotesPageComponent
+        component: NotesPageComponent,
+        canActivate: [LanguageGuard]
       },
       {
         path: 'notes/:noteId',
-        component: EditNotePageComponent
+        component: EditNotePageComponent,
+        canActivate: [LanguageGuard]
       },
       {
         path: 'settings',
-        component: SettingsPageComponent
+        component: SettingsPageComponent,
+        canActivate: [LanguageGuard]
       },
       {
         path: 'tags',
-        component: TagsPageComponent
+        component: TagsPageComponent,
+        canActivate: [LanguageGuard]
       }
     ]
   }

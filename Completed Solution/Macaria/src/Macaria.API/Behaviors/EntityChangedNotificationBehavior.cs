@@ -93,7 +93,7 @@ namespace Macaria.API.Behaviors
 
         public async Task SendNotification(object message) {
             
-            var tenantId = _httpContextAccessor.HttpContext.Request.GetHeaderValue("TenantId").ToLower();
+            var tenantId = $"{_httpContextAccessor.HttpContext.Items["TenantId"]}".ToLower();
 
             await _hubContext.Clients.Group(tenantId).SendAsync("message", message);            
         }        

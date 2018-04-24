@@ -1,28 +1,7 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.Configuration;
-using System;
-
 namespace IntegrationTests.Features.Tags
 {
-    public class TagScenarioBase
-    {
-        protected TestServer CreateServer() {
-            var webHostBuilder = new WebHostBuilder()
-                    .UseStartup(typeof(IntegrationTestsStartup))
-                    .UseKestrel()
-                    .UseConfiguration(TestUtilities.ConfigurationProvider.Get())
-                    .ConfigureAppConfiguration((builderContext, config) =>
-                    {
-                        config
-                        .AddJsonFile("settings.json");
-                    });
-
-            var testServer = new TestServer(webHostBuilder);
-
-            return testServer;
-        }
-
+    public class TagScenarioBase: ScenarioBase
+    {        
         public static class Get
         {
             public static string Tags = "api/tags";
@@ -45,6 +24,5 @@ namespace IntegrationTests.Features.Tags
                 return $"api/tags/{id}";
             }
         }
-
     }
 }

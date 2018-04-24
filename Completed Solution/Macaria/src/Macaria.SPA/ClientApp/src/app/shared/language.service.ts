@@ -15,9 +15,9 @@ export class LanguageService {
   }
   
   private _getBrowserLanguage() {
-    if (navigator.language == 'en-CA' || navigator.language == 'fr-CA') {      
-      return navigator.language.split("-")[0];
-    }
+    if (['en','fr'].indexOf(this._translateService.getBrowserLang()) > -1)   
+      return this._translateService.getBrowserLang();
+
     return null;
   }
 
@@ -25,7 +25,8 @@ export class LanguageService {
   
   public setCurrent(value: string) {
     this._localStorageService.put({ name: constants.CULTURE_KEY, value });
-    this._translateService.use(value);
+    this._translateService.use(value);    
   }
-  
+
+  public currentTranslations: any = {};
 }

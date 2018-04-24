@@ -11,7 +11,7 @@
     <input matInput placeholder="{{ 'Title' | translate }}" id="title" formControlName="title">
   </mat-form-field>
 
-  <app-quill-text-editor formControlName="body"></app-quill-text-editor>
+  <app-quill-text-editor formControlName="body" [editorPlaceholder]="editorPlaceholder"></app-quill-text-editor>
 
   <mat-chip-list [multiple]="true">
     <mat-chip *ngFor="let tag of tags$ | async">{{ tag.name }}</mat-chip>

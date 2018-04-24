@@ -27,6 +27,11 @@ namespace Macaria.API.Features.Users
             => await _mediator.Send(request);
 
         [AllowAnonymous]
+        [HttpPost("changepassword")]
+        public async Task ChangePassword(UserChangePasswordCommand.Request request)
+            => await _mediator.Send(request);
+
+        [AllowAnonymous]
         [HttpPost("token")]
         public async Task<ActionResult<AuthenticateCommand.Response>> SignIn(AuthenticateCommand.Request request)
             => await _mediator.Send(request);
@@ -36,15 +41,11 @@ namespace Macaria.API.Features.Users
             => await _mediator.Send(new GetUsersQuery.Request());
 
         [HttpGet("{userId}")]
-        public async Task<ActionResult<GetUserByIdQuery.Response>> GetById(GetUserByIdQuery.Request request)
+        public async Task<ActionResult<GetUserByIdQuery.Response>> GetById([FromRoute]GetUserByIdQuery.Request request)
             => await _mediator.Send(request);
 
-        [HttpPost("password")]
-        public async Task ChangePassword(UserChangePasswordCommand.Request request)
-        {
-            await _mediator.Send(request);
-        }
-
-
+        [HttpDelete("{User.UserId}")]
+        public async Task Remove([FromRoute]RemoveUserCommand.Request request)
+            => await _mediator.Send(request);
     }
 }

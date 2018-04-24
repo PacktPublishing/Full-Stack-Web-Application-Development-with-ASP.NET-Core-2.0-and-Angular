@@ -1,5 +1,4 @@
 using Macaria.API.Features.Tags;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using TestUtilities.Extensions;
@@ -23,7 +22,7 @@ namespace IntegrationTests.Features.Tags
                         }
                     });
 
-                Assert.True(response.TagId != default(int));
+                Assert.True(response.TagId == 3);
             }
         }
 
@@ -35,11 +34,10 @@ namespace IntegrationTests.Features.Tags
                 var response = await server.CreateClient()
                     .GetAsync<GetTagsQuery.Response>(Get.Tags);
 
-                Assert.True(response.Tags.Count() > 0);
+                Assert.True(response.Tags.Count() == 2);
             }
         }
-
-
+        
         [Fact]
         public async Task ShouldGetById()
         {
@@ -48,7 +46,8 @@ namespace IntegrationTests.Features.Tags
                 var response = await server.CreateClient()
                     .GetAsync<GetTagByIdQuery.Response>(Get.TagById(1));
 
-                Assert.True(response.Tag.TagId != default(int));
+                Assert.True(response.Tag.TagId == 1);
+                Assert.True(response.Tag.Name == "Angular");
             }
         }
         
@@ -57,18 +56,13 @@ namespace IntegrationTests.Features.Tags
         {
             using (var server = CreateServer())
             {
-                var getByIdResponse = await server.CreateClient()
-                    .GetAsync<GetTagByIdQuery.Response>(Get.TagById(1));
-
-                Assert.True(getByIdResponse.Tag.TagId != default(int));
-
                 var saveResponse = await server.CreateClient()
                     .PostAsAsync<SaveTagCommand.Request, SaveTagCommand.Response>(Post.Tags, new SaveTagCommand.Request()
                     {
-                        Tag = getByIdResponse.Tag
+                        Tag = new TagApiModel() { TagId = 1, Name = "Angular 6" }
                     });
 
-                Assert.True(saveResponse.TagId != default(int));
+                Assert.True(saveResponse.TagId == 1);
             }
         }
         

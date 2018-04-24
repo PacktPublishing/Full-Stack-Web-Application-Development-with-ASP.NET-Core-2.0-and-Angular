@@ -1,18 +1,19 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using MediatR;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Macaria.API.Services;
-using MediatR;
-using Macaria.Infrastructure.Extensions;
 using Microsoft.Extensions.Logging;
-using Macaria.Infrastructure.Middleware;
-using Macaria.Infrastructure.Behaviours;
+using Newtonsoft.Json;
 using System.Globalization;
 using System.Collections.Generic;
 using Macaria.API.Behaviors;
-using Newtonsoft.Json;
+using Macaria.API.Hubs;
+using Macaria.Infrastructure.Behaviours;
+using Macaria.Infrastructure.Extensions;
+using Macaria.Infrastructure.Middleware;
 using Macaria.Infrastructure;
+using Macaria.Infrastructure.Services;
 
 namespace Macaria.API
 {
@@ -26,9 +27,12 @@ namespace Macaria.API
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
-            var settings = new JsonSerializerSettings();
+            services.AddHttpContextAccessor();
 
-            settings.ContractResolver = new SignalRContractResolver();
+            var settings = new JsonSerializerSettings
+            {
+                ContractResolver = new SignalRContractResolver()
+            };
 
             var serializer = JsonSerializer.Create(settings);
 
@@ -53,11 +57,12 @@ namespace Macaria.API
             ConfigureDataStore(services);
             services.AddCustomSwagger();
             services.AddMediatR(typeof(Startup));
-            services.AddCustomCache();
             services.AddSignalR();
             services.AddCustomMvc();
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(EntityChangedNotificationBehavior<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+
         }
 
         public virtual void ConfigureDataStore(IServiceCollection services)
@@ -82,7 +87,7 @@ namespace Macaria.API
             app.UseMvc();
             app.UseSignalR(routes =>
             {
-                routes.MapHub<Macaria.API.Hubs.AppHub>("/hub");
+                routes.MapHub<AppHub>("/hub");
             });
             app.UseCustomSwagger();
         }

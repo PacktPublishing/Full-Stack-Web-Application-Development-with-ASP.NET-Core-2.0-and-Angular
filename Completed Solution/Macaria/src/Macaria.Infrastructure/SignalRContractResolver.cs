@@ -18,7 +18,6 @@ namespace Macaria.Infrastructure
             _assembly = typeof(Hub).GetTypeInfo().Assembly;
         }
 
-
         public JsonContract ResolveContract(Type type)
         {
             if (type.GetTypeInfo().Assembly.Equals(_assembly))

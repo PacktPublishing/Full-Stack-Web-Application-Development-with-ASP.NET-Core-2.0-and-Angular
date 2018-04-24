@@ -1,5 +1,4 @@
-﻿using System;
-namespace Macaria.Core.Entities
+﻿namespace Macaria.Core.Entities
 {
     public class User: BaseModel
     {

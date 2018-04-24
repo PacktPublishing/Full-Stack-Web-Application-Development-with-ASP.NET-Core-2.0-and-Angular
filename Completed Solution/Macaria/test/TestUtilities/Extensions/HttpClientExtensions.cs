@@ -20,7 +20,9 @@ namespace TestUtilities.Extensions
 
             var responseMessage = await client.PostAsync(url, stringContent);
 
-            return JsonConvert.DeserializeObject<TOut>(await responseMessage.Content.ReadAsStringAsync());
+            var responseText = await responseMessage.Content.ReadAsStringAsync();
+
+            return JsonConvert.DeserializeObject<TOut>(responseText);
         }
 
         public static async Task<TOut> PutAsAsync<TIn, TOut>(this HttpClient client, string url, TIn content)

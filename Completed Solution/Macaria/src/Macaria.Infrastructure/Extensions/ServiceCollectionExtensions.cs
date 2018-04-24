@@ -1,5 +1,4 @@
 ﻿using Macaria.Infrastructure.OperationFilters;
-using Macaria.Infrastructure.Caching;
 using Macaria.Infrastructure.Configuration;
 using Macaria.Infrastructure.Data;
 using Macaria.Infrastructure.Filters;
@@ -22,15 +21,6 @@ namespace Macaria.Infrastructure.Services
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddCustomCache(this IServiceCollection services)
-        {
-            services.AddMemoryCache();
-
-            services.TryAddSingleton<ICache, MemoryCache>();
-
-            return services;
-        }
-
         public static IServiceCollection AddCustomConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<AuthenticationSettings>(configuration.GetSection("Authentication"));            
@@ -116,7 +106,7 @@ namespace Macaria.Infrastructure.Services
                     {
                         OnMessageReceived = context =>
                         {
-                            if ((context.Request.Path.Value.StartsWith("/eventHub"))
+                            if ((context.Request.Path.Value.StartsWith("/hub"))
                                 && context.Request.Query.TryGetValue("token", out StringValues token)
                             )
                             {

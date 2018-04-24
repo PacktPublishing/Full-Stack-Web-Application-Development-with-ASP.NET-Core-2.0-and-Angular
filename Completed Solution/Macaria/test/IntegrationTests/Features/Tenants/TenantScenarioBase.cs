@@ -1,28 +1,9 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.Configuration;
-using System;
+﻿using System;
 
 namespace IntegrationTests.Features.Tenants
 {
-    public class TenantScenarioBase
+    public class TenantScenarioBase: ScenarioBase
     {
-        protected TestServer CreateServer() {
-            var webHostBuilder = new WebHostBuilder()
-                    .UseStartup(typeof(IntegrationTestsStartup))
-                    .UseKestrel()
-                    .UseConfiguration(TestUtilities.ConfigurationProvider.Get())
-                    .ConfigureAppConfiguration((builderContext, config) =>
-                    {
-                        config
-                        .AddJsonFile("settings.json");
-                    });
-
-            var testServer = new TestServer(webHostBuilder);
-
-            return testServer;
-        }
-
         public static class Get
         {
             public static string Tenants = "api/tenants";

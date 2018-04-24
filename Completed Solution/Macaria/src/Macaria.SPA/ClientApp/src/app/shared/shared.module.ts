@@ -18,6 +18,7 @@ import { HubClientGuard } from './hub-client-guard';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { LanguageService } from './language.service';
+import { LanguageGuard } from './language-guard';
 
 const declarations = [
   NotificationComponent,
@@ -36,6 +37,7 @@ const providers = [
   },
   HubClient,
   HubClientGuard,
+  LanguageGuard,
   LanguageService,
   LocalStorageService,
   LoggerService,

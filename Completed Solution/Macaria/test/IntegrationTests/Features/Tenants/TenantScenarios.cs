@@ -19,7 +19,7 @@ namespace IntegrationTests.Features.Tenants
                     .PostAsAsync<SaveTenantCommand.Request, SaveTenantCommand.Response>(Post.Tenants, new SaveTenantCommand.Request() {
                         Tenant = new TenantApiModel()
                         {
-                            Name = "Default"
+                            Name = "New Tenant"
                         }
                     });
 
@@ -35,8 +35,7 @@ namespace IntegrationTests.Features.Tenants
                 var response = await server.CreateClient()
                     .PostAsync(Post.Verify(new Guid("60DE04D9-E441-E811-9D3A-D481D7227E7A")),null);
 
-                response.EnsureSuccessStatusCode();
-                
+                response.EnsureSuccessStatusCode();                
             }
         }
         [Fact]
@@ -47,7 +46,7 @@ namespace IntegrationTests.Features.Tenants
                 var response = await server.CreateClient()
                     .GetAsync<GetTenantsQuery.Response>(Get.Tenants);
 
-                Assert.True(response.Tenants.Count() > 0);
+                Assert.True(response.Tenants.Count() == 1);
             }
         }
 
@@ -60,7 +59,7 @@ namespace IntegrationTests.Features.Tenants
                 var response = await server.CreateClient()
                     .GetAsync<GetTenantByIdQuery.Response>(Get.TenantById(new Guid("60DE04D9-E441-E811-9D3A-D481D7227E7A")));
 
-                Assert.True(response.Tenant.TenantId != default(Guid));
+                Assert.True(response.Tenant.TenantId == new Guid("60DE04D9-E441-E811-9D3A-D481D7227E7A"));
             }
         }
         
@@ -68,21 +67,17 @@ namespace IntegrationTests.Features.Tenants
         public async Task ShouldUpdate()
         {
             using (var server = CreateServer())
-            {
-                var getByIdResponse = await server.CreateClient()
-                    .GetAsync<GetTenantByIdQuery.Response>(Get.TenantById(new Guid("60DE04D9-E441-E811-9D3A-D481D7227E7A")));
-
-                Assert.True(getByIdResponse.Tenant.TenantId != default(Guid));
-
-                getByIdResponse.Tenant.Name = "Default";
-
+            {                
                 var saveResponse = await server.CreateClient()
                     .PostAsAsync<SaveTenantCommand.Request, SaveTenantCommand.Response>(Post.Tenants, new SaveTenantCommand.Request()
                     {
-                        Tenant = getByIdResponse.Tenant
+                        Tenant = new TenantApiModel() {
+                            TenantId = new Guid("60DE04D9-E441-E811-9D3A-D481D7227E7A"),
+                            Name = "Default 1"
+                        }
                     });
 
-                Assert.True(saveResponse.TenantId != default(Guid));
+                Assert.True(saveResponse.TenantId == new Guid("60DE04D9-E441-E811-9D3A-D481D7227E7A"));
             }
         }
         

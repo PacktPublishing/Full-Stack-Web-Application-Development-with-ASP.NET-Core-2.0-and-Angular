@@ -11,6 +11,7 @@ export class AppComponent {
   constructor(
     private _languageService: LanguageService,
     private _translateService: TranslateService) {
+
     _translateService.setDefaultLang(_languageService.default);
     
     _translateService.use(_languageService.current);

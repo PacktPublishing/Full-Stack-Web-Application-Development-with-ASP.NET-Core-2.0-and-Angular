@@ -39,7 +39,7 @@ namespace Macaria.API
                 if (args.Contains("seeddb"))
                 {
                     GetMacariaContext(scope).Database.EnsureCreated();
-                    SeedContext(GetMacariaContext(scope), GetConfiguration(scope));            
+                    ApiConfiguration.Seed(GetMacariaContext(scope), GetConfiguration(scope));            
                 }
 
                 if (args.Contains("migratedb"))
@@ -57,17 +57,6 @@ namespace Macaria.API
             => services.ServiceProvider.GetRequiredService<MacariaContext>();
 
         private static IConfiguration GetConfiguration(IServiceScope services)
-            => services.ServiceProvider.GetRequiredService<IConfiguration>();
-
-        public static void SeedContext(MacariaContext context, IConfiguration configuration) {
-            var tenant = context.Tenants.IgnoreQueryFilters().SingleOrDefault(x => x.Name == "Default");
-
-            if (tenant == null) { context.Tenants.Add(tenant = new Tenant() { Name = "Default", TenantId = new Guid("60DE04D9-E441-E811-9D3A-D481D7227E7A") }); }
-
-            context.SaveChanges();
-
-            UserConfiguration.Seed(context,tenant,configuration);
-            TagConfiguration.Seed(context,tenant);
-        }  
+            => services.ServiceProvider.GetRequiredService<IConfiguration>(); 
     }
 }

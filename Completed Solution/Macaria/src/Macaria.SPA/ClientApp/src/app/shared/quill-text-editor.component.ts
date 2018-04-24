@@ -1,4 +1,4 @@
-import { Component, ElementRef, forwardRef } from "@angular/core";
+import { Component, ElementRef, forwardRef, Input } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
 declare var Quill: any;
@@ -38,7 +38,7 @@ export class QuillTextEditorComponent implements ControlValueAccessor {
   public ngAfterViewInit() {
     this._quill = new Quill(this.nativeElement, {
       theme: 'bubble',
-      placeholder: 'Compose an epic...'
+      placeholder: this.editorPlaceholder
     });
 
     this._quill.on('text-change', this.onTextChanged);
@@ -47,6 +47,9 @@ export class QuillTextEditorComponent implements ControlValueAccessor {
   public onTextChanged(delta, oldDelta, source) {
     this.onChangeCallback(this.qlEditorNativeElement.innerHTML);
   }
+
+  @Input()
+  public editorPlaceholder: string;
 
   public get nativeElement(): HTMLElement { return this._elementRef.nativeElement.querySelector(".editor") as HTMLElement; }
 

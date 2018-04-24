@@ -13,7 +13,7 @@ namespace Macaria.API.Features.Tenants
         public class Validator: AbstractValidator<Request> {
             public Validator()
             {
-                RuleFor(request => request.Tenant.TenantId).NotNull();
+                RuleFor(request => request.Tenant.TenantId).NotEqual(default(Guid));
             }
         }
 
@@ -36,22 +36,15 @@ namespace Macaria.API.Features.Tenants
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
-                try
-                {
-                    var tenant = await _context.Tenants.FindAsync(request.Tenant.TenantId);
+                var tenant = await _context.Tenants.FindAsync(request.Tenant.TenantId);
 
-                    if (tenant == null) _context.Tenants.Add(tenant = new Tenant());
+                if (tenant == null) _context.Tenants.Add(tenant = new Tenant());
 
-                    tenant.Name = request.Tenant.Name;
+                tenant.Name = request.Tenant.Name;
 
-                    await _context.SaveChangesAsync(cancellationToken);
+                await _context.SaveChangesAsync(cancellationToken);
 
-                    return new Response() { TenantId = tenant.TenantId };
-
-                } catch(Exception e)
-                {
-                    throw e;
-                }
+                return new Response() { TenantId = tenant.TenantId };
             }
         }
     }

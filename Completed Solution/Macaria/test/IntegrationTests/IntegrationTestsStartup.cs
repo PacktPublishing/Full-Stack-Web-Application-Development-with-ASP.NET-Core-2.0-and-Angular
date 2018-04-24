@@ -1,6 +1,8 @@
 ﻿using IntegrationTests.Middleware;
 using Macaria.API;
+using Macaria.Infrastructure.Data;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -27,28 +29,17 @@ namespace IntegrationTests
 
         public override void ConfigureTenantIdAndUsernameResolution(IApplicationBuilder app)
         {
-            if (Configuration["isTest"] == bool.TrueString.ToLowerInvariant())
-            {
-                app.UseMiddleware<TenantIdAndUsernameMiddleware>();
-            }
-            else
-            {
-                base.ConfigureTenantIdAndUsernameResolution(app);
-            }
+            app.UseMiddleware<TenantIdAndUsernameMiddleware>();
         }
 
         public override void ConfigureDataStore(IServiceCollection services)
         {
-            if (Configuration["isTest"] == bool.TrueString.ToLowerInvariant())
+            services.AddScoped<IMacariaContext, MacariaContext>();
+
+            services.AddDbContext<MacariaContext>(options =>
             {
-                //TODO: InMemoryDataStore
-                base.ConfigureDataStore(services);
-            }
-            else
-            {
-                base.ConfigureDataStore(services);
-            }
-            
+                options.UseSqlServer("Data Source=(LocalDb)\\MSSQLLocalDB;Initial Catalog=MacariaIntegrationTests;Integrated Security=SSPI;", b => b.MigrationsAssembly("Macaria.Infrastructure"));
+            });
         }
     }
 }

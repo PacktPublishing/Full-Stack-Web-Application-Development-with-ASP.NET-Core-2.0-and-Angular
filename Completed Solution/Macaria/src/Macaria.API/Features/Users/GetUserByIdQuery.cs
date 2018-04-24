@@ -25,10 +25,14 @@ namespace Macaria.API.Features.Users
             }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
-                => new Response()
+            {
+                var user = await _context.Users.FindAsync(request.UserId);
+
+                return new Response()
                 {
-                    User = UserApiModel.FromUser(await _context.Users.FindAsync(request.UserId))
+                    User = UserApiModel.FromUser(user)
                 };
+            }
         }
     }
 }

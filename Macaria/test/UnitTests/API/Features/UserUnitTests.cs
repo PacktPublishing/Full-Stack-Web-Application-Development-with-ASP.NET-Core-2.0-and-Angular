@@ -12,12 +12,12 @@ using Xunit;
 
 namespace UnitTests.API.Features.Users
 {    
-    public class UserTests: BaseFeatureTestCollection
+    public class UserUnitTests: BaseFeatureTestCollection
     {
         protected readonly Mock<IEncryptionService> _encryptionServiceMock;
         protected readonly Mock<ITokenProvider> _tokenProvider;
 
-        public UserTests()
+        public UserUnitTests()
         {
             _encryptionServiceMock = new Mock<IEncryptionService>();
             _tokenProvider = new Mock<ITokenProvider>();

@@ -11,14 +11,17 @@
     <Compile Remove="API\Features\Tags\**" />
     <Compile Remove="API\Features\Tenants\**" />
     <Compile Remove="Core\**" />
+    <Compile Remove="Infrastructure\**" />
     <EmbeddedResource Remove="API\Features\Notes\**" />
     <EmbeddedResource Remove="API\Features\Tags\**" />
     <EmbeddedResource Remove="API\Features\Tenants\**" />
     <EmbeddedResource Remove="Core\**" />
+    <EmbeddedResource Remove="Infrastructure\**" />
     <None Remove="API\Features\Notes\**" />
     <None Remove="API\Features\Tags\**" />
     <None Remove="API\Features\Tenants\**" />
     <None Remove="Core\**" />
+    <None Remove="Infrastructure\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,10 +38,6 @@
     <None Update="xunit.runner.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="Infrastructure\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -3,28 +3,18 @@ using Macaria.API.Features.Notes;
 using Macaria.API.Hubs;
 using Macaria.Core.Entities;
 using Macaria.Infrastructure.Data;
-using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Moq;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace UnitTests.API
-{
+{    
     public class EntityChangedNotificationBehaviorTests: BaseTestCollection
     {
-        private readonly Mock<IHubContext<AppHub>> _hubContextMock;
-        
-        public EntityChangedNotificationBehaviorTests()
-        {
-            
-        }
-
         [Fact]
         public async Task ShouldSendNotificationAfterSaveNoteCommand()
         {
@@ -41,8 +31,8 @@ namespace UnitTests.API
 
                 var mockContext = new Mock<IHubContext<AppHub>>();
 
-                mockGroups.Setup((x) => x.SendAsync("message", new JObject())).Verifiable();
-
+                mockGroups.Setup(x => x.SendCoreAsync(It.IsAny<string>(), It.IsAny<object[]>())).Returns(Task.CompletedTask).Verifiable();
+                
                 mockClients.Setup(x => x.Group($"{new Guid("60DE04D9-E441-E811-9D3A-D481D7227E7A")}".ToLower())).Returns(mockGroups.Object);
 
                 mockContext.Setup(x => x.Clients).Returns(mockClients.Object);
@@ -75,6 +65,9 @@ namespace UnitTests.API
                         NoteId = 1
                     });                    
                 });
+
+                mockGroups.Verify();
+
                 Assert.NotNull(response);
             }
         }

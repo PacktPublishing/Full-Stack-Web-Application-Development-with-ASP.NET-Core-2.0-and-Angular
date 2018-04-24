@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading;
 using System.Threading.Tasks;
-using Macaria.Infrastructure.Extensions;
 using Macaria.API.Hubs;
 
 namespace Macaria.API.Behaviors
@@ -37,7 +36,7 @@ namespace Macaria.API.Behaviors
             return response;           
         }
 
-        public async Task SendSavedNotification(TRequest request, TResponse response)
+        private async Task SendSavedNotification(TRequest request, TResponse response)
         {
             var notification = default(object);
 
@@ -66,7 +65,7 @@ namespace Macaria.API.Behaviors
             await SendNotification(notification);
         }
 
-        public async Task SendRemovedNotification(TRequest request)
+        private async Task SendRemovedNotification(TRequest request)
         {            
             var notification = default(object);
 
@@ -91,7 +90,7 @@ namespace Macaria.API.Behaviors
             await SendNotification(notification);
         }
 
-        public async Task SendNotification(object message) {
+        private async Task SendNotification(object message) {
             
             var tenantId = $"{_httpContextAccessor.HttpContext.Items["TenantId"]}".ToLower();
 

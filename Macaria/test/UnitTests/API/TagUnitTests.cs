@@ -7,9 +7,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace UnitTests.API.Features.Tags
+namespace UnitTests.API.Tags
 {
-    public class TagUnitTests : BaseFeatureTestCollection
+    public class TagUnitTests : BaseTestCollection
     {     
  
         [Fact]

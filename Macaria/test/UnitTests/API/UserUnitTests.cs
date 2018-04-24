@@ -10,9 +10,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace UnitTests.API.Features.Users
+namespace UnitTests.API.Users
 {    
-    public class UserUnitTests: BaseFeatureTestCollection
+    public class UserUnitTests: BaseTestCollection
     {
         protected readonly Mock<IEncryptionService> _encryptionServiceMock;
         protected readonly Mock<ITokenProvider> _tokenProvider;

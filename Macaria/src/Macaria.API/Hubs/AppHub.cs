@@ -14,7 +14,7 @@ namespace Macaria.API.Hubs
         private readonly IMacariaContext _context;
 
         public AppHub(IMacariaContext context) => _context = context;
-
+        
         public async Task Send(string message) {
             
             var user = await GetUser(Context.User.Identity.Name);

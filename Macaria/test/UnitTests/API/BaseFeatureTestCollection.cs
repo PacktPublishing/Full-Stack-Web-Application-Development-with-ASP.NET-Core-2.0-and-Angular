@@ -6,15 +6,15 @@ using Moq;
 using System;
 using System.Collections.Generic;
 
-namespace UnitTests.API.Features
+namespace UnitTests.API
 {
-    public class BaseFeatureTestCollection
+    public class BaseTestCollection
     {
         
         protected readonly Mock<IHttpContextAccessor> _httpContextAccessorMock;
         protected readonly Mock<HttpContext> _httpContextMock;
 
-        public BaseFeatureTestCollection()
+        public BaseTestCollection()
         {            
             _httpContextAccessorMock = new Mock<IHttpContextAccessor>();
             _httpContextMock = new Mock<HttpContext>();

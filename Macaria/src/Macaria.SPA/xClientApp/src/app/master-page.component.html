@@ -1,0 +1,21 @@
+<mat-toolbar color="primary" class="mat-elevation-z6">
+  <button mat-icon-button (click)="drawer.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <h1>Macaria</h1>
+</mat-toolbar>
+
+<mat-drawer-container class="app-content-container" autosize>
+  <mat-drawer #drawer class="sidenav" mode="side">
+    <button mat-button [routerLink]="['/']">{{ "Create Note" | translate }}</button>
+    <button mat-button [routerLink]="['/notes']">{{ "Notes" | translate }}</button>
+    <button mat-button [routerLink]="['/tags']">{{ "Tags" | translate }}</button>
+    <button mat-button [routerLink]="['/settings']">{{ "Settings" | translate }}</button>
+    <button mat-button [routerLink]="['/login']">{{ "Logout" | translate }}</button>
+  </mat-drawer>
+
+  <div class="router-outlet-container">
+    <router-outlet></router-outlet>
+  </div>
+
+</mat-drawer-container>

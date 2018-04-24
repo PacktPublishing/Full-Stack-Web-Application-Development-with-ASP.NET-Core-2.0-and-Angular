@@ -1,0 +1,13 @@
+<mat-card-title>
+  Create Tag
+</mat-card-title>
+
+<form novalidate autocomplete="off" spellcheck="false" [formGroup]="form">
+  <mat-form-field>
+    <input matInput placeholder="Name" id="name" formControlName="name">
+  </mat-form-field>
+
+  <button mat-button (click)="handleCancel()">Cancel</button>
+  <button mat-button (click)="handleSave(this.form.value)">Save</button>
+
+</form>

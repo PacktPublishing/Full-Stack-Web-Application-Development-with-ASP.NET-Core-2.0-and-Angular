@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="API\Features\Notes\**" />
+    <Compile Remove="API\Features\Tags\**" />
+    <Compile Remove="API\Features\Tenants\**" />
+    <Compile Remove="Core\**" />
+    <EmbeddedResource Remove="API\Features\Notes\**" />
+    <EmbeddedResource Remove="API\Features\Tags\**" />
+    <EmbeddedResource Remove="API\Features\Tenants\**" />
+    <EmbeddedResource Remove="Core\**" />
+    <None Remove="API\Features\Notes\**" />
+    <None Remove="API\Features\Tags\**" />
+    <None Remove="API\Features\Tenants\**" />
+    <None Remove="Core\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="4.0.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
+    <PackageReference Include="Moq" Version="4.8.1" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+   
+    <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="xunit.runner.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Infrastructure\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Macaria.API\Macaria.API.csproj" />
+    <ProjectReference Include="..\..\src\Macaria.Core\Macaria.Core.csproj" />
+    <ProjectReference Include="..\..\src\Macaria.Infrastructure\Macaria.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\Macaria.SPA\Macaria.SPA.csproj" />
+    <ProjectReference Include="..\TestUtilities\TestUtilities.csproj" />
+  </ItemGroup>
+
+</Project>

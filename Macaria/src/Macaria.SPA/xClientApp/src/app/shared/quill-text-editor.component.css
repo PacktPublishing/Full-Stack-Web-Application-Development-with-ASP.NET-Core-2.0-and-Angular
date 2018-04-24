@@ -1,0 +1,8 @@
+:host {
+  display: block;
+  background-color: #fff;
+}
+
+  :host .editor {
+    height: calc(100% - 42px);
+  }

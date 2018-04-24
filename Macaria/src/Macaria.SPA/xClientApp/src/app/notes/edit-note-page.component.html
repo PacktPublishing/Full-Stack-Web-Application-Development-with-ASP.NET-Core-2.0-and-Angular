@@ -1,0 +1,24 @@
+<app-primary-header *ngIf="!noteId">
+  {{ "Create Note" | translate }}
+</app-primary-header>
+
+<app-primary-header *ngIf="noteId">
+  {{ "Edit Note" | translate }}
+</app-primary-header>
+
+<form class="home-content-container" novalidate autocomplete="off" spellcheck="false" [formGroup]="form">
+  <mat-form-field>
+    <input matInput placeholder="{{ 'Title' | translate }}" id="title" formControlName="title">
+  </mat-form-field>
+
+  <app-quill-text-editor formControlName="body" [editorPlaceholder]="editorPlaceholder"></app-quill-text-editor>
+
+  <mat-chip-list [multiple]="true">
+    <mat-chip *ngFor="let tag of tags$ | async">{{ tag.name }}</mat-chip>
+  </mat-chip-list>
+
+  <div class="actions">
+    <button mat-button (click)="handleSave()">{{ "Save" | translate }}</button>
+    <button mat-button>{{ "Cancel" | translate }}</button>
+  </div>
+</form>

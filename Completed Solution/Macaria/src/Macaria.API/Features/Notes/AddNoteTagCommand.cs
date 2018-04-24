@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Macaria.Core.Entities;
 using Macaria.Infrastructure.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -8,13 +9,14 @@ using System.Threading.Tasks;
 
 namespace Macaria.API.Features.Notes
 {
-    public class RemoveNoteTagCommand
+    public class AddNoteTagCommand
     {
         public class Validator : AbstractValidator<Request>
         {
             public Validator()
             {
-
+                RuleFor(request => request.NoteId).NotEqual(default(int));
+                RuleFor(request => request.TagId).NotEqual(default(int));
             }
         }
 
@@ -23,8 +25,7 @@ namespace Macaria.API.Features.Notes
             public int TagId { get; set; }
             public int NoteId { get; set; }
         }
-
-
+        
         public class Handler : IRequestHandler<Request>
         {
             private readonly IMacariaContext _context;
@@ -37,15 +38,25 @@ namespace Macaria.API.Features.Notes
             {
                 var note = await _context.Notes
                     .Include(x => x.NoteTags)
+                    .Include("NoteTags.Tag")
                     .SingleAsync(x => x.NoteId == request.NoteId);
 
-                var noteTag = note.NoteTags.Where(x => x.TagId == request.TagId).SingleOrDefault();
-                
-                if (noteTag != null)
+                var tag = await _context.Tags.FindAsync(request.TagId);
+
+                var noteTag = new NoteTag()
                 {
-                    note.NoteTags.Remove(noteTag);
+                    NoteId = request.NoteId,
+                    TagId = request.TagId,
+                    Note = note,
+                    Tag = tag
+                };
+
+                if(note.NoteTags.SingleOrDefault( x=> x.NoteId == request.NoteId && x.TagId == request.TagId) == null) {
+                    note.NoteTags.Add(noteTag);
                     await _context.SaveChangesAsync(cancellationToken);
-                }                
+                }
+
+                await Task.CompletedTask;
             }
         }
     }

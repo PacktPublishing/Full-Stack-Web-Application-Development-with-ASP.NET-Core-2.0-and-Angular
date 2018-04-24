@@ -19,7 +19,7 @@ namespace Macaria.API.Features.Notes
             => await _mediator.Send(new GetGetNotesByCurrentUserQuery.Request());
 
         [HttpPost("{noteId}/tag/{tagId}")]
-        public async Task AddTag(AddTagCommand.Request request)
+        public async Task AddTag(AddNoteTagCommand.Request request)
             => await _mediator.Send(request);
 
         [HttpDelete("{noteId}/tag/{tagId}")]

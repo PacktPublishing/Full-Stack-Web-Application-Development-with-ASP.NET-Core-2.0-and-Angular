@@ -19,15 +19,11 @@ namespace IntegrationTests.Features.Notes
         [Fact]
         public async Task ShouldSaveNote()
         {
-            TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             using (var server = CreateServer())
             {
-                var hubConnection = new HubConnectionBuilder()
-                .WithUrl($"http://integrationtests/hub?token={TokenFactory.Get("quinntynebrown@gmail.com")}")
-                .WithMessageHandler((h) => server.CreateHandler())
-                .WithTransport(TransportType.LongPolling)
-                .Build();
+                var hubConnection = GetHubConnection(server.CreateHandler());
 
                 hubConnection.On<dynamic>("message", (result) =>
                 {
@@ -211,6 +207,8 @@ namespace IntegrationTests.Features.Notes
         [Fact]
         public async Task ShouldDeleteNote()
         {
+            var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+
             void setUpData(MacariaContext context)
             {
                 context.Notes.Add(new Note()
@@ -225,10 +223,23 @@ namespace IntegrationTests.Features.Notes
 
             using (var server = CreateServer(setUpData))
             {
+                var hubConnection = GetHubConnection(server.CreateHandler());
+
+                hubConnection.On<dynamic>("message", (result) =>
+                {
+                    Assert.Equal("[Note] Removed", $"{result.type}");
+                    Assert.Equal(1, Convert.ToInt16(result.payload.noteId));
+                    tcs.SetResult(true);
+                });
+
+                await hubConnection.StartAsync();
+
                 var response = await server.CreateClient()
                     .DeleteAsync(Delete.Note(1));
 
                 response.EnsureSuccessStatusCode();
+
+                await tcs.Task;
             }
         }
     }

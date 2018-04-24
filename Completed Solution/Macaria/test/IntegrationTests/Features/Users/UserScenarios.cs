@@ -9,7 +9,7 @@ namespace IntegrationTests.Features.Users
     public class UserScenarios: UserScenarioBase
     {
         [Fact]
-        public async Task ShouldCreate()
+        public async Task ShouldCreateUser()
         {
             using (var server = CreateServer())
             {
@@ -25,7 +25,7 @@ namespace IntegrationTests.Features.Users
         }
 
         [Fact]
-        public async Task ShouldChangePassword()
+        public async Task ShouldChangeUserPassword()
         {
             using (var server = CreateServer())
             {
@@ -40,7 +40,7 @@ namespace IntegrationTests.Features.Users
         }
 
         [Fact]
-        public async Task ShouldAuthenticate()
+        public async Task ShouldAuthenticateUser()
         {
             using (var server = CreateServer())
             {
@@ -57,7 +57,7 @@ namespace IntegrationTests.Features.Users
         }
 
         [Fact]
-        public async Task ShouldUpdate()
+        public async Task ShouldUpdateUser()
         {
             using (var server = CreateServer())
             {
@@ -72,7 +72,7 @@ namespace IntegrationTests.Features.Users
         }
 
         [Fact]
-        public async Task ShouldGetAll()
+        public async Task ShouldGetAllUsers()
         {
             using (var server = CreateServer())
             {
@@ -85,7 +85,7 @@ namespace IntegrationTests.Features.Users
 
 
         [Fact]
-        public async Task ShouldGetById()
+        public async Task ShouldGetUserById()
         {
             using (var server = CreateServer())
             {
@@ -97,7 +97,7 @@ namespace IntegrationTests.Features.Users
         }
                 
         [Fact]
-        public async Task ShouldDelete()
+        public async Task ShouldDeleteUser()
         {
             using (var server = CreateServer())
             {

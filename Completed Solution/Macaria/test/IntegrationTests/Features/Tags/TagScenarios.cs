@@ -8,9 +8,8 @@ namespace IntegrationTests.Features.Tags
 {
     public class TagScenarios: TagScenarioBase
     {
-
         [Fact]
-        public async Task ShouldSave()
+        public async Task ShouldSaveTag()
         {
             using (var server = CreateServer())
             {
@@ -27,7 +26,7 @@ namespace IntegrationTests.Features.Tags
         }
 
         [Fact]
-        public async Task ShouldGetAll()
+        public async Task ShouldGetAllTags()
         {
             using (var server = CreateServer())
             {
@@ -39,7 +38,7 @@ namespace IntegrationTests.Features.Tags
         }
         
         [Fact]
-        public async Task ShouldGetById()
+        public async Task ShouldGetTagById()
         {
             using (var server = CreateServer())
             {
@@ -52,7 +51,7 @@ namespace IntegrationTests.Features.Tags
         }
         
         [Fact]
-        public async Task ShouldUpdate()
+        public async Task ShouldUpdateTag()
         {
             using (var server = CreateServer())
             {
@@ -67,7 +66,7 @@ namespace IntegrationTests.Features.Tags
         }
         
         [Fact]
-        public async Task ShouldDelete()
+        public async Task ShouldDeleteTag()
         {
             using (var server = CreateServer())
             {

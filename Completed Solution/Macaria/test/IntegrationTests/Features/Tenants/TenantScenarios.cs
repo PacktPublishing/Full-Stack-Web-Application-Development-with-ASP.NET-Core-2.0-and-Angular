@@ -11,7 +11,7 @@ namespace IntegrationTests.Features.Tenants
     {
 
         [Fact]
-        public async Task ShouldSave()
+        public async Task ShouldSaveTenant()
         {
             using (var server = CreateServer())
             {
@@ -28,7 +28,7 @@ namespace IntegrationTests.Features.Tenants
         }
 
         [Fact]
-        public async Task ShouldVerify()
+        public async Task ShouldVerifyTenant()
         {
             using (var server = CreateServer())
             {                
@@ -39,7 +39,7 @@ namespace IntegrationTests.Features.Tenants
             }
         }
         [Fact]
-        public async Task ShouldGetAll()
+        public async Task ShouldGetAllTenants()
         {
             using (var server = CreateServer())
             {
@@ -52,7 +52,7 @@ namespace IntegrationTests.Features.Tenants
 
 
         [Fact]
-        public async Task ShouldGetById()
+        public async Task ShouldGetTenantById()
         {
             using (var server = CreateServer())
             {
@@ -64,7 +64,7 @@ namespace IntegrationTests.Features.Tenants
         }
         
         [Fact]
-        public async Task ShouldUpdate()
+        public async Task ShouldUpdateTenant()
         {
             using (var server = CreateServer())
             {                
@@ -82,7 +82,7 @@ namespace IntegrationTests.Features.Tenants
         }
         
         [Fact]
-        public async Task ShouldDelete()
+        public async Task ShouldDeleteTenant()
         {
             using (var server = CreateServer())
             {

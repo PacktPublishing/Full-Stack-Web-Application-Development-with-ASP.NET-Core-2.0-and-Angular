@@ -54,7 +54,7 @@ namespace IntegrationTests.Features.Notes
         }
 
         [Fact]
-        public async Task ShouldAddTag()
+        public async Task ShouldAddNoteTag()
         {
 
             void setUpData(MacariaContext context)
@@ -83,7 +83,7 @@ namespace IntegrationTests.Features.Notes
         }
 
         [Fact]
-        public async Task ShouldRemoveTag()
+        public async Task ShouldRemoveNoteTag()
         {
             void setUpData(MacariaContext context)
             {
@@ -114,7 +114,7 @@ namespace IntegrationTests.Features.Notes
         }
 
         [Fact]
-        public async Task ShouldGetAll()
+        public async Task ShouldGetAllNotes()
         {
             void setUpData(MacariaContext context)
             {
@@ -152,7 +152,7 @@ namespace IntegrationTests.Features.Notes
         }
         
         [Fact]
-        public async Task ShouldGetById()
+        public async Task ShouldGetNoteById()
         {
             void setUpData(MacariaContext context)
             {
@@ -176,7 +176,7 @@ namespace IntegrationTests.Features.Notes
         }
         
         [Fact]
-        public async Task ShouldUpdate()
+        public async Task ShouldUpdateNote()
         {
             void setUpData(MacariaContext context)
             {
@@ -209,7 +209,7 @@ namespace IntegrationTests.Features.Notes
         }
         
         [Fact]
-        public async Task ShouldDelete()
+        public async Task ShouldDeleteNote()
         {
             void setUpData(MacariaContext context)
             {

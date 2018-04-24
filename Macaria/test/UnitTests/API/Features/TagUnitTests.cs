@@ -28,7 +28,7 @@ namespace UnitTests.API.Features.Tags
                 {
                     Tag = new TagApiModel()
                     {
-                        Name = "Angular"
+                        Name = "Quinntyne"
                     }
                 }, default(CancellationToken));
 
@@ -50,7 +50,7 @@ namespace UnitTests.API.Features.Tags
                 context.Tags.Add(new Tag()
                 {
                     TagId = 1,
-                    Name = "Angular",
+                    Name = "Quinntyne",
                     Tenant = tenant
                 });
 
@@ -63,7 +63,7 @@ namespace UnitTests.API.Features.Tags
                     TagId = 1
                 }, default(CancellationToken));
 
-                Assert.Equal("Angular", response.Tag.Name);
+                Assert.Equal("Quinntyne", response.Tag.Name);
             }
         }
 
@@ -81,7 +81,7 @@ namespace UnitTests.API.Features.Tags
                 context.Tags.Add(new Macaria.Core.Entities.Tag()
                 {
                     TagId = 1,
-                    Name = "Angular",
+                    Name = "Quinntyne",
                     Tenant = tenant
                 });
 
@@ -109,7 +109,7 @@ namespace UnitTests.API.Features.Tags
                 context.Tags.Add(new Tag()
                 {
                     TagId = 1,
-                    Name = "Angular",
+                    Name = "Quinntyne",
                     Tenant = tenant
                 });
 
@@ -140,7 +140,7 @@ namespace UnitTests.API.Features.Tags
                 context.Tags.Add(new Tag()
                 {
                     TagId = 1,
-                    Name = "Angular",
+                    Name = "Quinntyne",
                     Tenant = tenant
                 });
 

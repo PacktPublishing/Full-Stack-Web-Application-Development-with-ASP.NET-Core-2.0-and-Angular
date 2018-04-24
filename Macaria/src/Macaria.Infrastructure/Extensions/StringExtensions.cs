@@ -19,8 +19,14 @@ namespace Macaria.Infrastructure.Extensions
 
         public static string RemoveAccent(this string txt)
         {
-            byte[] bytes = System.Text.Encoding.GetEncoding("Cyrillic").GetBytes(txt);
-            return System.Text.Encoding.ASCII.GetString(bytes);
+            try
+            {
+                byte[] bytes = System.Text.Encoding.GetEncoding("Cyrillic").GetBytes(txt);
+                return System.Text.Encoding.ASCII.GetString(bytes);
+            }catch
+            {
+                return txt;
+            }
         }
     }
 }

@@ -11,7 +11,6 @@ using Macaria.API.Behaviors;
 using Macaria.API.Hubs;
 using Macaria.Infrastructure.Behaviours;
 using Macaria.Infrastructure.Extensions;
-using Macaria.Infrastructure.Middleware;
 using Macaria.Infrastructure;
 using Macaria.Infrastructure.Services;
 
@@ -39,16 +38,6 @@ namespace Macaria.API
             services.Add(new ServiceDescriptor(typeof(JsonSerializer),
                                                provider => serializer,
                                                ServiceLifetime.Transient));
-
-            services.Configure<RequestLocalizationOptions>(options =>
-            {
-                options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("en-CA");
-                 
-                options.SupportedCultures = new List<CultureInfo> {
-                    new CultureInfo("en-CA"),
-                    new CultureInfo("fr-CA")
-                };
-            });
             services.AddSignalR();
             services.AddCustomConfiguration(Configuration);
             services.AddSecurity(Configuration);            
@@ -82,19 +71,13 @@ namespace Macaria.API
             app.UseRequestLocalization();
 
             app.UseCors("CorsPolicy");
-            ConfigureAuth(app);
-            ConfigureTenantIdAndUsernameResolution(app);            
+            ConfigureAuth(app);            
             app.UseMvc();
             app.UseSignalR(routes =>
             {
                 routes.MapHub<AppHub>("/hub");
             });
             app.UseCustomSwagger();
-        }
-
-        public virtual void ConfigureTenantIdAndUsernameResolution(IApplicationBuilder app)
-        {
-            app.UseMiddleware<TenantIdAndUsernameMiddleware>();
         }
     }
 }

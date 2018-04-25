@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,7 +7,7 @@ using Xunit;
 using Macaria.API.Features.Notes;
 using Macaria.Core.Entities;
 using Macaria.Infrastructure.Data;
-using TestUtilities.Extensions;
+using Macaria.Infrastructure.Extensions;
 
 
 namespace IntegrationTests.Features.Notes
@@ -59,7 +58,7 @@ namespace IntegrationTests.Features.Notes
                 {
                     Title = "Title1",
                     Body = "Body",
-                    Tenant = context.Tenants.First()
+                    
                 };
                 
                 context.Notes.Add(note);
@@ -87,7 +86,7 @@ namespace IntegrationTests.Features.Notes
                 {
                     Title = "Title1",
                     Body = "Body",
-                    Tenant = context.Tenants.First()
+                    
                 };
 
                 note.NoteTags.Add(new NoteTag()
@@ -118,21 +117,21 @@ namespace IntegrationTests.Features.Notes
                 {
                     Title = "Title1",
                     Body = "Body",
-                    Tenant = context.Tenants.First()
+                    
                 });
 
                 context.Notes.Add(new Note()
                 {
                     Title = "Title2",
                     Body = "Body",
-                    Tenant = context.Tenants.First()
+                    
                 });
 
                 context.Notes.Add(new Note()
                 {
                     Title = "Title3",
                     Body = "Body",
-                    Tenant = context.Tenants.First()
+                    
                 });
 
                 context.SaveChanges();
@@ -156,7 +155,7 @@ namespace IntegrationTests.Features.Notes
                 {
                     Title = "Title",
                     Body = "Body",
-                    Tenant = context.Tenants.First()
+                    
                 });
 
                 context.SaveChanges();
@@ -180,7 +179,7 @@ namespace IntegrationTests.Features.Notes
                 {
                     Title = "Title",
                     Body = "Body",
-                    Tenant = context.Tenants.First()
+                    
                 });
 
                 context.SaveChanges();
@@ -215,7 +214,7 @@ namespace IntegrationTests.Features.Notes
                 {
                     Title = "Title",
                     Body = "Body",
-                    Tenant = context.Tenants.First()
+                    
                 });
 
                 context.SaveChanges();

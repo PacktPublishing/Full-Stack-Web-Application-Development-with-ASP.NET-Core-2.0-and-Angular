@@ -13,13 +13,13 @@ namespace Macaria.API.Features.Users
         {
             public Validator()
             {
-                RuleFor(request => request.User.UserId).NotEqual(0);
+                RuleFor(request => request.UserId).NotEqual(0);
             }
         }
 
         public class Request : IRequest
         {
-            public User User { get; set; }
+            public int UserId { get; set; }
         }
 
         public class Handler : IRequestHandler<Request>
@@ -32,7 +32,7 @@ namespace Macaria.API.Features.Users
 
             public async Task Handle(Request request, CancellationToken cancellationToken)
             {
-                _context.Users.Remove(await _context.Users.FindAsync(request.User.UserId));
+                _context.Users.Remove(await _context.Users.FindAsync(request.UserId));
                 await _context.SaveChangesAsync(cancellationToken);
             }
 

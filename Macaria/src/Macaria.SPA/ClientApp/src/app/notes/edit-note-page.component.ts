@@ -44,7 +44,7 @@ export class EditNotePageComponent {
 
   ngOnInit() {
     if (this.slug)
-      this._notesService.getBySlugAndCurrentUser({ slug: this.slug })
+      this._notesService.getBySlug({ slug: this.slug })
         .pipe(
           map(x => this.note$.next(x.note))
         )

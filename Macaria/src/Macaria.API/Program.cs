@@ -36,15 +36,15 @@ namespace Macaria.API
                     GetMacariaContext(scope).Database.EnsureDeleted();
                 }
 
+                if (args.Contains("migratedb"))
+                {
+                    GetMacariaContext(scope).Database.Migrate();
+                }
+
                 if (args.Contains("seeddb"))
                 {
                     GetMacariaContext(scope).Database.EnsureCreated();
                     ApiConfiguration.Seed(GetMacariaContext(scope), GetConfiguration(scope));            
-                }
-
-                if (args.Contains("migratedb"))
-                {
-                    GetMacariaContext(scope).Database.Migrate();
                 }
                 
                 if (args.Contains("stop"))

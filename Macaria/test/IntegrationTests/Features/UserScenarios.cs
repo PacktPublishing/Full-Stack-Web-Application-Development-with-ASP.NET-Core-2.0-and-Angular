@@ -1,12 +1,11 @@
 using Macaria.API.Features.Users;
 using System.Linq;
 using System.Threading.Tasks;
-using TestUtilities.Extensions;
+using Macaria.Infrastructure.Extensions;
 using Xunit;
 
 namespace IntegrationTests.Features.Users
 {
-    [CollectionDefinition("NoteScenarios", DisableParallelization = true)]
     public class UserScenarios: UserScenarioBase
     {
         [Fact]

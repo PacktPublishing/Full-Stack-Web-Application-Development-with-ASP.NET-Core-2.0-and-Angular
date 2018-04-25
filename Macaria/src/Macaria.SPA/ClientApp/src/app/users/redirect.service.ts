@@ -1,13 +1,11 @@
-﻿import { Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { ActivatedRoute, Router } from '@angular/router';
-import { RedirectService } from "../tenants/redirect.service";
 
 @Injectable()
-export class LoginRedirectService extends RedirectService {
+export class LoginRedirectService {
   constructor(
-    route: ActivatedRoute,
-    router: Router) {
-    super(route, router)
+    private _route: ActivatedRoute,
+    private _router: Router) {
   }
 
   loginUrl: string = "/login";

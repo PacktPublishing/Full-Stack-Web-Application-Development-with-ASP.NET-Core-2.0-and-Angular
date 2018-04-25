@@ -2,7 +2,6 @@
 using Macaria.API.Features.Tags;
 using Macaria.Infrastructure.Data;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,12 +14,11 @@ namespace Macaria.API.Behaviors
     {
         private readonly IHubContext<AppHub> _hubContext;
         private readonly IMacariaContext _context;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        public EntityChangedNotificationBehavior(IHubContext<AppHub> hubContext, IMacariaContext context, IHttpContextAccessor httpContextAccessor)
+
+        public EntityChangedNotificationBehavior(IHubContext<AppHub> hubContext, IMacariaContext context)
         {
             _hubContext = hubContext;
             _context = context;
-            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
@@ -62,7 +60,7 @@ namespace Macaria.API.Behaviors
                 };
             }
 
-            await SendNotification(notification);
+            await _hubContext.Clients.All.SendAsync("message", notification);
         }
 
         private async Task SendRemovedNotification(TRequest request)
@@ -86,16 +84,10 @@ namespace Macaria.API.Behaviors
                     Payload = new { (request as RemoveTagCommand.Request).TagId }
                 };
             }
-            
-            await SendNotification(notification);
+
+            await _hubContext.Clients.All.SendAsync("message", notification);
         }
-
-        private async Task SendNotification(object message) {
-            
-            var tenantId = $"{_httpContextAccessor.HttpContext.Items["TenantId"]}".ToLower();
-
-            await _hubContext.Clients.Group(tenantId).SendAsync("message", message);            
-        }        
+        
     }
     
 }

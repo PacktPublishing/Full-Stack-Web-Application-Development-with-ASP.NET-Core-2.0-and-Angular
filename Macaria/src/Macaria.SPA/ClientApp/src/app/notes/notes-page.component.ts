@@ -28,7 +28,7 @@ export class NotesPageComponent {
   public localeText: any = {};
 
   ngOnInit() {
-    this._notesService.getByCurrentUser()
+    this._notesService.get()
       .pipe(
         map(x => this._noteStore.notes$.next(x.notes))
       )

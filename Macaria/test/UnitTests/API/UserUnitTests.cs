@@ -12,7 +12,7 @@ using Xunit;
 
 namespace UnitTests.API.Users
 {    
-    public class UserUnitTests: BaseTestCollection
+    public class UserUnitTests
     {
         protected readonly Mock<IEncryptionService> _encryptionServiceMock;
         protected readonly Mock<ITokenProvider> _tokenProvider;
@@ -38,15 +38,13 @@ namespace UnitTests.API.Users
                 .UseInMemoryDatabase(databaseName: "ShouldHandleAuthenticateUserCommandRequest")
                 .Options;
 
-            using (var context = new MacariaContext(options, _httpContextAccessorMock.Object))
-            {
-                var tenant = InsertTenantIntoInMemoryDatabase(context);
-
+            using (var context = new MacariaContext(options))
+            {                
                 context.Users.Add(new Macaria.Core.Entities.User()
                 {
                     Username = "quinntynebrown@gmail.com",
                     Password = "password",
-                    Tenant = tenant
+                    
                 });
 
                 context.SaveChanges();
@@ -70,7 +68,7 @@ namespace UnitTests.API.Users
                 .UseInMemoryDatabase(databaseName: "ShouldHandleCreateUserCommandRequest")
                 .Options;
 
-            using (var context = new MacariaContext(options,_httpContextAccessorMock.Object))
+            using (var context = new MacariaContext(options))
             {
                 var handler = new CreateUserCommand.Handler(context, _encryptionServiceMock.Object);
 
@@ -90,16 +88,16 @@ namespace UnitTests.API.Users
                 .UseInMemoryDatabase(databaseName: "ShouldHandleGetByIdQueryRequest")
                 .Options;
 
-            using (var context = new MacariaContext(options, _httpContextAccessorMock.Object))
+            using (var context = new MacariaContext(options))
             {
-                var tenant = InsertTenantIntoInMemoryDatabase(context);
+                
 
                 context.Users.Add(new Macaria.Core.Entities.User()
                 {
                     UserId = 1,
                     Username = "quinntynebrown@gmail.com",
                     Password = "password",
-                    Tenant = tenant
+                    
                 });
 
                 context.SaveChanges();
@@ -122,16 +120,16 @@ namespace UnitTests.API.Users
                 .UseInMemoryDatabase(databaseName: "ShouldHandleGetUsersQueryRequest")
                 .Options;
 
-            using (var context = new MacariaContext(options, _httpContextAccessorMock.Object))
+            using (var context = new MacariaContext(options))
             {
-                var tenant = InsertTenantIntoInMemoryDatabase(context);
+                
 
                 context.Users.Add(new Macaria.Core.Entities.User()
                 {
                     UserId = 1,
                     Username = "quinntynebrown@gmail.com",
                     Password = "password",
-                    Tenant = tenant
+                    
                 });
 
                 context.SaveChanges();
@@ -151,16 +149,16 @@ namespace UnitTests.API.Users
                 .UseInMemoryDatabase(databaseName: "ShouldHandleRemoveUserCommandRequest")
                 .Options;
 
-            using (var context = new MacariaContext(options, _httpContextAccessorMock.Object))
+            using (var context = new MacariaContext(options))
             {
-                var tenant = InsertTenantIntoInMemoryDatabase(context);
+                
 
                 context.Users.Add(new User()
                 {
                     UserId = 1,
                     Username = "quinntynebrown@gmail.com",
                     Password = "password",
-                    Tenant = tenant
+                    
                 });
 
                 context.SaveChanges();
@@ -183,16 +181,16 @@ namespace UnitTests.API.Users
                 .UseInMemoryDatabase(databaseName: "ShouldHandleUpdateUserCommandRequest")
                 .Options;
 
-            using (var context = new MacariaContext(options, _httpContextAccessorMock.Object))
+            using (var context = new MacariaContext(options))
             {
-                var tenant = InsertTenantIntoInMemoryDatabase(context);
+                
 
                 context.Users.Add(new User()
                 {
                     UserId = 1,
                     Username = "quinntynebrown@gmail.com",
                     Password = "password",
-                    Tenant = tenant
+                    
                 });
 
                 context.SaveChanges();
@@ -217,16 +215,16 @@ namespace UnitTests.API.Users
                 .UseInMemoryDatabase(databaseName: "ShouldHandleUserChangePasswordCommandRequest")
                 .Options;
 
-            using (var context = new MacariaContext(options, _httpContextAccessorMock.Object))
+            using (var context = new MacariaContext(options))
             {
-                var tenant = InsertTenantIntoInMemoryDatabase(context);
+                
 
                 context.Users.Add(new User()
                 {
                     UserId = 1,
                     Username = "quinntynebrown@gmail.com",
                     Password = "password",
-                    Tenant = tenant
+                    
                 });
 
                 context.SaveChanges();

@@ -11,7 +11,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { NotesModule } from './notes/notes.module';
 import { MaterialModule } from './material/material.module';
 import { SharedModule } from './shared/shared.module';
-import { TenantsModule } from './tenants/tenants.module';
 import { UsersModule } from './users/users.module';
 import { AnonymousMasterPageComponent } from './anonymous-master-page.component';
 import { MasterPageComponent } from './master-page.component';
@@ -40,7 +39,6 @@ import { SettingsModule } from './settings/settings.module';
     SharedModule,
     SettingsModule,
     TagsModule,
-    TenantsModule,
     UsersModule
   ],
   providers: [

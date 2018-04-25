@@ -9,7 +9,7 @@ using Xunit;
 
 namespace UnitTests.API
 {
-    public class NoteUnitTests : BaseTestCollection
+    public class NoteUnitTests
     {     
  
         [Fact]
@@ -20,7 +20,7 @@ namespace UnitTests.API
                 .UseInMemoryDatabase(databaseName: "ShouldHandleSaveNoteCommandRequest")
                 .Options;
 
-            using (var context = new MacariaContext(options, _httpContextAccessorMock.Object))
+            using (var context = new MacariaContext(options))
             {
                 var handler = new SaveNoteCommand.Handler(context);
 
@@ -43,15 +43,15 @@ namespace UnitTests.API
                 .UseInMemoryDatabase(databaseName: "ShouldHandleGetNoteByIdQueryRequest")
                 .Options;
 
-            using (var context = new MacariaContext(options, _httpContextAccessorMock.Object))
+            using (var context = new MacariaContext(options))
             {
-                var tenant = InsertTenantIntoInMemoryDatabase(context);
+                
 
                 context.Notes.Add(new Note()
                 {
                     NoteId = 1,
                     Title = "Quinntyne",
-                    Tenant = tenant
+                    
                 });
 
                 context.SaveChanges();
@@ -74,15 +74,15 @@ namespace UnitTests.API
                 .UseInMemoryDatabase(databaseName: "ShouldHandleGetNotesQueryRequest")
                 .Options;
 
-            using (var context = new MacariaContext(options, _httpContextAccessorMock.Object))
+            using (var context = new MacariaContext(options))
             {
-                var tenant = InsertTenantIntoInMemoryDatabase(context);
+                
 
                 context.Notes.Add(new Macaria.Core.Entities.Note()
                 {
                     NoteId = 1,
                     Title = "Quinntyne",
-                    Tenant = tenant
+                    
                 });
 
                 context.SaveChanges();
@@ -102,15 +102,15 @@ namespace UnitTests.API
                 .UseInMemoryDatabase(databaseName: "ShouldHandleRemoveNoteCommandRequest")
                 .Options;
 
-            using (var context = new MacariaContext(options, _httpContextAccessorMock.Object))
+            using (var context = new MacariaContext(options))
             {
-                var tenant = InsertTenantIntoInMemoryDatabase(context);
+                
 
                 context.Notes.Add(new Note()
                 {
                     NoteId = 1,
                     Title = "Quinntyne",
-                    Tenant = tenant
+                    
                 });
 
                 context.SaveChanges();
@@ -133,15 +133,15 @@ namespace UnitTests.API
                 .UseInMemoryDatabase(databaseName: "ShouldHandleUpdateNoteCommandRequest")
                 .Options;
 
-            using (var context = new MacariaContext(options, _httpContextAccessorMock.Object))
+            using (var context = new MacariaContext(options))
             {
-                var tenant = InsertTenantIntoInMemoryDatabase(context);
+                
 
                 context.Notes.Add(new Note()
                 {
                     NoteId = 1,
                     Title = "Quinntyne",
-                    Tenant = tenant
+                    
                 });
 
                 context.SaveChanges();
@@ -170,16 +170,16 @@ namespace UnitTests.API
                 .UseInMemoryDatabase(databaseName: "ShouldHandleSaveNoteTagCommandRequest")
                 .Options;
 
-            using (var context = new MacariaContext(options, _httpContextAccessorMock.Object))
+            using (var context = new MacariaContext(options))
             {
 
-                var tenant = InsertTenantIntoInMemoryDatabase(context);
+                
 
                 var note = new Note()
                 {
                     NoteId = 1,
                     Title = "My Note",
-                    Tenant = tenant
+                    
                 };
 
                 context.Notes.Add(note);
@@ -188,7 +188,7 @@ namespace UnitTests.API
                 {
                     TagId = 1,
                     Name = "Angular",
-                    Tenant = tenant
+                    
                 });
 
                 context.SaveChanges();
@@ -213,16 +213,16 @@ namespace UnitTests.API
                 .UseInMemoryDatabase(databaseName: "ShouldHandleRemoveNoteTagCommandRequest")
                 .Options;
 
-            using (var context = new MacariaContext(options, _httpContextAccessorMock.Object))
+            using (var context = new MacariaContext(options))
             {
 
-                var tenant = InsertTenantIntoInMemoryDatabase(context);
+                
 
                 var note = new Note()
                 {
                     NoteId = 1,
                     Title = "My Note",
-                    Tenant = tenant
+                    
                 };
 
                 context.Notes.Add(note);
@@ -231,7 +231,7 @@ namespace UnitTests.API
                 {
                     TagId = 1,
                     Name = "Angular",
-                    Tenant = tenant
+                    
                 });
 
                 context.SaveChanges();
@@ -240,7 +240,7 @@ namespace UnitTests.API
                 {
                     TagId = 1,
                     NoteId = 1,
-                    Tenant = tenant
+                    
                 });
 
                 context.SaveChanges();

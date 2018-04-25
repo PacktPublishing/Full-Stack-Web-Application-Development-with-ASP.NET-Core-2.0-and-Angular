@@ -1,9 +1,6 @@
-﻿using Macaria.Core.Entities;
-using Macaria.Infrastructure.Data;
+﻿using Macaria.Infrastructure.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.EntityFrameworkCore;
-using System;
 using System.Threading.Tasks;
 
 namespace Macaria.API.Hubs
@@ -15,29 +12,8 @@ namespace Macaria.API.Hubs
 
         public AppHub(IMacariaContext context) => _context = context;
         
-        public async Task Send(string message) {
-            
-            var user = await GetUser(Context.User.Identity.Name);
-
-            await Clients.Group($"{user.Tenant.TenantId}".ToLower()).SendAsync("message", message);
+        public async Task Send(string message) {                        
+            await Clients.All.SendAsync("message", message);
         }
-
-        public override async Task OnConnectedAsync()
-        {
-            var user = await GetUser(Context.User.Identity.Name);
-
-            await Groups.AddAsync(Context.ConnectionId, $"{user.Tenant.TenantId}".ToLower());
-
-            await base.OnConnectedAsync();
-        }
-
-        public override Task OnDisconnectedAsync(Exception exception)
-        {
-            return base.OnDisconnectedAsync(exception);
-        }
-
-        public async Task<User> GetUser(string username)
-            => await _context.Users.IgnoreQueryFilters().Include(x => x.Tenant)
-                .FirstAsync(x => x.Username == username);   
     }
 }

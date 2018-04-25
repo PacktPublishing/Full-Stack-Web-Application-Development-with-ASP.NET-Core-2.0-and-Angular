@@ -14,7 +14,7 @@ using Xunit;
 
 namespace UnitTests.API
 {    
-    public class EntityChangedNotificationBehaviorTests: BaseTestCollection
+    public class EntityChangedNotificationBehaviorTests
     {
         [Fact]
         public async Task ShouldSendNotificationAfterSaveNoteCommand()
@@ -23,7 +23,7 @@ namespace UnitTests.API
                 .UseInMemoryDatabase(databaseName: "ShouldSendNotificationAfterSaveNoteCommand")
                 .Options;
 
-            using (var context = new MacariaContext(options, _httpContextAccessorMock.Object))
+            using (var context = new MacariaContext(options))
             {
 
                 var mockClients = new Mock<IHubClients>();
@@ -34,15 +34,13 @@ namespace UnitTests.API
 
                 mockGroups.Setup(x => x.SendCoreAsync(It.IsAny<string>(), It.IsAny<object[]>())).Returns(Task.CompletedTask).Verifiable();
                 
-                mockClients.Setup(x => x.Group($"{new Guid("60DE04D9-E441-E811-9D3A-D481D7227E7A")}".ToLower())).Returns(mockGroups.Object);
+                mockClients.Setup(x => x.All).Returns(mockGroups.Object);
 
                 mockContext.Setup(x => x.Clients).Returns(mockClients.Object);
-
-                var tenant = InsertTenantIntoInMemoryDatabase(context);
-
+                
                 var subject =
                 new EntityChangedNotificationBehavior<SaveNoteCommand.Request, SaveNoteCommand.Response>
-                (mockContext.Object, context, _httpContextAccessorMock.Object);
+                (mockContext.Object, context);
                 
                 var response = await subject.Handle(new SaveNoteCommand.Request()
                 {
@@ -56,7 +54,7 @@ namespace UnitTests.API
                     context.Notes.Add(new Note()
                     {
                         NoteId = 1,
-                        Tenant = tenant
+                        
                     });
 
                     context.SaveChanges();
@@ -80,7 +78,7 @@ namespace UnitTests.API
                 .UseInMemoryDatabase(databaseName: "ShouldSendNotificationAfterRemoveNoteCommand")
                 .Options;
 
-            using (var context = new MacariaContext(options, _httpContextAccessorMock.Object))
+            using (var context = new MacariaContext(options))
             {
 
                 var mockClients = new Mock<IHubClients>();
@@ -91,15 +89,13 @@ namespace UnitTests.API
 
                 mockGroups.Setup(x => x.SendCoreAsync(It.IsAny<string>(), It.IsAny<object[]>())).Returns(Task.CompletedTask).Verifiable();
 
-                mockClients.Setup(x => x.Group($"{new Guid("60DE04D9-E441-E811-9D3A-D481D7227E7A")}".ToLower())).Returns(mockGroups.Object);
+                mockClients.Setup(x => x.All).Returns(mockGroups.Object);
 
                 mockContext.Setup(x => x.Clients).Returns(mockClients.Object);
-
-                var tenant = InsertTenantIntoInMemoryDatabase(context);
-
+                
                 var subject =
                 new EntityChangedNotificationBehavior<RemoveNoteCommand.Request, RemoveNoteCommand.Response>
-                (mockContext.Object, context, _httpContextAccessorMock.Object);
+                (mockContext.Object, context);
 
                 context.Notes.Add(new Note()
                 {
@@ -136,7 +132,7 @@ namespace UnitTests.API
                 .UseInMemoryDatabase(databaseName: "ShouldSendNotificationAfterSaveTagCommand")
                 .Options;
 
-            using (var context = new MacariaContext(options, _httpContextAccessorMock.Object))
+            using (var context = new MacariaContext(options))
             {
 
                 var mockClients = new Mock<IHubClients>();
@@ -147,15 +143,15 @@ namespace UnitTests.API
 
                 mockGroups.Setup(x => x.SendCoreAsync(It.IsAny<string>(), It.IsAny<object[]>())).Returns(Task.CompletedTask).Verifiable();
 
-                mockClients.Setup(x => x.Group($"{new Guid("60DE04D9-E441-E811-9D3A-D481D7227E7A")}".ToLower())).Returns(mockGroups.Object);
+                mockClients.Setup(x => x.All).Returns(mockGroups.Object);
 
                 mockContext.Setup(x => x.Clients).Returns(mockClients.Object);
 
-                var tenant = InsertTenantIntoInMemoryDatabase(context);
+                
 
                 var subject =
                 new EntityChangedNotificationBehavior<SaveTagCommand.Request, SaveTagCommand.Response>
-                (mockContext.Object, context, _httpContextAccessorMock.Object);
+                (mockContext.Object, context);
 
                 var response = await subject.Handle(new SaveTagCommand.Request()
                 {
@@ -169,7 +165,7 @@ namespace UnitTests.API
                     context.Tags.Add(new Tag()
                     {
                         TagId = 1,
-                        Tenant = tenant
+                        
                     });
 
                     context.SaveChanges();
@@ -193,7 +189,7 @@ namespace UnitTests.API
                 .UseInMemoryDatabase(databaseName: "ShouldSendNotificationAfterRemoveTagCommand")
                 .Options;
 
-            using (var context = new MacariaContext(options, _httpContextAccessorMock.Object))
+            using (var context = new MacariaContext(options))
             {
 
                 var mockClients = new Mock<IHubClients>();
@@ -204,15 +200,13 @@ namespace UnitTests.API
 
                 mockGroups.Setup(x => x.SendCoreAsync(It.IsAny<string>(), It.IsAny<object[]>())).Returns(Task.CompletedTask).Verifiable();
 
-                mockClients.Setup(x => x.Group($"{new Guid("60DE04D9-E441-E811-9D3A-D481D7227E7A")}".ToLower())).Returns(mockGroups.Object);
+                mockClients.Setup(x => x.All).Returns(mockGroups.Object);
 
                 mockContext.Setup(x => x.Clients).Returns(mockClients.Object);
-
-                var tenant = InsertTenantIntoInMemoryDatabase(context);
-
+                
                 var subject =
                 new EntityChangedNotificationBehavior<RemoveTagCommand.Request, RemoveTagCommand.Response>
-                (mockContext.Object, context, _httpContextAccessorMock.Object);
+                (mockContext.Object, context);
 
                 context.Tags.Add(new Tag()
                 {

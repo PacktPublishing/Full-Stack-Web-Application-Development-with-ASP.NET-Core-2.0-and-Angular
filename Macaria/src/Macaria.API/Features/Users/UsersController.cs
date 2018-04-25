@@ -1,7 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
 
 namespace Macaria.API.Features.Users
@@ -44,7 +43,7 @@ namespace Macaria.API.Features.Users
         public async Task<ActionResult<GetUserByIdQuery.Response>> GetById([FromRoute]GetUserByIdQuery.Request request)
             => await _mediator.Send(request);
 
-        [HttpDelete("{User.UserId}")]
+        [HttpDelete("{userId}")]
         public async Task Remove([FromRoute]RemoveUserCommand.Request request)
             => await _mediator.Send(request);
     }

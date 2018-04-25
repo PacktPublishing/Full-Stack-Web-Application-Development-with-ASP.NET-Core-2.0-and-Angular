@@ -9,7 +9,7 @@ using Xunit;
 
 namespace UnitTests.API.Tags
 {
-    public class TagUnitTests : BaseTestCollection
+    public class TagUnitTests
     {     
  
         [Fact]
@@ -20,7 +20,7 @@ namespace UnitTests.API.Tags
                 .UseInMemoryDatabase(databaseName: "ShouldHandleSaveTagCommandRequest")
                 .Options;
 
-            using (var context = new MacariaContext(options, _httpContextAccessorMock.Object))
+            using (var context = new MacariaContext(options))
             {
                 var handler = new SaveTagCommand.Handler(context);
 
@@ -43,15 +43,15 @@ namespace UnitTests.API.Tags
                 .UseInMemoryDatabase(databaseName: "ShouldHandleGetTagByIdQueryRequest")
                 .Options;
 
-            using (var context = new MacariaContext(options, _httpContextAccessorMock.Object))
+            using (var context = new MacariaContext(options))
             {
-                var tenant = InsertTenantIntoInMemoryDatabase(context);
+                
 
                 context.Tags.Add(new Tag()
                 {
                     TagId = 1,
                     Name = "Quinntyne",
-                    Tenant = tenant
+                    
                 });
 
                 context.SaveChanges();
@@ -74,15 +74,15 @@ namespace UnitTests.API.Tags
                 .UseInMemoryDatabase(databaseName: "ShouldHandleGetTagsQueryRequest")
                 .Options;
 
-            using (var context = new MacariaContext(options, _httpContextAccessorMock.Object))
+            using (var context = new MacariaContext(options))
             {
-                var tenant = InsertTenantIntoInMemoryDatabase(context);
+                
 
                 context.Tags.Add(new Macaria.Core.Entities.Tag()
                 {
                     TagId = 1,
                     Name = "Quinntyne",
-                    Tenant = tenant
+                    
                 });
 
                 context.SaveChanges();
@@ -102,15 +102,15 @@ namespace UnitTests.API.Tags
                 .UseInMemoryDatabase(databaseName: "ShouldHandleRemoveTagCommandRequest")
                 .Options;
 
-            using (var context = new MacariaContext(options, _httpContextAccessorMock.Object))
+            using (var context = new MacariaContext(options))
             {
-                var tenant = InsertTenantIntoInMemoryDatabase(context);
+                
 
                 context.Tags.Add(new Tag()
                 {
                     TagId = 1,
                     Name = "Quinntyne",
-                    Tenant = tenant
+                    
                 });
 
                 context.SaveChanges();
@@ -133,15 +133,15 @@ namespace UnitTests.API.Tags
                 .UseInMemoryDatabase(databaseName: "ShouldHandleUpdateTagCommandRequest")
                 .Options;
 
-            using (var context = new MacariaContext(options, _httpContextAccessorMock.Object))
+            using (var context = new MacariaContext(options))
             {
-                var tenant = InsertTenantIntoInMemoryDatabase(context);
+                
 
                 context.Tags.Add(new Tag()
                 {
                     TagId = 1,
                     Name = "Quinntyne",
-                    Tenant = tenant
+                    
                 });
 
                 context.SaveChanges();

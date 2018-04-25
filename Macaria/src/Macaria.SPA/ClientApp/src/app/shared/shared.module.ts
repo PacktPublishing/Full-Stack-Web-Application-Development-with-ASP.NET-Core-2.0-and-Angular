@@ -16,6 +16,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { LanguageService } from './language.service';
 import { LanguageGuard } from './language-guard';
+import { MaterialModule } from '../material/material.module';
 
 const declarations = [
   NotificationComponent,
@@ -56,10 +57,12 @@ export function TranslateHttpLoaderFactory(httpClient: HttpClient) {
         useFactory: TranslateHttpLoaderFactory,
         deps: [HttpClient]
       }
-    })
+    }),
+
+    MaterialModule
   ],
   providers,
-  exports: [TranslateModule,...declarations],
+  exports: [TranslateModule, MaterialModule, ...declarations],
   entryComponents:[NotificationComponent]
 })
 export class SharedModule { }

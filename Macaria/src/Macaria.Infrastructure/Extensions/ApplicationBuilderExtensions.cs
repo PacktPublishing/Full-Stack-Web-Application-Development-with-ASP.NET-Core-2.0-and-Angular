@@ -1,6 +1,4 @@
-﻿using Macaria.Infrastructure.Middleware;
-using Macaria.Infrastructure.OperationFilters;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 
 namespace Macaria.Infrastructure.Extensions
 {

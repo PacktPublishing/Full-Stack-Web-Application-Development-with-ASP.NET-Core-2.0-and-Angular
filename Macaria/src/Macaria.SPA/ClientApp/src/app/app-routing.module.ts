@@ -1,7 +1,5 @@
 import { Routes, RouterModule, RouteReuseStrategy, DetachedRouteHandle, ActivatedRouteSnapshot } from '@angular/router';
-import { TenantGuard } from './tenants/tenant.guard';
 import { AuthGuard } from './users/auth.guard';
-import { SetTenantComponent } from './tenants/set-tenant.component';
 import { LoginComponent } from './users/login.component';
 import { MasterPageComponent } from './master-page.component';
 import { AnonymousMasterPageComponent } from './anonymous-master-page.component';
@@ -15,21 +13,8 @@ import { LanguageGuard } from './shared/language-guard';
 
 export const routes: Routes = [
   {
-    path: 'tenants/set',
-    component: AnonymousMasterPageComponent,
-    children: [
-      {
-        path: '',
-        component: SetTenantComponent
-      }
-    ]
-  },
-  {
     path: 'login',
     component: AnonymousMasterPageComponent,
-    canActivate: [
-      TenantGuard
-    ],
     children: [
       {
         path: '',
@@ -41,7 +26,6 @@ export const routes: Routes = [
     path: '',
     component: MasterPageComponent,
     canActivate: [
-      TenantGuard,
       AuthGuard,
       HubClientGuard      
     ],

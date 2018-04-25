@@ -3,18 +3,18 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestUtilities.Extensions
+namespace Macaria.Infrastructure.Extensions
 {
     public static class HttpClientExtensions
     {
         public static async Task<TResult> PostAsAsync<TResult>(this HttpClient client, string url, HttpContent content)
-        {            
+        {
             var responseMessage = await client.PostAsync(url, content);
 
             return JsonConvert.DeserializeObject<TResult>(await responseMessage.Content.ReadAsStringAsync());
         }
 
-        public static async Task<TOut> PostAsAsync<TIn,TOut>(this HttpClient client, string url, TIn content)
+        public static async Task<TOut> PostAsAsync<TIn, TOut>(this HttpClient client, string url, TIn content)
         {
             var stringContent = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json");
 

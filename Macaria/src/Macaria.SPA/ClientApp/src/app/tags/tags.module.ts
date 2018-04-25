@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '../shared/shared.module';
-import { MaterialModule } from '../material/material.module';
 
 import { TagsService } from './tags.service';
 import { TagsPageComponent } from './tags-page.component';
@@ -32,7 +31,6 @@ const providers = [
     RouterModule,
 
     AgGridComponentsModule,
-    MaterialModule,
     SharedModule
   ],
   providers,

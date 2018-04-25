@@ -32,11 +32,5 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="Features\Notes\" />
-    <Folder Include="Features\Tags\" />
-    <Folder Include="Features\Users\" />
-  </ItemGroup>
 
 </Project>

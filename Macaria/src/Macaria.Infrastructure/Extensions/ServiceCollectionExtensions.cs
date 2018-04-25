@@ -54,7 +54,6 @@ namespace Macaria.Infrastructure.Services
             services.ConfigureSwaggerGen(options =>
             {
                 options.OperationFilter<AuthorizationHeaderParameterOperationFilter>();
-                options.OperationFilter<TenantHeaderParameterOperationFilter>();
             });
 
             return services;

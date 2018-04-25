@@ -1,12 +1,10 @@
 using Macaria.API.Features.Tags;
-using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.SignalR.Client;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using TestUtilities;
-using TestUtilities.Extensions;
 using Xunit;
+using Macaria.Infrastructure.Extensions;
 
 namespace IntegrationTests.Features.Tags
 {

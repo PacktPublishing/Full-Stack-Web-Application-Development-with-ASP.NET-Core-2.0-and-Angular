@@ -28,47 +28,20 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\app.component.spec.ts" />
+    <None Remove="ClientApp\src\app\notes\note-resolver.service.ts" />
+    <None Remove="ClientApp\src\app\shared\shared.module.ts" />
+    <None Remove="ClientApp\src\app\tags\tags-resolver.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="ClientApp\node_modules\node-sass\vendor\win32-x64-57\binding.node" />
     <None Include="codeGeneratorSettings.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\node_modules\%40angular\animations\" />
-    <Folder Include="ClientApp\node_modules\%40angular\cdk\" />
-    <Folder Include="ClientApp\node_modules\%40angular\common\" />
-    <Folder Include="ClientApp\node_modules\%40angular\compiler\" />
-    <Folder Include="ClientApp\node_modules\%40angular\core\" />
-    <Folder Include="ClientApp\node_modules\%40angular\forms\" />
-    <Folder Include="ClientApp\node_modules\%40angular\material\" />
-    <Folder Include="ClientApp\node_modules\%40angular\platform-browser-dynamic\" />
-    <Folder Include="ClientApp\node_modules\%40angular\platform-browser\" />
-    <Folder Include="ClientApp\node_modules\%40angular\router\" />
-    <Folder Include="ClientApp\node_modules\%40aspnet\signalr\dist\" />
-    <Folder Include="ClientApp\node_modules\%40ngx-translate\core\" />
-    <Folder Include="ClientApp\node_modules\%40ngx-translate\http-loader\" />
-    <Folder Include="ClientApp\node_modules\ag-grid-angular\" />
-    <Folder Include="ClientApp\node_modules\ag-grid\dist\lib\components\" />
-    <Folder Include="ClientApp\node_modules\ag-grid\dist\lib\headerRendering\" />
-    <Folder Include="ClientApp\node_modules\ag-grid\dist\lib\rendering\" />
-    <Folder Include="ClientApp\node_modules\ag-grid\dist\lib\rowModels\" />
-    <Folder Include="ClientApp\node_modules\ag-grid\src\styles\" />
-    <Folder Include="ClientApp\node_modules\core-js\" />
-    <Folder Include="ClientApp\node_modules\html-entities\" />
-    <Folder Include="ClientApp\node_modules\loglevel\" />
-    <Folder Include="ClientApp\node_modules\rxjs\_esm5\internal\" />
-    <Folder Include="ClientApp\node_modules\sockjs-client\" />
-    <Folder Include="ClientApp\node_modules\style-loader\" />
-    <Folder Include="ClientApp\node_modules\url\node_modules\" />
-    <Folder Include="ClientApp\node_modules\webpack-dev-server\" />
-    <Folder Include="ClientApp\node_modules\webpack\" />
-    <Folder Include="ClientApp\node_modules\zone.js\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\app.component.spec.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\notes\note-resolver.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\shared.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\tags\tags-resolver.service.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

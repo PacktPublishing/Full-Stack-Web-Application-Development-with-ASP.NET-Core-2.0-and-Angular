@@ -5,10 +5,11 @@ import { Note } from "./note.model";
 import { Observable } from "rxjs";
 import { map, takeUntil, tap } from "rxjs/operators";
 import { ColDef } from "ag-grid";
-import { DeleteCellComponent } from "../ag-grid-components/delete-cell.component";
-import { NoteStore } from "./tag-store";
+
 import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
+import { NoteStore } from "./note-store";
+import { DeleteCellComponent } from "../shared/delete-cell.component";
 
 @Component({
   templateUrl: "./notes-page.component.html",

@@ -5,21 +5,28 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { TagsModule } from '../tags/tags.module';
 import { NotesService } from './notes.service';
-import { SharedModule } from '../shared/shared.module';
+import { CoreModule } from '../core/core.module';
 import { NotesPageComponent } from './notes-page.component';
-import { AgGridComponentsModule } from '../ag-grid-components/ag-grid-components.module';
-import { NoteStore } from './tag-store';
+
 import { EditNotePageComponent } from './edit-note-page.component';
+import { NoteStore } from './note-store';
+import { TagPageComponent } from './tag-page.component';
+import { SharedModule } from '../shared/shared.module';
 
 const declarations = [
   EditNotePageComponent,
-  NotesPageComponent
+  NotesPageComponent,
+  TagPageComponent
 ];
 
 const providers = [
   NotesService,
   NoteStore
 ];
+
+const entryComponents = [
+
+]
 
 @NgModule({
   declarations: declarations,
@@ -29,11 +36,12 @@ const providers = [
     HttpClientModule,
     ReactiveFormsModule,
     RouterModule,
-
-    AgGridComponentsModule,
+    
+    CoreModule,
     SharedModule,
     TagsModule
   ],
+  entryComponents,
   providers,
 })
 export class NotesModule { }

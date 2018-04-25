@@ -6,7 +6,5 @@ namespace Macaria.Core.Entities
     {
         DateTime CreatedOn { get; set; }
         DateTime LastModifiedOn { get; set; }
-        string CreatedBy { get; set; }
-        string LastModifiedBy { get; set; }
     }
 }

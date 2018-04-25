@@ -21,14 +21,14 @@ import {
   Validators
 } from "@angular/forms";
 
-import { constants } from "../shared/constants";
 import { AuthService } from "./auth.service";
 import { LoginRedirectService } from "./redirect.service";
-import { HubClient } from "../shared/hub-client";
+import { HubClient } from "../core/hub-client";
 import { takeUntil, tap, map } from "rxjs/operators";
 import { MatSnackBar } from "@angular/material";
 import { TranslateService } from "@ngx-translate/core";
 import { AddTagOverlayComponent } from "../tags/add-tag-overlay.component";
+import { ENTER } from "@angular/cdk/keycodes";
 
 @Component({
     templateUrl: "./login.component.html",
@@ -109,7 +109,7 @@ export class LoginComponent {
 
   @HostListener('window:keyup', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
-    if (event.keyCode == constants.ENTER_KEY_CODE)
+    if (event.keyCode == ENTER)
       this.tryToLogin({ value: this.form.value });
   }
   

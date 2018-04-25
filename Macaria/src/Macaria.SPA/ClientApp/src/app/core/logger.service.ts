@@ -1,5 +1,5 @@
 import { Injectable, Inject } from "@angular/core";
-import { constants } from "./constants";
+import { minimumLogLevel } from "./constants";
 
 export interface ILogger {
   log(logLevel: LogLevel, message: string): void;
@@ -17,7 +17,7 @@ export enum LogLevel {
 
 @Injectable()
 export class LoggerService implements ILogger {
-  constructor(@Inject(constants.MINIMUM_LOG_LEVEL) private _minimumLogLevel: LogLevel) { }
+  constructor(@Inject(minimumLogLevel) private _minimumLogLevel: LogLevel) { }
   
   public log(logLevel: LogLevel, message: string) {
     if (logLevel >= this._minimumLogLevel)

@@ -3,13 +3,12 @@ import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-import { SharedModule } from '../shared/shared.module';
-
+import { CoreModule } from '../core/core.module';
 import { TagsService } from './tags.service';
 import { TagsPageComponent } from './tags-page.component';
-import { AgGridComponentsModule } from '../ag-grid-components/ag-grid-components.module';
 import { AddTagOverlayComponent } from './add-tag-overlay.component';
 import { TagStore } from './tag-store';
+import { SharedModule } from '../shared/shared.module';
 
 const declarations = [
   TagsPageComponent,
@@ -25,12 +24,9 @@ const providers = [
   declarations: declarations,
   imports: [
     CommonModule,
-    FormsModule,
     HttpClientModule,
-    ReactiveFormsModule,
     RouterModule,
-
-    AgGridComponentsModule,
+    CoreModule,
     SharedModule
   ],
   providers,

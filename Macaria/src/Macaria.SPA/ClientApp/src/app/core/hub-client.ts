@@ -3,7 +3,7 @@ import { Observable } from "rxjs";
 import { Subject } from 'rxjs';
 import { HubConnection } from "@aspnet/signalr";
 import { LocalStorageService } from "./local-storage.service";
-import { constants } from "./constants";
+import { accessTokenKey, baseUrl } from "./constants";
 
 @Injectable()
 export class HubClient {
@@ -11,7 +11,7 @@ export class HubClient {
   public messages$: Subject<any> = new Subject();
   
   constructor(
-    @Inject(constants.BASE_URL)private _baseUrl:string,
+    @Inject(baseUrl)private _baseUrl:string,
     private _storage: LocalStorageService,
     private _ngZone: NgZone) {
   }
@@ -24,15 +24,13 @@ export class HubClient {
       return this._connect;
 
     this._connect = new Promise((resolve) => {      
-      this._connection = this._connection || new HubConnection(`${this._baseUrl}hub?token=${this._storage.get({ name: constants.ACCESS_TOKEN_KEY })}`);
+      this._connection = this._connection || new HubConnection(`${this._baseUrl}hub?token=${this._storage.get({ name: accessTokenKey })}`);
       
       this._connection.on("message", (value) => {
         this._ngZone.run(() => this.messages$.next(value));
       });
 
-      this._connection.start().then(() => resolve());
-
-      
+      this._connection.start().then(() => resolve());      
     });
 
     return this._connect;

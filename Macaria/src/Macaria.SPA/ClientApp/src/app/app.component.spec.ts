@@ -8,7 +8,7 @@
 //import { MaterialModule } from './material/material.module';
 //import { NotesModule } from './notes';
 //import { FormsModule } from '@angular/forms';
-//import { SharedModule } from './shared/shared.module';
+//import { SharedModule } from './core/core.module';
 //import { SettingsModule } from './settings/settings.module';
 //import { TenantsModule } from './tenants/tenants.module';
 //import { UsersModule } from './users/users.module';

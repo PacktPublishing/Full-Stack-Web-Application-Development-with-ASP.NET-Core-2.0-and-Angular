@@ -5,12 +5,12 @@ import { RouterModule } from '@angular/router';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth.guard';
 import { LoginComponent } from './login.component';
-import { SharedModule } from '../shared/shared.module';
-import { MaterialModule } from '../material/material.module';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { CoreModule } from '../core/core.module';
+
+import { HttpClientModule } from '@angular/common/http';
 import { LoginRedirectService } from './redirect.service';
 import { JwtInterceptor } from './jwt.interceptor';
-import { AuthInterceptor } from './auth.interceptor';
+import { SharedModule } from '../shared/shared.module';
 
 const declarations = [
   LoginComponent
@@ -28,9 +28,9 @@ const providers = [
     CommonModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule,
     RouterModule,
     
+    CoreModule,
     SharedModule
   ],
   providers,

@@ -1,68 +1,135 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from "@angular/common";
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
-import { LocalStorageService } from './local-storage.service';
-import { LoggerService } from './logger.service';
-import { QuillTextEditorComponent } from './quill-text-editor.component';
+import {
+  MatAutocompleteModule,
+  MatButtonModule,
+  MatButtonToggleModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatChipsModule,
+  MatDatepickerModule,
+  MatDialogModule,
+  MatDividerModule,
+  MatExpansionModule,
+  MatGridListModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatMenuModule,
+  MatNativeDateModule,
+  MatPaginatorModule,
+  MatProgressBarModule,
+  MatProgressSpinnerModule,
+  MatRadioModule,
+  MatRippleModule,
+  MatSelectModule,
+  MatSidenavModule,
+  MatSliderModule,
+  MatSlideToggleModule,
+  MatSnackBarModule,
+  MatSortModule,
+  MatStepperModule,
+  MatTableModule,
+  MatTabsModule,
+  MatToolbarModule,
+  MatTooltipModule
+} from "@angular/material";
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { PrimaryHeaderComponent } from './primary-header.component';
-import { HeaderInterceptor } from './headers.interceptor';
-import { HubClient } from './hub-client';
-import { NotificationComponent } from './notification.component';
-import { Notifications } from './notifications';
-import { HubClientGuard } from './hub-client-guard';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from "@ngx-translate/http-loader";
-import { LanguageService } from './language.service';
-import { LanguageGuard } from './language-guard';
-import { MaterialModule } from '../material/material.module';
-
-const declarations = [
-  NotificationComponent,
-  PrimaryHeaderComponent,
-  QuillTextEditorComponent,
-];
-
-const providers = [
-  {
-    provide: HTTP_INTERCEPTORS,
-    useClass: HeaderInterceptor,
-    multi: true
-  },
-  HubClient,
-  HubClientGuard,
-  LanguageGuard,
-  LanguageService,
-  LocalStorageService,
-  LoggerService,
-  Notifications
-];
-
-export function TranslateHttpLoaderFactory(httpClient: HttpClient) {
-  return new TranslateHttpLoader(httpClient);
-}
+import { QuillTextEditorComponent } from './quill-text-editor.component';
+import { CommonModule } from '@angular/common';
+import { AgGridModule } from 'ag-grid-angular';
+import { DeleteCellComponent } from './delete-cell.component';
 
 @NgModule({
-  declarations: declarations,
+  declarations: [
+    DeleteCellComponent,
+    PrimaryHeaderComponent,
+    QuillTextEditorComponent
+  ],
   imports: [
+    MatAutocompleteModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatChipsModule,
+    MatDatepickerModule,
+    MatDialogModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatGridListModule,
+    MatIconModule,
+    MatInputModule,
+    MatListModule,
+    MatMenuModule,
+    MatNativeDateModule,
+    MatPaginatorModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
+    MatRadioModule,
+    MatRippleModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatSliderModule,
+    MatSlideToggleModule,
+    MatSnackBarModule,
+    MatSortModule,
+    MatStepperModule,
+    MatTableModule,
+    MatTabsModule,
+    MatToolbarModule,
+    MatTooltipModule,
+
     CommonModule,
     FormsModule,
-    HttpClientModule,
-	  ReactiveFormsModule,
-    RouterModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: TranslateHttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    }),
-
-    MaterialModule
+    ReactiveFormsModule,
+    
+    AgGridModule.withComponents([
+      DeleteCellComponent
+    ]),
   ],
-  providers,
-  exports: [TranslateModule, MaterialModule, ...declarations],
-  entryComponents:[NotificationComponent]
+  exports: [
+    MatAutocompleteModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatChipsModule,
+    MatDatepickerModule,
+    MatDialogModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatGridListModule,
+    MatIconModule,
+    MatInputModule,
+    MatListModule,
+    MatMenuModule,
+    MatNativeDateModule,
+    MatPaginatorModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
+    MatRadioModule,
+    MatRippleModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatSliderModule,
+    MatSlideToggleModule,
+    MatSnackBarModule,
+    MatSortModule,
+    MatStepperModule,
+    MatTableModule,
+    MatTabsModule,
+    MatToolbarModule,
+    MatTooltipModule,
+
+    AgGridModule,
+    FormsModule,
+    ReactiveFormsModule,
+
+    DeleteCellComponent,
+    PrimaryHeaderComponent,
+    QuillTextEditorComponent,
+    PrimaryHeaderComponent
+  ]
 })
 export class SharedModule { }

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { Tag } from "./tag.model";
-import { HubClient } from "../shared/hub-client";
+import { HubClient } from "../core/hub-client";
 import { filter, map } from "rxjs/operators";
 import { PathLocationStrategy } from "@angular/common";
 

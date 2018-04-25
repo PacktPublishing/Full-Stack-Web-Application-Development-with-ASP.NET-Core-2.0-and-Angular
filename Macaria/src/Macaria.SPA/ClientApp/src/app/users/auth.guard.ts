@@ -5,9 +5,9 @@ import {
 } from "@angular/router";
 import { Observable } from "rxjs";
 
-import { LocalStorageService } from "../shared/local-storage.service";
+import { LocalStorageService } from "../core/local-storage.service";
 import { Injectable } from "@angular/core";
-import { constants } from "../shared/constants";
+import { accessTokenKey } from "../core/constants";
 import { LoginRedirectService } from "./redirect.service";
 
 @Injectable()
@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
 
   }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean  {
-    const token = this._localStorageService.get({ name: constants.ACCESS_TOKEN_KEY });
+    const token = this._localStorageService.get({ name: accessTokenKey });
 
     if (token)
       return true;

@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { Subject } from "rxjs";
-import { OverlayRefWrapper } from "../shared/overlay-ref-wrapper";
+import { OverlayRefWrapper } from "../core/overlay-ref-wrapper";
 import { TagsService } from "./tags.service";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Tag } from "./tag.model";

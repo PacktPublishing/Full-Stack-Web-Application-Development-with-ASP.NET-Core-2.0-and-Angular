@@ -6,16 +6,15 @@ import { Observable } from "rxjs";
 import { map, tap, filter } from "rxjs/operators";
 import { ColDef } from "ag-grid";
 import { Overlay } from "@angular/cdk/overlay";
-import { OverlayRefWrapper } from "../shared/overlay-ref-wrapper";
+import { OverlayRefWrapper } from "../core/overlay-ref-wrapper";
 import { PortalInjector, ComponentPortal } from "@angular/cdk/portal";
 import { AddTagOverlayComponent } from "./add-tag-overlay.component";
 import { TagStore } from "./tag-store";
 import { takeUntil } from "rxjs/operators";
 import { MatSnackBar } from "@angular/material";
-import { Notifications } from "../shared/notifications";
-import { DeleteCellComponent } from "../ag-grid-components/delete-cell.component";
-import { HubClient } from "../shared/hub-client";
+import { HubClient } from "../core/hub-client";
 import { TranslateService } from "@ngx-translate/core";
+import { DeleteCellComponent } from "../shared/delete-cell.component";
 
 @Component({
   templateUrl: "./tags-page.component.html",
@@ -30,8 +29,7 @@ export class TagsPageComponent {
     private _tagsService: TagsService,
     public _tagStore: TagStore,
     public _translateService: TranslateService,
-    private _snackBar: MatSnackBar,
-    private _notifications: Notifications
+    private _snackBar: MatSnackBar
   ) {
 
   }

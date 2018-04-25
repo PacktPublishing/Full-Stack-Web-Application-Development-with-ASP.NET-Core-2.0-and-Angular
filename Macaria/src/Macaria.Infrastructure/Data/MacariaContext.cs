@@ -1,5 +1,4 @@
 ﻿using Macaria.Core.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -13,7 +12,7 @@ namespace Macaria.Infrastructure.Data
         DbSet<Note> Notes { get; set; }
         DbSet<Tag> Tags { get; set; }
         DbSet<User> Users { get; set; }
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken, string username = null);
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 
     public class MacariaContext : DbContext, IMacariaContext
@@ -24,13 +23,8 @@ namespace Macaria.Infrastructure.Data
         public DbSet<Note> Notes { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<User> Users { get; set; }
-
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return SaveChangesAsync(cancellationToken,null);
-        }
-
-        public Task<int> SaveChangesAsync(CancellationToken cancellationToken, string username = null)
+        
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken)
         {            
             ChangeTracker.DetectChanges();
 
@@ -39,10 +33,8 @@ namespace Macaria.Infrastructure.Data
                 .Select(x => x.Entity as ILoggable))
             {
                 var isNew = entity.CreatedOn == default(DateTime);
-                entity.CreatedOn = isNew ? DateTime.UtcNow : entity.CreatedOn;
-                entity.CreatedBy = isNew ? username : entity.CreatedBy;
+                entity.CreatedOn = isNew ? DateTime.UtcNow : entity.CreatedOn;   
                 entity.LastModifiedOn = DateTime.UtcNow;
-                entity.LastModifiedBy = username;
             }
 
             foreach (var item in ChangeTracker.Entries().Where(e => e.State == EntityState.Deleted))

@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { TranslateService } from "@ngx-translate/core";
-import { LanguageService } from './shared/language.service';
+import { LanguageService } from './core/language.service';
 
 @Component({
   selector: 'app-root',

@@ -167,7 +167,7 @@ namespace UnitTests.API.Users
 
                 await handler.Handle(new RemoveUserCommand.Request()
                 {
-                    User = new User() {  UserId = 1 }
+                    UserId = 1
                 }, default(CancellationToken));
 
                 Assert.Equal(0, context.Users.Count());
@@ -217,14 +217,11 @@ namespace UnitTests.API.Users
 
             using (var context = new MacariaContext(options))
             {
-                
-
                 context.Users.Add(new User()
                 {
                     UserId = 1,
                     Username = "quinntynebrown@gmail.com",
-                    Password = "password",
-                    
+                    Password = "password" 
                 });
 
                 context.SaveChanges();

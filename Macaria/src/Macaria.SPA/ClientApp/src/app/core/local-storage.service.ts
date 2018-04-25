@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { constants } from "./constants";
+import { storageKey } from "./constants";
 
 @Injectable()
 export class LocalStorageService { 
@@ -7,7 +7,7 @@ export class LocalStorageService {
 
   public get items() {
     if (this._items === null) {
-      var storageItems = localStorage.getItem(constants.STORAGE_KEY);
+      var storageItems = localStorage.getItem(storageKey);
       if (storageItems === "null") {
         storageItems = null;
       }
@@ -49,6 +49,6 @@ export class LocalStorageService {
     this.updateLocalStorage();
   }
   public updateLocalStorage() {
-    localStorage.setItem(constants.STORAGE_KEY, JSON.stringify(this._items));
+    localStorage.setItem(storageKey, JSON.stringify(this._items));
   }
 }

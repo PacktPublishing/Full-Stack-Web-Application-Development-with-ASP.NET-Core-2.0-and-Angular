@@ -1,14 +1,14 @@
 import { Injectable, Inject } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { constants } from "../shared/constants";
 import { Note } from "./note.model";
 import { Observable } from "rxjs";
+import { baseUrl } from "../core/constants";
 
 @Injectable()
 export class NotesService {
   constructor(
     private _httpClient: HttpClient,
-    @Inject(constants.BASE_URL) private _baseUrl: string) {
+    @Inject(baseUrl) private _baseUrl: string) {
 
   }
 
@@ -24,7 +24,7 @@ export class NotesService {
 
   public addTag(options: { noteId: number, tagId: number }) {    
     return this._httpClient
-      .post(`${this._baseUrl}api/notes/${options.noteId}/addTag`, options);
+      .post(`${this._baseUrl}api/notes/${options.noteId}/tag/${options.tagId}`, options);
   }
 
   public removeTag(options: { noteId: number, tagId: number }) {

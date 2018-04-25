@@ -1,17 +1,17 @@
 import { Injectable, Inject } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { constants } from "../shared/constants";
+import { baseUrl } from "../core/constants";
 import { Tag } from "./tag.model";
 import { Observable } from "rxjs";
 import { shareReplay, tap } from "rxjs/operators";
-import { HubClient } from "../shared/hub-client";
+import { HubClient } from "../core/hub-client";
 
 @Injectable()
 export class TagsService {
   constructor(
     private _httpClient: HttpClient,
     private _hubClient: HubClient,
-    @Inject(constants.BASE_URL) private _baseUrl: string) {
+    @Inject(baseUrl) private _baseUrl: string) {
 
     this._hubClient.messages$
       .pipe(

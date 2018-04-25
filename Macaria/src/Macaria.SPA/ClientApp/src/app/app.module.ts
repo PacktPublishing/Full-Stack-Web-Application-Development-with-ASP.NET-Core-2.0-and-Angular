@@ -6,11 +6,10 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { constants } from './shared/constants';
+import { baseUrl } from './core/constants';
 import { AppRoutingModule } from './app-routing.module';
 import { NotesModule } from './notes/notes.module';
-import { MaterialModule } from './material/material.module';
-import { SharedModule } from './shared/shared.module';
+import { CoreModule } from './core/core.module';
 import { UsersModule } from './users/users.module';
 import { AnonymousMasterPageComponent } from './anonymous-master-page.component';
 import { MasterPageComponent } from './master-page.component';
@@ -18,6 +17,7 @@ import { AgGridModule } from "ag-grid-angular";
 import { TagsModule } from './tags/tags.module';
 import { TagsPageComponent } from './tags/tags-page.component';
 import { SettingsModule } from './settings/settings.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -30,19 +30,18 @@ import { SettingsModule } from './settings/settings.module';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     BrowserAnimationsModule,
     HttpClientModule,
-    FormsModule,
     
     AppRoutingModule,
 
-    MaterialModule,
+    CoreModule,
     NotesModule,
-    SharedModule,
     SettingsModule,
+    SharedModule,
     TagsModule,
     UsersModule
   ],
   providers: [
-    { provide: constants.BASE_URL, useValue: "http://localhost:10372/" }
+    { provide: baseUrl, useValue: "http://localhost:10372/" }
   ],
   bootstrap: [AppComponent]
 })

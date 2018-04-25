@@ -7,9 +7,10 @@ import { NgModule } from '@angular/core';
 import { TagsPageComponent } from './tags/tags-page.component';
 import { NotesPageComponent } from './notes/notes-page.component';
 import { SettingsPageComponent } from './settings/settings-page.component';
-import { HubClientGuard } from './shared/hub-client-guard';
+import { HubClientGuard } from './core/hub-client-guard';
 import { EditNotePageComponent } from './notes/edit-note-page.component';
-import { LanguageGuard } from './shared/language-guard';
+import { LanguageGuard } from './core/language-guard';
+import { TagPageComponent } from './notes/tag-page.component';
 
 export const routes: Routes = [
   {
@@ -38,6 +39,11 @@ export const routes: Routes = [
       {
         path: 'notes',
         component: NotesPageComponent,
+        canActivate: [LanguageGuard]
+      },
+      {
+        path: 'notes/tag/:tagId',
+        component: TagPageComponent,
         canActivate: [LanguageGuard]
       },
       {

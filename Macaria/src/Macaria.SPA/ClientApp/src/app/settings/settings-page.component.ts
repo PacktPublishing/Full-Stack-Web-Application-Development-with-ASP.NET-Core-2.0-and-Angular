@@ -1,8 +1,8 @@
 import { Component } from "@angular/core";
 import { Subject } from "rxjs";
-import { LocalStorageService } from "../shared/local-storage.service";
-import { constants } from "../shared/constants";
-import { LanguageService } from "../shared/language.service";
+import { LocalStorageService } from "../core/local-storage.service";
+import { accessTokenKey } from "../core/constants";
+import { LanguageService } from "../core/language.service";
 
 @Component({
   templateUrl: "./settings-page.component.html",

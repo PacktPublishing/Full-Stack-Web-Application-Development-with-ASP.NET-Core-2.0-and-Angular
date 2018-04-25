@@ -1,5 +1,5 @@
 
-namespace IntegrationTests.Features.Users
+namespace IntegrationTests.Features
 {
     public class UserScenarioBase: ScenarioBase
     {

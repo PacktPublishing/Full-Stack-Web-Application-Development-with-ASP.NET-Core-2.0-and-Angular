@@ -1,4 +1,4 @@
-namespace IntegrationTests.Features.Notes
+namespace IntegrationTests.Features
 {
     public class NoteScenarioBase: ScenarioBase
     {

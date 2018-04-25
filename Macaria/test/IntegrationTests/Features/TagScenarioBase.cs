@@ -1,4 +1,4 @@
-namespace IntegrationTests.Features.Tags
+namespace IntegrationTests.Features
 {
     public class TagScenarioBase: ScenarioBase
     {        

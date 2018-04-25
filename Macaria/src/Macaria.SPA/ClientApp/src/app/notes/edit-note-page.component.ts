@@ -32,9 +32,9 @@ export class EditNotePageComponent {
   constructor(
     private _activatedRoute: ActivatedRoute,
     private _elementRef: ElementRef,
-    private _notesService: NotesService,
     private _languageService: LanguageService,
     private _localStorageService: LocalStorageService,
+    private _notesService: NotesService,
     private _tagsService: TagsService,
     private _tagStore: TagStore,
     private _router: Router

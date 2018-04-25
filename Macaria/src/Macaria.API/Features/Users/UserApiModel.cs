@@ -1,5 +1,4 @@
 using Macaria.Core.Entities;
-using System;
 
 namespace Macaria.API.Features.Users
 {
@@ -8,12 +7,10 @@ namespace Macaria.API.Features.Users
         public int UserId { get; set; }
         public string Username { get; set; }
         public static UserApiModel FromUser(User user)
-        {
-            var model = new UserApiModel();
-            model.UserId = user.UserId;
-            model.Username = user.Username;
-
-            return model;
-        }
+            => new UserApiModel
+            {
+                UserId = user.UserId,
+                Username = user.Username
+            };
     }
 }

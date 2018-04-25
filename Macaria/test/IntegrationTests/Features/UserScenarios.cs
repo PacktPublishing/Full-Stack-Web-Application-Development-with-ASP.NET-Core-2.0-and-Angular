@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Macaria.Infrastructure.Extensions;
 using Xunit;
 
-namespace IntegrationTests.Features.Users
+namespace IntegrationTests.Features
 {
     public class UserScenarios: UserScenarioBase
     {

@@ -14,7 +14,7 @@ export class NotesService {
 
   public getBySlug(options: { slug: string }): Observable<{ note: Note }> {
     return this._httpClient
-      .get<{ note: Note }>(`${this._baseUrl}api/notes/${options.slug}`);
+      .get<{ note: Note }>(`${this._baseUrl}api/notes/slug/${options.slug}`);
   }
 
   public save(options: { note: Note }) {

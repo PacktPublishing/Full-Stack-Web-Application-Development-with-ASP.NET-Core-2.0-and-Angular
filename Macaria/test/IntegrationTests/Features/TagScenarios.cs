@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 using Xunit;
 using Macaria.Infrastructure.Extensions;
 
-namespace IntegrationTests.Features.Tags
+namespace IntegrationTests.Features
 {
-    [CollectionDefinition("NoteScenarios", DisableParallelization = true)]
     public class TagScenarios: TagScenarioBase
     {
         [Fact]

@@ -10,9 +10,8 @@ using Macaria.Infrastructure.Data;
 using Macaria.Infrastructure.Extensions;
 
 
-namespace IntegrationTests.Features.Notes
+namespace IntegrationTests.Features
 {
-    [CollectionDefinition("NoteScenarios", DisableParallelization = true)]
     public class NoteScenarios: NoteScenarioBase
     {
         [Fact]

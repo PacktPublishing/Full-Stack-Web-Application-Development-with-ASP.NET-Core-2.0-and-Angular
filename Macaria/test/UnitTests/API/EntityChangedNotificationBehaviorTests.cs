@@ -1,5 +1,6 @@
 ﻿using Macaria.API.Behaviors;
 using Macaria.API.Features.Notes;
+using Macaria.API.Features.Tags;
 using Macaria.API.Hubs;
 using Macaria.Core.Entities;
 using Macaria.Infrastructure.Data;
@@ -75,18 +76,169 @@ namespace UnitTests.API
         [Fact]
         public async Task ShouldSendNotificationAfterRemoveNoteCommand()
         {
+            var options = new DbContextOptionsBuilder<MacariaContext>()
+                .UseInMemoryDatabase(databaseName: "ShouldSendNotificationAfterRemoveNoteCommand")
+                .Options;
+
+            using (var context = new MacariaContext(options, _httpContextAccessorMock.Object))
+            {
+
+                var mockClients = new Mock<IHubClients>();
+
+                var mockGroups = new Mock<IClientProxy>();
+
+                var mockContext = new Mock<IHubContext<AppHub>>();
+
+                mockGroups.Setup(x => x.SendCoreAsync(It.IsAny<string>(), It.IsAny<object[]>())).Returns(Task.CompletedTask).Verifiable();
+
+                mockClients.Setup(x => x.Group($"{new Guid("60DE04D9-E441-E811-9D3A-D481D7227E7A")}".ToLower())).Returns(mockGroups.Object);
+
+                mockContext.Setup(x => x.Clients).Returns(mockClients.Object);
+
+                var tenant = InsertTenantIntoInMemoryDatabase(context);
+
+                var subject =
+                new EntityChangedNotificationBehavior<RemoveNoteCommand.Request, RemoveNoteCommand.Response>
+                (mockContext.Object, context, _httpContextAccessorMock.Object);
+
+                context.Notes.Add(new Note()
+                {
+                    NoteId = 1,
+                    Title = "Angular"
+                });
+
+                context.SaveChanges();
+
+                var response = await subject.Handle(new RemoveNoteCommand.Request()
+                {
+                    NoteId = 1
+
+                }, default(CancellationToken), () => {
+
+                    context.Notes.Remove(context.Notes.Find(1));
+
+                    context.SaveChanges();
+
+                    return Task.FromResult(new RemoveNoteCommand.Response() { });
+                });
+
+                mockGroups.Verify();
+
+                Assert.NotNull(response);
+            }
 
         }
 
         [Fact]
         public async Task ShouldSendNotificationAfterSaveTagCommand()
         {
+            var options = new DbContextOptionsBuilder<MacariaContext>()
+                .UseInMemoryDatabase(databaseName: "ShouldSendNotificationAfterSaveTagCommand")
+                .Options;
 
+            using (var context = new MacariaContext(options, _httpContextAccessorMock.Object))
+            {
+
+                var mockClients = new Mock<IHubClients>();
+
+                var mockGroups = new Mock<IClientProxy>();
+
+                var mockContext = new Mock<IHubContext<AppHub>>();
+
+                mockGroups.Setup(x => x.SendCoreAsync(It.IsAny<string>(), It.IsAny<object[]>())).Returns(Task.CompletedTask).Verifiable();
+
+                mockClients.Setup(x => x.Group($"{new Guid("60DE04D9-E441-E811-9D3A-D481D7227E7A")}".ToLower())).Returns(mockGroups.Object);
+
+                mockContext.Setup(x => x.Clients).Returns(mockClients.Object);
+
+                var tenant = InsertTenantIntoInMemoryDatabase(context);
+
+                var subject =
+                new EntityChangedNotificationBehavior<SaveTagCommand.Request, SaveTagCommand.Response>
+                (mockContext.Object, context, _httpContextAccessorMock.Object);
+
+                var response = await subject.Handle(new SaveTagCommand.Request()
+                {
+                    Tag = new TagApiModel()
+                    {
+                        TagId = 1,
+                        Name = "Angular"
+                    }
+                }, default(CancellationToken), () => {
+
+                    context.Tags.Add(new Tag()
+                    {
+                        TagId = 1,
+                        Tenant = tenant
+                    });
+
+                    context.SaveChanges();
+
+                    return Task.FromResult(new SaveTagCommand.Response()
+                    {
+                        TagId = 1
+                    });
+                });
+
+                mockGroups.Verify();
+
+                Assert.NotNull(response);
+            }
         }
 
         [Fact]
         public async Task ShouldSendNotificationAfterRemoveTagCommand()
         {
+            var options = new DbContextOptionsBuilder<MacariaContext>()
+                .UseInMemoryDatabase(databaseName: "ShouldSendNotificationAfterRemoveTagCommand")
+                .Options;
+
+            using (var context = new MacariaContext(options, _httpContextAccessorMock.Object))
+            {
+
+                var mockClients = new Mock<IHubClients>();
+
+                var mockGroups = new Mock<IClientProxy>();
+
+                var mockContext = new Mock<IHubContext<AppHub>>();
+
+                mockGroups.Setup(x => x.SendCoreAsync(It.IsAny<string>(), It.IsAny<object[]>())).Returns(Task.CompletedTask).Verifiable();
+
+                mockClients.Setup(x => x.Group($"{new Guid("60DE04D9-E441-E811-9D3A-D481D7227E7A")}".ToLower())).Returns(mockGroups.Object);
+
+                mockContext.Setup(x => x.Clients).Returns(mockClients.Object);
+
+                var tenant = InsertTenantIntoInMemoryDatabase(context);
+
+                var subject =
+                new EntityChangedNotificationBehavior<RemoveTagCommand.Request, RemoveTagCommand.Response>
+                (mockContext.Object, context, _httpContextAccessorMock.Object);
+
+                context.Tags.Add(new Tag()
+                {
+                    TagId = 1,
+                    Name = "Angular"
+                });
+
+                context.SaveChanges();
+
+                var response = await subject.Handle(new RemoveTagCommand.Request()
+                {
+                    TagId = 1
+
+                }, default(CancellationToken), () => {
+
+                    context.Tags.Remove(context.Tags.Find(1));
+
+                    context.SaveChanges();
+
+                    return Task.FromResult(new RemoveTagCommand.Response() { });
+                });
+
+                mockGroups.Verify();
+
+                Assert.NotNull(response);
+            }
 
         }
     }

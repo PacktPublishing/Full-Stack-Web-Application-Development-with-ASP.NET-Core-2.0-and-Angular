@@ -15,12 +15,14 @@ namespace Macaria.API.Features.Notes
                 RuleFor(request => request.NoteId).NotEqual(0);
             }
         }
-        public class Request : IRequest
+        public class Request : IRequest<Response>
         {
             public int NoteId { get; set; }
         }
 
-        public class Handler : IRequestHandler<Request>
+        public class Response { }
+
+        public class Handler : IRequestHandler<Request,Response>
         {
             public IMacariaContext _context { get; set; }
             public Handler(IMacariaContext context)
@@ -28,10 +30,11 @@ namespace Macaria.API.Features.Notes
                 _context = context;
             }
 
-            public async Task Handle(Request request, CancellationToken cancellationToken)
+            public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
                 _context.Notes.Remove(await _context.Notes.FindAsync(request.NoteId));
                 await _context.SaveChangesAsync(cancellationToken);
+                return new Response() { };
             }
 
         }

@@ -26,8 +26,8 @@ Bin/
 obj/
 Obj/
 
-ClientApp/src/**/*.js
-ClientApp/src/**/*.js.map
+ClientApp/src/app/**/*.js
+ClientApp/src/app/**/*.js.map
 ClientApp/e2e/**/*.js
 ClientApp/e2e/**/*.js.map
 

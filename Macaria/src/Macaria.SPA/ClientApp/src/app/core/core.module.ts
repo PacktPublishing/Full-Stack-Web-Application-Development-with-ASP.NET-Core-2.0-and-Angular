@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { LocalStorageService } from './local-storage.service';
 import { LoggerService } from './logger.service';
-
 import { HeaderInterceptor } from './headers.interceptor';
 import { HubClient } from './hub-client';
 import { HubClientGuard } from './hub-client-guard';
@@ -13,7 +12,10 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { LanguageService } from './language.service';
 import { LanguageGuard } from './language-guard';
-
+import { AuthGuard } from './auth.guard';
+import { AuthService } from './auth.service';
+import { LoginRedirectService } from './redirect.service';
+import { JwtInterceptor } from './jwt.interceptor';
 
 const providers = [
   {
@@ -21,12 +23,21 @@ const providers = [
     useClass: HeaderInterceptor,
     multi: true
   },
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: JwtInterceptor,
+    multi: true
+  },
+
+  AuthGuard,
+  AuthService,
   HubClient,
   HubClientGuard,
   LanguageGuard,
   LanguageService,
   LocalStorageService,
-  LoggerService
+  LoginRedirectService,
+  LoggerService 
 ];
 
 export function TranslateHttpLoaderFactory(httpClient: HttpClient) {

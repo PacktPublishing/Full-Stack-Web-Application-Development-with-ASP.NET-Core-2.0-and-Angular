@@ -1,5 +1,4 @@
 import { Routes, RouterModule, RouteReuseStrategy, DetachedRouteHandle, ActivatedRouteSnapshot } from '@angular/router';
-import { AuthGuard } from './users/auth.guard';
 import { LoginComponent } from './users/login.component';
 import { MasterPageComponent } from './master-page.component';
 import { AnonymousMasterPageComponent } from './anonymous-master-page.component';
@@ -11,6 +10,7 @@ import { HubClientGuard } from './core/hub-client-guard';
 import { EditNotePageComponent } from './notes/edit-note-page.component';
 import { LanguageGuard } from './core/language-guard';
 import { TagPageComponent } from './notes/tag-page.component';
+import { AuthGuard } from './core/auth.guard';
 
 export const routes: Routes = [
   {

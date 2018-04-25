@@ -8,9 +8,8 @@ import { NotesService } from './notes.service';
 import { Note } from "./note.model";
 import { LocalStorageService } from '../core/local-storage.service';
 import { TagsService } from '../tags/tags.service';
-import { pluckOut } from '../core/pluck-out';
+
 import { Observable } from 'rxjs';
-import { addOrUpdate } from '../core/add-or-update';
 import { takeUntil, catchError, tap, map, startWith } from 'rxjs/operators';
 import { Tag } from '../tags/tag.model';
 import { FormGroup, FormControl, Validators } from "@angular/forms";

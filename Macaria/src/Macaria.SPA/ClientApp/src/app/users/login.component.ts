@@ -1,15 +1,8 @@
 import {
   Component,
-  ChangeDetectionStrategy,
   Input,
-  OnInit,
-  EventEmitter,
-  Output,
-  AfterViewInit,
-  AfterContentInit,
   Renderer,
   ElementRef,
-  ViewEncapsulation,
   HostListener
 } from "@angular/core";
 
@@ -21,14 +14,13 @@ import {
   Validators
 } from "@angular/forms";
 
-import { AuthService } from "./auth.service";
-import { LoginRedirectService } from "./redirect.service";
-import { HubClient } from "../core/hub-client";
 import { takeUntil, tap, map } from "rxjs/operators";
 import { MatSnackBar } from "@angular/material";
 import { TranslateService } from "@ngx-translate/core";
-import { AddTagOverlayComponent } from "../tags/add-tag-overlay.component";
 import { ENTER } from "@angular/cdk/keycodes";
+import { AuthService } from "../core/auth.service";
+import { LoginRedirectService } from "../core/redirect.service";
+import { Output } from "@angular/core";
 
 @Component({
     templateUrl: "./login.component.html",

@@ -1,15 +1,21 @@
-<mat-card-title>
-  {{ "Login" | translate }}
-</mat-card-title>
-<form novalidate autocomplete="off" spellcheck="false" [formGroup]="form">
-  <mat-form-field>
-    <input matInput placeholder="{{ 'Username' | translate }}" id="username" formControlName="username">
-  </mat-form-field>
 
-  <mat-form-field>
-    <input matInput placeholder="{{ 'Password' | translate }}" id="password" formControlName="password" type="password">
-  </mat-form-field>
 
-  <button mat-button (click)="tryToLogin({ value: this.form.value })">{{ "Submit" | translate }}</button>
-</form>
+<mat-card>
+  <section class="mat-typography">
+    <h2>Macaria</h2>
+  </section>
+  <mat-card-title>
+    {{ "Login" | translate }}
+  </mat-card-title>
+  <form novalidate autocomplete="off" spellcheck="false" [formGroup]="form">
+    <mat-form-field>
+      <input matInput placeholder="{{ 'Username' | translate }}" id="username" formControlName="username">
+    </mat-form-field>
 
+    <mat-form-field>
+      <input matInput placeholder="{{ 'Password' | translate }}" id="password" formControlName="password" type="password">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="tryToLogin({ value: this.form.value })">{{ "Submit" | translate }}</button>
+  </form>
+</mat-card>

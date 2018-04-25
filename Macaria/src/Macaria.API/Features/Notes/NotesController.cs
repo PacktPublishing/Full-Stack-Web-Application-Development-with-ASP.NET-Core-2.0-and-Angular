@@ -14,6 +14,10 @@ namespace Macaria.API.Features.Notes
 
         public NotesController(IMediator mediator) => _mediator = mediator;
 
+        [HttpGet("{slug}")]
+        public async Task<ActionResult<GetGetNoteBySlugQuery.Response>> GetByCurrentUser([FromRoute]GetGetNoteBySlugQuery.Request request)
+            => await _mediator.Send(request);
+
         [HttpGet("currentuser")]
         public async Task<ActionResult<GetGetNotesByCurrentUserQuery.Response>> GetByCurrentUser()
             => await _mediator.Send(new GetGetNotesByCurrentUserQuery.Request());

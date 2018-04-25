@@ -65,7 +65,7 @@ export class NotesPageComponent {
   }
 
   public handleTitleClick($event) {
-    this._router.navigateByUrl(`/notes/${$event.data.noteId}`);
+    this._router.navigateByUrl(`/notes/${$event.data.slug}`);
   }
 
   public frameworkComponents = {

@@ -1,5 +1,25 @@
 {
+  "An error ocurr.Try it again.": "An error ocurr.Try it again.",
+  "Cancel": "Cancel",
+  "Compose a note...": "Compose a note...",
+  "Create": "Create",
+  "Create Note": "Create Note",
+  "Language": "Language",
   "Login": "Login",
+  "Login Failed": "Login Failed",
+  "Logout": "Logout",
+  "Page": "Page",
+  "Name": "Name",
+  "Notes": "Notes",
+  "of": "of",
+  "Password": "Password",
+  "Save": "Save",
   "Set Tenant": "Set Tenant",
-  "Settings": "Settings"
+  "Settings": "Settings",
+  "Submit": "Submit",
+  "Tags": "Tags",
+  "Tenant Id": "Tenant Id",
+  "Title": "Title",
+  "to": "to",
+  "Username": "Username"
 }

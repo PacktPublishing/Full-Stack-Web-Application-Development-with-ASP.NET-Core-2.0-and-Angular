@@ -14,7 +14,7 @@
   <app-quill-text-editor formControlName="body" [editorPlaceholder]="editorPlaceholder"></app-quill-text-editor>
 
   <mat-chip-list [multiple]="true">
-    <mat-chip *ngFor="let tag of tags$ | async">{{ tag.name }}</mat-chip>
+    <mat-chip [color]="'accent'" selected="true" *ngFor="let tag of tags$ | async">{{ tag.name }}</mat-chip>
   </mat-chip-list>
 
   <div class="actions">

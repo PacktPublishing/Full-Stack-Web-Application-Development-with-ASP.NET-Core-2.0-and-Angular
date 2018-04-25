@@ -42,12 +42,22 @@ export class EditNotePageComponent {
     this.editorPlaceholder = this._languageService.currentTranslations[this.editorPlaceholder];
   }
 
+  ngOnInit() {
+    if (this.slug)
+      this._notesService.getBySlugAndCurrentUser({ slug: this.slug })
+        .pipe(
+          map(x => this.note$.next(x.note))
+        )
+        .subscribe();
+  }
   ngAfterViewInit() {
     this._tagsService.get()
       .pipe(takeUntil(this.onDestroy))
       .subscribe(x => this._tagStore.tags$.next(x.tags));
   }
-  
+
+  public notes$: BehaviorSubject<Note> = new BehaviorSubject(<Note>{});
+
   public get tags$():Observable<Array<Tag>> {
     return this._tagStore.tags$;
   }
@@ -104,8 +114,8 @@ export class EditNotePageComponent {
     body: new FormControl(this.note.body, [Validators.required]),
   });
 
-  public get noteId() {
-    return Number(this._activatedRoute.snapshot.params["noteId"]);  
+  public get slug():string {
+    return this._activatedRoute.snapshot.params["slug"];  
   }
 
   ngOnDestroy() {

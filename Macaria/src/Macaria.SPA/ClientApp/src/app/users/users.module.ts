@@ -20,12 +20,7 @@ const declarations = [
 const providers = [
   AuthGuard,
   AuthService,
-  LoginRedirectService,
-  {
-    provide: HTTP_INTERCEPTORS,
-    useClass: JwtInterceptor,
-    multi: true
-  }
+  LoginRedirectService
 ];
 
 @NgModule({

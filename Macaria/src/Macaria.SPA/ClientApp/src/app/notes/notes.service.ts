@@ -12,6 +12,11 @@ export class NotesService {
 
   }
 
+  public getBySlug(options: { slug: string }): Observable<{ note: Note }> {
+    return this._httpClient
+      .get<{ note: Note }>(`${this._baseUrl}api/notes/${options.slug}`);
+  }
+
   public save(options: { note: Note }) {
     return this._httpClient
       .post(`${this._baseUrl}api/notes`, options)
@@ -40,11 +45,6 @@ export class NotesService {
   public getByCurrentUser(): Observable<{ notes: Array<Note> }> {
     return this._httpClient
       .get<{ notes: Array<Note> }>(`${this._baseUrl}api/notes/currentuser`);
-  }
-
-  public getBySlugAndCurrentUser(options: { slug: string }): Observable<{ note: Note }> {    
-    return this._httpClient
-      .get<{ note: Note }>(`${this._baseUrl}api/notes/getBySlugAndCurrentUser?slug=${options.slug}`);
   }
 
   public getById(options: { id: number }): Observable<{ note: Note }> {    

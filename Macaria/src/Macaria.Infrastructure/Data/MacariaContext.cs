@@ -56,7 +56,9 @@ namespace Macaria.Infrastructure.Data
             }
 
             foreach (var item in ChangeTracker.Entries().Where(
-                e => e.State == EntityState.Added && e.Entity.GetType() == typeof(BaseModel)))
+                e => e.State == EntityState.Added
+                && e.Metadata.GetProperties().Any(p => p.Name == "TenantId")
+                && e.Entity.GetType() != typeof(Tenant)))
             {                
                 item.CurrentValues["TenantId"] = TenantId;
             }

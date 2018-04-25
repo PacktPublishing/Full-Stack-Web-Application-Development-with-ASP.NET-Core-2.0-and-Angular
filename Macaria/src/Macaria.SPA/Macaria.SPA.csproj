@@ -36,7 +36,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\dist\out-tsc\" />
     <Folder Include="ClientApp\node_modules\%40angular\animations\" />
     <Folder Include="ClientApp\node_modules\%40angular\cdk\" />
     <Folder Include="ClientApp\node_modules\%40angular\common\" />

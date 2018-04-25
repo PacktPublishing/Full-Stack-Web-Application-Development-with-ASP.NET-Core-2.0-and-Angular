@@ -7,9 +7,6 @@ import { LocalStorageService } from './local-storage.service';
 import { LoggerService } from './logger.service';
 import { QuillTextEditorComponent } from './quill-text-editor.component';
 import { PrimaryHeaderComponent } from './primary-header.component';
-import { SideNavComponent } from "./side-nav.component";
-import { SideNavItemComponent } from './side-nav-item.component';
-import { SideNavSectionComponent } from './side-nav-section.component';
 import { HeaderInterceptor } from './headers.interceptor';
 import { HubClient } from './hub-client';
 import { NotificationComponent } from './notification.component';
@@ -24,9 +21,6 @@ const declarations = [
   NotificationComponent,
   PrimaryHeaderComponent,
   QuillTextEditorComponent,
-  SideNavComponent,
-  SideNavItemComponent,
-  SideNavSectionComponent
 ];
 
 const providers = [

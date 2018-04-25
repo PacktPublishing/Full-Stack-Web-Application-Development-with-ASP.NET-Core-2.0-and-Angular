@@ -57,7 +57,7 @@ export const routes: Routes = [
         canActivate: [LanguageGuard]
       },
       {
-        path: 'notes/:noteId',
+        path: 'notes/:slug',
         component: EditNotePageComponent,
         canActivate: [LanguageGuard]
       },

@@ -27,6 +27,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\app.component.spec.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="ClientApp\node_modules\node-sass\vendor\win32-x64-57\binding.node" />
     <None Include="codeGeneratorSettings.json" />
   </ItemGroup>
@@ -62,6 +66,10 @@
     <Folder Include="ClientApp\node_modules\webpack-dev-server\" />
     <Folder Include="ClientApp\node_modules\webpack\" />
     <Folder Include="ClientApp\node_modules\zone.js\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\app.component.spec.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

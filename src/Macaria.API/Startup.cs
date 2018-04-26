@@ -13,6 +13,7 @@ using Macaria.Infrastructure.Behaviours;
 using Macaria.Infrastructure.Extensions;
 using Macaria.Infrastructure;
 using Macaria.Infrastructure.Services;
+using Macaria.API.Features.Notes;
 
 namespace Macaria.API
 {
@@ -50,8 +51,7 @@ namespace Macaria.API
             services.AddCustomMvc();
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(EntityChangedNotificationBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
-
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));            
         }
 
         public virtual void ConfigureDataStore(IServiceCollection services)

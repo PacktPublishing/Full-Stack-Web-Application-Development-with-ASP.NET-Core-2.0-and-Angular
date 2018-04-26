@@ -12,6 +12,7 @@ namespace Macaria.API.Behaviors
 {
     public class EntityChangedNotificationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
+        
     {
         private readonly IHubContext<AppHub> _hubContext;
         private readonly IMacariaContext _context;
@@ -24,69 +25,75 @@ namespace Macaria.API.Behaviors
 
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
+            if (typeof(TRequest) == typeof(SaveNoteCommand.Request))
+                return await (HandleSaveNoteCommand(request as SaveNoteCommand.Request, cancellationToken, next as RequestHandlerDelegate<SaveNoteCommand.Response>) as Task<TResponse>);
+
+            if (typeof(TRequest) == typeof(RemoveNoteCommand.Request))
+                return await (HandleRemoveNoteCommand(request as RemoveNoteCommand.Request, cancellationToken, next as RequestHandlerDelegate<RemoveNoteCommand.Response>) as Task<TResponse>);
+
+            if (typeof(TRequest) == typeof(SaveTagCommand.Request))
+                return await (HandleSaveTagCommand(request as SaveTagCommand.Request, cancellationToken, next as RequestHandlerDelegate<SaveTagCommand.Response>) as Task<TResponse>);
+
+            if (typeof(TRequest) == typeof(RemoveTagCommand.Request))
+                return await (HandleRemoveTagCommand(request as RemoveTagCommand.Request, cancellationToken, next as RequestHandlerDelegate<RemoveTagCommand.Response>) as Task<TResponse>);
+
+            return await next();
+        }
+
+        public async Task<SaveNoteCommand.Response> HandleSaveNoteCommand(SaveNoteCommand.Request request, CancellationToken cancellationToken, RequestHandlerDelegate<SaveNoteCommand.Response> next)
+        {
             var response = await next();
 
-            if (typeof(TRequest) == typeof(SaveNoteCommand.Request) || typeof(TRequest) == typeof(SaveTagCommand.Request))
-                await SendSavedNotification(request, response);
+            var note = await _context.Notes.FindAsync(response.NoteId);
 
-            if (typeof(TRequest) == typeof(RemoveNoteCommand.Request) || typeof(TRequest) == typeof(RemoveTagCommand.Request))
-                await SendRemovedNotification(request);
+            await _hubContext.Clients.All.SendAsync("message", new
+            {
+                Type = "[Note] Saved",
+                Payload = new { note = NoteApiModel.FromNote(note) }
+            });
 
-            return response;           
+            return response;
         }
 
-        private async Task SendSavedNotification(TRequest request, TResponse response)
+        public async Task<RemoveNoteCommand.Response> HandleRemoveNoteCommand(RemoveNoteCommand.Request request, CancellationToken cancellationToken, RequestHandlerDelegate<RemoveNoteCommand.Response> next)
         {
-            var notification = default(object);
+            var response = await next();
 
-            if (request as SaveNoteCommand.Request != null)
+            await _hubContext.Clients.All.SendAsync("message", new
             {
-                var note = await _context.Notes.FindAsync((response as SaveNoteCommand.Response).NoteId);
+                Type = "[Note] Removed",
+                Payload = new { noteId = request.NoteId }
+            });
 
-                notification = new
-                {
-                    Type = "[Note] Saved",
-                    Payload = new { note = NoteApiModel.FromNote(note) }
-                };
-            }
-
-            if (request as SaveTagCommand.Request != null)
-            {
-                var tag = await _context.Tags.FindAsync((response as SaveTagCommand.Response).TagId);
-
-                notification = new
-                {
-                    Type = "[Tag] Saved",
-                    Payload = new { tag = TagApiModel.FromTag(tag) }
-                };
-            }
-
-            await _hubContext.Clients.All.SendAsync("message", notification);
+            return response;
         }
 
-        private async Task SendRemovedNotification(TRequest request)
-        {            
-            var notification = default(object);
+        public async Task<SaveTagCommand.Response> HandleSaveTagCommand(SaveTagCommand.Request request, CancellationToken cancellationToken, RequestHandlerDelegate<SaveTagCommand.Response> next)
+        {
+            var response = await next();
 
-            if (request as RemoveNoteCommand.Request != null)
+            var tag = await _context.Tags.FindAsync(response.TagId);
+
+            await _hubContext.Clients.All.SendAsync("message", new
             {
-                notification = new
-                {
-                    Type = "[Note] Removed",
-                    Payload = new { (request as RemoveNoteCommand.Request).NoteId }
-                };
-            }
+                Type = "[Tag] Saved",
+                Payload = new { tag = TagApiModel.FromTag(tag) }
+            });
 
-            if (request as RemoveTagCommand.Request != null)
+            return response;
+        }
+
+        public async Task<RemoveTagCommand.Response> HandleRemoveTagCommand(RemoveTagCommand.Request request, CancellationToken cancellationToken, RequestHandlerDelegate<RemoveTagCommand.Response> next)
+        {
+            var response = await next();
+
+            await _hubContext.Clients.All.SendAsync("message", new
             {
-                notification = new
-                {
-                    Type = "[Tag] Removed",
-                    Payload = new { (request as RemoveTagCommand.Request).TagId }
-                };
-            }
+                Type = "[Tag] Removed",
+                Payload = new { tagId = request.TagId }
+            });
 
-            await _hubContext.Clients.All.SendAsync("message", notification);
+            return response;
         }
     } 
 }

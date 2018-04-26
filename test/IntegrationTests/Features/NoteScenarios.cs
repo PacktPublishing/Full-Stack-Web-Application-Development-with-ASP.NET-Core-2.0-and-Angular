@@ -50,66 +50,6 @@ namespace IntegrationTests.Features
         }
 
         [Fact]
-        public async Task ShouldAddNoteTag()
-        {
-
-            void setUpData(MacariaContext context)
-            {
-                var note = new Note()
-                {
-                    Title = "Title1",
-                    Body = "Body",
-                    
-                };
-                
-                context.Notes.Add(note);
-
-                context.SaveChanges();
-            }
-
-            using (var server = CreateServer(setUpData))
-            {
-                var response = await server.CreateClient()
-                    .PostAsAsync<AddTagCommand.Request, Task>(Post.AddTag(1,1), new AddTagCommand.Request()
-                    {
-                        TagId = 1,
-                        NoteId = 1
-                    });
-            }
-        }
-
-        [Fact]
-        public async Task ShouldRemoveNoteTag()
-        {
-            void setUpData(MacariaContext context)
-            {
-                var note = new Note()
-                {
-                    Title = "Title1",
-                    Body = "Body",
-                    
-                };
-
-                note.NoteTags.Add(new NoteTag()
-                {
-                    Tag = context.Tags.IgnoreQueryFilters().First()
-                });
-
-                context.Notes.Add(note);
-                
-                context.SaveChanges();
-            }
-
-            using (var server = CreateServer(setUpData))
-            {
-                var response = await server.CreateClient()
-                    .DeleteAsync(Delete.RemoveTag(1,1));
-
-                response.EnsureSuccessStatusCode();
-            }
-        }
-
-        [Fact]
         public async Task ShouldGetAllNotes()
         {
             void setUpData(MacariaContext context)
@@ -213,8 +153,7 @@ namespace IntegrationTests.Features
                 context.Notes.Add(new Note()
                 {
                     Title = "Title",
-                    Body = "Body",
-                    
+                    Body = "Body"                    
                 });
 
                 context.SaveChanges();

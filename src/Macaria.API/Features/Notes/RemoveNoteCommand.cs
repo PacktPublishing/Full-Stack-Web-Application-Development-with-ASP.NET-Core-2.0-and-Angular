@@ -36,7 +36,6 @@ namespace Macaria.API.Features.Notes
                 await _context.SaveChangesAsync(cancellationToken);
                 return new Response() { };
             }
-
         }
     }
 }

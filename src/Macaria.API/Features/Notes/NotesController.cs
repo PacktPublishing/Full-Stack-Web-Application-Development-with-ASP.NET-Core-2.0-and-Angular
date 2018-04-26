@@ -17,20 +17,11 @@ namespace Macaria.API.Features.Notes
         [HttpGet("slug/{slug}")]
         public async Task<ActionResult<GetGetNoteBySlugQuery.Response>> GetByCurrentUser([FromRoute]GetGetNoteBySlugQuery.Request request)
             => await _mediator.Send(request);
-
-        [HttpPost("{noteId}/tag/{tagId}")]
-        public async Task AddTag(AddNoteTagCommand.Request request)
-            => await _mediator.Send(request);
-
-        [HttpDelete("{noteId}/tag/{tagId}")]
-        public async Task RemoveTag([FromRoute]RemoveNoteTagCommand.Request request)
-            => await _mediator.Send(request);
-
+ 
         [HttpPost]
         public async Task<ActionResult<SaveNoteCommand.Response>> Save(SaveNoteCommand.Request request)
             => await _mediator.Send(request);
         
-
         [HttpDelete("{noteId}")]
         public async Task Remove([FromRoute]RemoveNoteCommand.Request request)
             => await _mediator.Send(request);

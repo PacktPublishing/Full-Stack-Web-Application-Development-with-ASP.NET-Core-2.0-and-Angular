@@ -41,7 +41,7 @@ import { SharedModule } from './shared/shared.module';
     UsersModule
   ],
   providers: [
-    { provide: baseUrl, useValue: "http://localhost:10372/" }
+    { provide: baseUrl, useValue: "http://localhost:54193/" }
   ],
   bootstrap: [AppComponent]
 })

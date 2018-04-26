@@ -45,8 +45,6 @@ namespace UnitTests.API.Tags
 
             using (var context = new MacariaContext(options))
             {
-                
-
                 context.Tags.Add(new Tag()
                 {
                     TagId = 1,
@@ -75,9 +73,7 @@ namespace UnitTests.API.Tags
                 .Options;
 
             using (var context = new MacariaContext(options))
-            {
-                
-
+            {                
                 context.Tags.Add(new Macaria.Core.Entities.Tag()
                 {
                     TagId = 1,
@@ -104,8 +100,6 @@ namespace UnitTests.API.Tags
 
             using (var context = new MacariaContext(options))
             {
-                
-
                 context.Tags.Add(new Tag()
                 {
                     TagId = 1,
@@ -135,8 +129,6 @@ namespace UnitTests.API.Tags
 
             using (var context = new MacariaContext(options))
             {
-                
-
                 context.Tags.Add(new Tag()
                 {
                     TagId = 1,
@@ -161,6 +153,5 @@ namespace UnitTests.API.Tags
                 Assert.Equal("Quinntyne", context.Tags.Single(x => x.TagId == 1).Name);
             }
         }
-        
     }
 }

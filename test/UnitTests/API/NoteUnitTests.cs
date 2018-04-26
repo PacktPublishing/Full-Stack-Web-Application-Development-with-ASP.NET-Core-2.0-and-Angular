@@ -138,13 +138,10 @@ namespace UnitTests.API
 
             using (var context = new MacariaContext(options))
             {
-                
-
                 context.Notes.Add(new Note()
                 {
                     NoteId = 1,
-                    Title = "Quinntyne",
-                    
+                    Title = "Quinntyne"
                 });
 
                 context.SaveChanges();
@@ -162,95 +159,6 @@ namespace UnitTests.API
 
                 Assert.Equal(1, response.NoteId);
                 Assert.Equal("Quinntyne", context.Notes.Single(x => x.NoteId == 1).Title);
-            }
-        }
-
-        [Fact]
-        public async Task ShouldHandleSaveNoteTagCommandRequest()
-        {
-
-            var options = new DbContextOptionsBuilder<MacariaContext>()
-                .UseInMemoryDatabase(databaseName: "ShouldHandleSaveNoteTagCommandRequest")
-                .Options;
-
-            using (var context = new MacariaContext(options))
-            {
-                var note = new Note()
-                {
-                    NoteId = 1,
-                    Title = "My Note",
-                    
-                };
-
-                context.Notes.Add(note);
-
-                context.Tags.Add(new Tag()
-                {
-                    TagId = 1,
-                    Name = "Angular",
-                    
-                });
-
-                context.SaveChanges();
-
-                var handler = new AddNoteTagCommand.Handler(context);
-
-                await handler.Handle(new AddNoteTagCommand.Request()
-                {
-                    NoteId =1,
-                    TagId = 1
-                }, default(CancellationToken));
-
-                Assert.Single(note.NoteTags);
-            }
-        }
-
-        [Fact]
-        public async Task ShouldHandleRemoveNoteTagCommandRequest()
-        {
-
-            var options = new DbContextOptionsBuilder<MacariaContext>()
-                .UseInMemoryDatabase(databaseName: "ShouldHandleRemoveNoteTagCommandRequest")
-                .Options;
-
-            using (var context = new MacariaContext(options))
-            {
-                var note = new Note()
-                {
-                    NoteId = 1,
-                    Title = "My Note",
-                    
-                };
-
-                context.Notes.Add(note);
-                
-                context.Tags.Add(new Tag()
-                {
-                    TagId = 1,
-                    Name = "Angular",
-                    
-                });
-
-                context.SaveChanges();
-
-                note.NoteTags.Add(new NoteTag()
-                {
-                    TagId = 1,
-                    NoteId = 1,
-                    
-                });
-
-                context.SaveChanges();
-
-                var handler = new RemoveNoteTagCommand.Handler(context);
-
-                await handler.Handle(new RemoveNoteTagCommand.Request()
-                {
-                    NoteId = 1,
-                    TagId = 1
-                }, default(CancellationToken));
-
-                Assert.Empty(note.NoteTags);
             }
         }
     }

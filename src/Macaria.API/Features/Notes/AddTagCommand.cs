@@ -55,7 +55,6 @@ namespace Macaria.API.Features.Notes
                     note.NoteTags.Add(noteTag);
                     await _context.SaveChangesAsync(cancellationToken);
                 }
-                
             }
         }
     }

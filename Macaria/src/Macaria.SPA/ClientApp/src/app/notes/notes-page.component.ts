@@ -18,7 +18,7 @@ import { Store } from "../core/store";
 export class NotesPageComponent { 
   constructor(
     private _notesService: NotesService,
-    private _noteStore: Store,
+    private _store: Store,
     private _router: Router,
     private _translateService: TranslateService
   ) { }
@@ -30,7 +30,7 @@ export class NotesPageComponent {
   ngOnInit() {
     this._notesService.get()
       .pipe(
-        map(x => this._noteStore.notes$.next(x.notes))
+        map(x => this._store.notes$.next(x.notes))
       )
       .subscribe();
 
@@ -49,7 +49,7 @@ export class NotesPageComponent {
   }
 
   public handleDelete($event) {
-    const notes = this._noteStore.notes$.value;
+    const notes = this._store.notes$.value;
     const deletedNoteIndex = notes.findIndex(x => x.noteId == $event.data.noteId);
 
     notes.splice(deletedNoteIndex, 1);
@@ -58,7 +58,7 @@ export class NotesPageComponent {
       .pipe(
         takeUntil(this.onDestroy),
         tap(x => {
-          this._noteStore.notes$.next([...notes]);
+          this._store.notes$.next([...notes]);
         })
       )
       .subscribe();
@@ -77,7 +77,7 @@ export class NotesPageComponent {
   public onGridReady($event) { $event.api.sizeColumnsToFit(); }
 
   public get notes$(): Observable<Array<Note>> {
-    return this._noteStore.notes$;
+    return this._store.notes$;
   }
 
   ngOnDestroy() {

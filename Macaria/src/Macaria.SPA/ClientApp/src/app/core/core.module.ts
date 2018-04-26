@@ -16,6 +16,7 @@ import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 import { LoginRedirectService } from './redirect.service';
 import { JwtInterceptor } from './jwt.interceptor';
+import { Store } from './store';
 
 const providers = [
   {
@@ -37,7 +38,8 @@ const providers = [
   LanguageService,
   LocalStorageService,
   LoginRedirectService,
-  LoggerService 
+  LoggerService,
+  Store
 ];
 
 export function TranslateHttpLoaderFactory(httpClient: HttpClient) {

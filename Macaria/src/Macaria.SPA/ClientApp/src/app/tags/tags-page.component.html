@@ -5,14 +5,13 @@
 <section class="page-content-container">
   <ag-grid-angular class="ag-theme-material"
                    [columnDefs]="columnDefs"
-                   [rowData]="_tagStore.tags$ | async"
+                   [rowData]="tags$ | async"
                    [pagination]="true"
                    [frameworkComponents]="frameworkComponents"
                    [paginationPageSize]="5"
                    [animateRows]="true"
                    (gridReady)="onGridReady($event)"
-                   [localeText]="localeText"
-                   >
+                   [localeText]="localeText">
   </ag-grid-angular>
 
   <div class="actions">

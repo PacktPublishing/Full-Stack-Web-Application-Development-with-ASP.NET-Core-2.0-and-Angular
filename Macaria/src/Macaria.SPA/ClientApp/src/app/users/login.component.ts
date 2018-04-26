@@ -21,6 +21,7 @@ import { ENTER } from "@angular/cdk/keycodes";
 import { AuthService } from "../core/auth.service";
 import { LoginRedirectService } from "../core/redirect.service";
 import { Output } from "@angular/core";
+import { HttpErrorResponse } from "@angular/common/http";
 
 @Component({
     templateUrl: "./login.component.html",
@@ -39,7 +40,6 @@ export class LoginComponent {
 
   ngOnInit() {
     this._authService.logout();
-
     this._translateService.get(["Login Failed", "An error ocurr.Try it again."])
       .pipe(
         takeUntil(this.onDestroy),
@@ -53,13 +53,7 @@ export class LoginComponent {
   public translations;
 
   ngAfterContentInit() {
-
     this._renderer.invokeElementMethod(this.usernameNativeElement, 'focus', []);
-
-    this.form.patchValue({
-      username: this.username,
-      password: this.password
-    });
   }
 
   @Input()
@@ -90,21 +84,23 @@ export class LoginComponent {
     })
       .subscribe(() =>
         this._loginRedirectService.redirectPreLogin(),
-        errorResponse => this.handleError(errorResponse));
+      errorResponse => {
+        return this.handleError(errorResponse);
+      });
   }
 
   public handleError(errorResponse) {
+    if (!errorResponse.error && !errorResponse.error.messages) {
+      this._matSnackBar.open(this.translations['Login Failed'], errorResponse.statusText, {
+        duration: 0
+      });
+      return;
+    }
     this._matSnackBar.open(this.translations['Login Failed'], this.translations[errorResponse.error.messages[0]], {
       duration: 0
     });
   }
 
-  @HostListener('window:keyup', ['$event'])
-  handleKeyboardEvent(event: KeyboardEvent) {
-    if (event.keyCode == ENTER)
-      this.tryToLogin({ value: this.form.value });
-  }
-  
   ngOnDestroy() {
     this.onDestroy.next();	
   }

@@ -1,8 +1,8 @@
-<app-primary-header *ngIf="!noteId">
+<app-primary-header *ngIf="!note.noteId">
   {{ "Create Note" | translate }}
 </app-primary-header>
 
-<app-primary-header *ngIf="noteId">
+<app-primary-header *ngIf="note.noteId">
   {{ "Edit Note" | translate }}
 </app-primary-header>
 

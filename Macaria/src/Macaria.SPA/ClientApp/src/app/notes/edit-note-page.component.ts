@@ -1,6 +1,3 @@
-//https://stackblitz.com/edit/angular-ucxm2s
-
-
 import { Component, ElementRef, Injector } from '@angular/core';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { ActivatedRoute, Router, Event } from '@angular/router';
@@ -8,7 +5,6 @@ import { NotesService } from './notes.service';
 import { Note } from "./note.model";
 import { LocalStorageService } from '../core/local-storage.service';
 import { TagsService } from '../tags/tags.service';
-
 import { Observable } from 'rxjs';
 import { takeUntil, catchError, tap, map, startWith } from 'rxjs/operators';
 import { Tag } from '../tags/tag.model';
@@ -34,10 +30,11 @@ export class EditNotePageComponent {
     private _elementRef: ElementRef,
     private _languageService: LanguageService,
     private _localStorageService: LocalStorageService,
-    private _notesService: NotesService,
+    private _notesService: NotesService,    
+    private _router: Router,
+    private _store: Store,
     private _tagsService: TagsService,
-    private _tagStore: Store,
-    private _router: Router
+    
   ) {    
     this.editorPlaceholder = this._languageService.currentTranslations[this.editorPlaceholder];
   }
@@ -58,7 +55,7 @@ export class EditNotePageComponent {
 
     this._tagsService.get()
       .pipe(takeUntil(this.onDestroy))
-      .subscribe(x => this._tagStore.tags$.next(x.tags));
+      .subscribe(x => this._store.tags$.next(x.tags));
 
     this.addItems = new FormControl();
     
@@ -99,7 +96,7 @@ export class EditNotePageComponent {
   public notes$: BehaviorSubject<Note> = new BehaviorSubject(<Note>{});
 
   public get tags$():Observable<Array<Tag>> {
-    return this._tagStore.tags$;
+    return this._store.tags$;
   }
 
   public note$: BehaviorSubject<Note> = new BehaviorSubject(new Note());

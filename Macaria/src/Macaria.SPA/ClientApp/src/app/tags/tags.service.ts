@@ -48,6 +48,9 @@ export class TagsService {
   private _get(): Observable<{ tags: Array<Tag> }> {  
     return this._httpClient
       .get<{ tags: Array<Tag> }>(`${this._baseUrl}api/tags`)
+      .pipe(
+        tap(x => console.log(x))
+      );
   }
 
   private _cache$: Observable<{ tags: Array<Tag> }>;  

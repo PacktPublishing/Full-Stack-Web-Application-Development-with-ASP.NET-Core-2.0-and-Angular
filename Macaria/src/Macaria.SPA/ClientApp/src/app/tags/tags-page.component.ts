@@ -26,13 +26,11 @@ export class TagsPageComponent {
     private _injector: Injector,
     private _overlay: Overlay,
     private _hubClient: HubClient,
-    private _store: Store,
+    public _store: Store,
     private _tagsService: TagsService,
     public _translateService: TranslateService,
     private _snackBar: MatSnackBar
-  ) {
-
-  }
+  ) { }
 
   public localeText: any = {};
 
@@ -77,9 +75,7 @@ export class TagsPageComponent {
 
   public onGridReady(params) { params.api.sizeColumnsToFit(); }
 
-  public get tags$(): Observable<Array<Tag>> {
-    return this._store.tags$;
-  }
+  public get tags$(): Observable<Array<Tag>> { return this._store.tags$; }
 
   public onDestroy: Subject<void> = new Subject<void>();
 

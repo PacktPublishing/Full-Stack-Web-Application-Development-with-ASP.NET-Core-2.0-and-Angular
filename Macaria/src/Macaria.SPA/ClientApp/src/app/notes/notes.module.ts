@@ -11,6 +11,7 @@ import { NotesPageComponent } from './notes-page.component';
 import { EditNotePageComponent } from './edit-note-page.component';
 import { TagPageComponent } from './tag-page.component';
 import { SharedModule } from '../shared/shared.module';
+import { NoteResolver } from './note-resolver.service';
 
 const declarations = [
   EditNotePageComponent,
@@ -20,6 +21,7 @@ const declarations = [
 
 const providers = [
   NotesService,
+  NoteResolver
 ];
 
 const entryComponents = [

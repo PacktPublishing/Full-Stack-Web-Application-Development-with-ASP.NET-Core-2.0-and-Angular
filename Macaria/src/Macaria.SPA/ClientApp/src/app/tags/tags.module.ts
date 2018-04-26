@@ -8,6 +8,7 @@ import { TagsService } from './tags.service';
 import { TagsPageComponent } from './tags-page.component';
 import { AddTagOverlayComponent } from './add-tag-overlay.component';
 import { SharedModule } from '../shared/shared.module';
+import { TagsResolver } from './tags-resolver.service';
 
 const declarations = [
   TagsPageComponent,
@@ -15,7 +16,8 @@ const declarations = [
 ];
 
 const providers = [
-  TagsService
+  TagsService,
+  TagsResolver
 ];
 
 @NgModule({

@@ -11,7 +11,6 @@ import { Tag } from '../tags/tag.model';
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { TranslateService } from '@ngx-translate/core';
 import { LanguageService } from '../core/language.service';
-import { CellClickedEvent } from 'ag-grid';
 import { ViewChild } from '@angular/core';
 import { MatInput, MatAutocompleteSelectedEvent } from '@angular/material';
 import { ENTER, COMMA } from "@angular/cdk/keycodes";
@@ -32,34 +31,21 @@ export class EditNotePageComponent {
     private _localStorageService: LocalStorageService,
     private _notesService: NotesService,    
     private _router: Router,
-    private _store: Store,
-    private _tagsService: TagsService,
-    
+    private _store: Store    
   ) {    
-    this.editorPlaceholder = this._languageService.currentTranslations[this.editorPlaceholder];
+    this.editorPlaceholder = this._languageService.currentTranslations[this.editorPlaceholder];    
   }
 
-  canDeactivate() {
+  canDeactivate() { !this.form.dirty; }
 
-  }
-
-  ngOnInit() {
-    if (this.slug)
-      this._notesService
-        .getBySlug({ slug: this.slug })
-        .pipe(
-          takeUntil(this.onDestroy),
-          map(x => this.note$.next(x.note))
-        )
-        .subscribe();
-
-    this._tagsService.get()
-      .pipe(takeUntil(this.onDestroy))
-      .subscribe(x => this._store.tags$.next(x.tags));
-
-    this.addItems = new FormControl();
+  ngAfterViewInit() {
     
-    this.filteredItems = this.addItems.valueChanges
+    this.form.patchValue({
+      "title": this.note$.value.title,
+      "body": this.note$.value.body
+    });
+
+    this.filteredItems = this.form.get('addItems').valueChanges
       .pipe(
         startWith(''),
         map(item =>
@@ -73,9 +59,7 @@ export class EditNotePageComponent {
   selectedItems: string[] = [];
   
   filteredItems: Observable<any[]>;
-
-  addItems: FormControl;
-
+  
   separatorKeysCodes = [ENTER, COMMA];
 
   get itemsData(): string[] {
@@ -86,12 +70,7 @@ export class EditNotePageComponent {
     this.selectedItems = v;
   }
 
-  items: any[] = [{ tagId: 1, name: 'Samsung' },
-  { tagId: 2, name: 'Nokia' },
-  { tagId: 3, name: 'Redmi' },
-  { tagId: 4, name: 'Moto' },
-  { tagId: 5, name: 'Apple' }
-  ];
+  items: any[] = this._store.tags$.value;
 
   public notes$: BehaviorSubject<Note> = new BehaviorSubject(<Note>{});
 
@@ -99,14 +78,15 @@ export class EditNotePageComponent {
     return this._store.tags$;
   }
 
-  public note$: BehaviorSubject<Note> = new BehaviorSubject(new Note());
+  public get note$(): BehaviorSubject<Note> {
+    return this._store.note$;
+  }
 
   public onDestroy: Subject<void> = new Subject();
 
   public quillEditorFormControl: FormControl = new FormControl('');
   
-  public handleSaveClick() {
-    
+  public handleSaveClick() {    
     this._notesService.save({
       note: this.form.value,
     })
@@ -128,6 +108,7 @@ export class EditNotePageComponent {
   public form = new FormGroup({
     title: new FormControl(this.note.title, [Validators.required]),
     body: new FormControl(this.note.body, [Validators.required]),
+    addItems: new FormControl()
   });
 
   public get slug():string {

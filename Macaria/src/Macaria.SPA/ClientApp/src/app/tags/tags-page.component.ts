@@ -1,4 +1,4 @@
-import { Component, Injector } from "@angular/core";
+import { Component, Injector, Input } from "@angular/core";
 import { Subject, pipe } from "rxjs";
 import { TagsService } from "./tags.service";
 import { Tag } from "./tag.model";
@@ -30,10 +30,12 @@ export class TagsPageComponent {
     private _tagsService: TagsService,
     public _translateService: TranslateService,
     private _snackBar: MatSnackBar
-  ) { }
+  ) {
+
+  }
 
   public localeText: any = {};
-
+  
   ngOnInit() {
     this._tagsService.get()
       .pipe(

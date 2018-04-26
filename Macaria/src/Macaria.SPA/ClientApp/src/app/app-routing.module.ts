@@ -11,6 +11,8 @@ import { EditNotePageComponent } from './notes/edit-note-page.component';
 import { LanguageGuard } from './core/language-guard';
 import { TagPageComponent } from './notes/tag-page.component';
 import { AuthGuard } from './core/auth.guard';
+import { TagsResolver } from './tags/tags-resolver.service';
+import { NoteResolver } from './notes/note-resolver.service';
 
 export const routes: Routes = [
   {
@@ -34,7 +36,11 @@ export const routes: Routes = [
       {
         path: '',
         component: EditNotePageComponent,
-        canActivate: [LanguageGuard]
+        canActivate: [LanguageGuard],
+        resolve: {
+          tags: TagsResolver,
+          note: NoteResolver
+        }
       },
       {
         path: 'notes',
@@ -49,7 +55,11 @@ export const routes: Routes = [
       {
         path: 'notes/:slug',
         component: EditNotePageComponent,
-        canActivate: [LanguageGuard]
+        canActivate: [LanguageGuard],
+        resolve: {
+          tags: TagsResolver,
+          note: NoteResolver
+        }
       },
       {
         path: 'settings',
@@ -59,7 +69,10 @@ export const routes: Routes = [
       {
         path: 'tags',
         component: TagsPageComponent,
-        canActivate: [LanguageGuard]
+        canActivate: [LanguageGuard],
+        resolve: {
+          tags: TagsResolver
+        }
       }
     ]
   }

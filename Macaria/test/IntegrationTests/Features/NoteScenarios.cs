@@ -8,7 +8,8 @@ using Macaria.API.Features.Notes;
 using Macaria.Core.Entities;
 using Macaria.Infrastructure.Data;
 using Macaria.Infrastructure.Extensions;
-
+using System.Collections.Generic;
+using Macaria.API.Features.Tags;
 
 namespace IntegrationTests.Features
 {
@@ -37,7 +38,8 @@ namespace IntegrationTests.Features
                         Note = new NoteApiModel()
                         {
                             Title = "First Note",
-                            Body = "<p>Something Important</p>"
+                            Body = "<p>Something Important</p>",
+                            Tags = new List<TagApiModel>() { new TagApiModel() { TagId = 1, Name = "Angular" } }
                         }
                     });
 
@@ -178,7 +180,6 @@ namespace IntegrationTests.Features
                 {
                     Title = "Title",
                     Body = "Body",
-                    
                 });
 
                 context.SaveChanges();

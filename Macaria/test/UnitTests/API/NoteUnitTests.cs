@@ -1,7 +1,9 @@
 using Macaria.API.Features.Notes;
+using Macaria.API.Features.Tags;
 using Macaria.Core.Entities;
 using Macaria.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,7 +13,6 @@ namespace UnitTests.API
 {
     public class NoteUnitTests
     {     
- 
         [Fact]
         public async Task ShouldHandleSaveNoteCommandRequest()
         {
@@ -24,11 +25,20 @@ namespace UnitTests.API
             {
                 var handler = new SaveNoteCommand.Handler(context);
 
+                context.Tags.Add(new Tag()
+                {
+                    TagId = 1,
+                    Name = "Angular"
+                });
+
+                context.SaveChanges();
+
                 var response = await handler.Handle(new SaveNoteCommand.Request()
                 {
                     Note = new NoteApiModel()
                     {
-                        Title = "Quinntyne"
+                        Title = "Quinntyne",
+                        Tags = new List<TagApiModel>() { new TagApiModel() { TagId = 1 } }
                     }
                 }, default(CancellationToken));
 
@@ -45,8 +55,6 @@ namespace UnitTests.API
 
             using (var context = new MacariaContext(options))
             {
-                
-
                 context.Notes.Add(new Note()
                 {
                     NoteId = 1,
@@ -76,8 +84,6 @@ namespace UnitTests.API
 
             using (var context = new MacariaContext(options))
             {
-                
-
                 context.Notes.Add(new Macaria.Core.Entities.Note()
                 {
                     NoteId = 1,
@@ -104,13 +110,10 @@ namespace UnitTests.API
 
             using (var context = new MacariaContext(options))
             {
-                
-
                 context.Notes.Add(new Note()
                 {
                     NoteId = 1,
                     Title = "Quinntyne",
-                    
                 });
 
                 context.SaveChanges();
@@ -172,9 +175,6 @@ namespace UnitTests.API
 
             using (var context = new MacariaContext(options))
             {
-
-                
-
                 var note = new Note()
                 {
                     NoteId = 1,
@@ -215,9 +215,6 @@ namespace UnitTests.API
 
             using (var context = new MacariaContext(options))
             {
-
-                
-
                 var note = new Note()
                 {
                     NoteId = 1,

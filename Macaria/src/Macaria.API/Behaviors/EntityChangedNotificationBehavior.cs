@@ -46,7 +46,7 @@ namespace Macaria.API.Behaviors
                 notification = new
                 {
                     Type = "[Note] Saved",
-                    Payload = new { note }
+                    Payload = new { note = NoteApiModel.FromNote(note) }
                 };
             }
 
@@ -57,7 +57,7 @@ namespace Macaria.API.Behaviors
                 notification = new
                 {
                     Type = "[Tag] Saved",
-                    Payload = new { tag }
+                    Payload = new { tag = TagApiModel.FromTag(tag) }
                 };
             }
 

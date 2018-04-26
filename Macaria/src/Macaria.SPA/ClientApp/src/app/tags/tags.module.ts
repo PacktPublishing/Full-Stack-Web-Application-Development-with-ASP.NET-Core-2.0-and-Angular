@@ -7,7 +7,6 @@ import { CoreModule } from '../core/core.module';
 import { TagsService } from './tags.service';
 import { TagsPageComponent } from './tags-page.component';
 import { AddTagOverlayComponent } from './add-tag-overlay.component';
-import { TagStore } from './tag-store';
 import { SharedModule } from '../shared/shared.module';
 
 const declarations = [
@@ -16,8 +15,7 @@ const declarations = [
 ];
 
 const providers = [
-  TagsService,
-  TagStore
+  TagsService
 ];
 
 @NgModule({

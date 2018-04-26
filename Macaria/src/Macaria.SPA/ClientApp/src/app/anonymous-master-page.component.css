@@ -1,12 +1,11 @@
 :host {
-  display: flex;
   align-items: center;
-  position: relative;
-  content: contain;
   background-color: var(--default-color,rgb(241,241,241));
+  color: #fff;
+  display: flex;
+  height: 100vh;
   margin: 0;
   padding: 0;
-  height: 100vh;
+  position: relative;
   width: 100vw;
-  color: #fff;
 }

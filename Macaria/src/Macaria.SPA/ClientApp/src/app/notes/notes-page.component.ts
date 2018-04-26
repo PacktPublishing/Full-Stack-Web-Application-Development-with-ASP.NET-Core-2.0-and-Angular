@@ -5,11 +5,10 @@ import { Note } from "./note.model";
 import { Observable } from "rxjs";
 import { map, takeUntil, tap } from "rxjs/operators";
 import { ColDef } from "ag-grid";
-
 import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
-import { NoteStore } from "./note-store";
 import { DeleteCellComponent } from "../shared/delete-cell.component";
+import { Store } from "../core/store";
 
 @Component({
   templateUrl: "./notes-page.component.html",
@@ -19,7 +18,7 @@ import { DeleteCellComponent } from "../shared/delete-cell.component";
 export class NotesPageComponent { 
   constructor(
     private _notesService: NotesService,
-    private _noteStore: NoteStore,
+    private _noteStore: Store,
     private _router: Router,
     private _translateService: TranslateService
   ) { }

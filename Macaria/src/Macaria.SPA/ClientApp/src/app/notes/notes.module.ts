@@ -9,7 +9,6 @@ import { CoreModule } from '../core/core.module';
 import { NotesPageComponent } from './notes-page.component';
 
 import { EditNotePageComponent } from './edit-note-page.component';
-import { NoteStore } from './note-store';
 import { TagPageComponent } from './tag-page.component';
 import { SharedModule } from '../shared/shared.module';
 
@@ -21,7 +20,6 @@ const declarations = [
 
 const providers = [
   NotesService,
-  NoteStore
 ];
 
 const entryComponents = [

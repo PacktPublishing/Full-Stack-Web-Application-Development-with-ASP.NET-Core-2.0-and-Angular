@@ -9,12 +9,12 @@ import { Overlay } from "@angular/cdk/overlay";
 import { OverlayRefWrapper } from "../core/overlay-ref-wrapper";
 import { PortalInjector, ComponentPortal } from "@angular/cdk/portal";
 import { AddTagOverlayComponent } from "./add-tag-overlay.component";
-import { TagStore } from "./tag-store";
 import { takeUntil } from "rxjs/operators";
 import { MatSnackBar } from "@angular/material";
 import { HubClient } from "../core/hub-client";
 import { TranslateService } from "@ngx-translate/core";
 import { DeleteCellComponent } from "../shared/delete-cell.component";
+import { Store } from "../core/store";
 
 @Component({
   templateUrl: "./tags-page.component.html",
@@ -26,8 +26,8 @@ export class TagsPageComponent {
     private _injector: Injector,
     private _overlay: Overlay,
     private _hubClient: HubClient,
+    private _store: Store,
     private _tagsService: TagsService,
-    public _tagStore: TagStore,
     public _translateService: TranslateService,
     private _snackBar: MatSnackBar
   ) {
@@ -40,7 +40,7 @@ export class TagsPageComponent {
     this._tagsService.get()
       .pipe(
         takeUntil(this.onDestroy),
-        map(x => this._tagStore.tags$.next(x.tags))
+        map(x => this._store.tags$.next(x.tags))
       )
       .subscribe();
 
@@ -78,7 +78,7 @@ export class TagsPageComponent {
   public onGridReady(params) { params.api.sizeColumnsToFit(); }
 
   public get tags$(): Observable<Array<Tag>> {
-    return this._tagStore.tags$;
+    return this._store.tags$;
   }
 
   public onDestroy: Subject<void> = new Subject<void>();

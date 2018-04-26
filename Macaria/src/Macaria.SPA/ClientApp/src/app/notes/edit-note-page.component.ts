@@ -13,13 +13,13 @@ import { Observable } from 'rxjs';
 import { takeUntil, catchError, tap, map, startWith } from 'rxjs/operators';
 import { Tag } from '../tags/tag.model';
 import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { TagStore } from '../tags/tag-store';
 import { TranslateService } from '@ngx-translate/core';
 import { LanguageService } from '../core/language.service';
 import { CellClickedEvent } from 'ag-grid';
 import { ViewChild } from '@angular/core';
 import { MatInput, MatAutocompleteSelectedEvent } from '@angular/material';
 import { ENTER, COMMA } from "@angular/cdk/keycodes";
+import { Store } from '../core/store';
 
 var moment: any;
 
@@ -36,7 +36,7 @@ export class EditNotePageComponent {
     private _localStorageService: LocalStorageService,
     private _notesService: NotesService,
     private _tagsService: TagsService,
-    private _tagStore: TagStore,
+    private _tagStore: Store,
     private _router: Router
   ) {    
     this.editorPlaceholder = this._languageService.currentTranslations[this.editorPlaceholder];

@@ -1,11 +1,12 @@
 ﻿using Macaria.API.Features.Notes;
 using Macaria.API.Features.Tags;
+using Macaria.API.Hubs;
 using Macaria.Infrastructure.Data;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading;
 using System.Threading.Tasks;
-using Macaria.API.Hubs;
+
 
 namespace Macaria.API.Behaviors
 {
@@ -87,7 +88,5 @@ namespace Macaria.API.Behaviors
 
             await _hubContext.Clients.All.SendAsync("message", notification);
         }
-        
-    }
-    
+    } 
 }

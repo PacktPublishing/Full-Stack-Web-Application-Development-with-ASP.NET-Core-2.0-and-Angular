@@ -5,7 +5,6 @@ import { TagsService } from "./tags.service";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Tag } from "./tag.model";
 import { tap } from "rxjs/operators";
-import { TagStore } from "./tag-store";
 
 @Component({
   templateUrl: "./add-tag-overlay.component.html",
@@ -15,8 +14,7 @@ import { TagStore } from "./tag-store";
 export class AddTagOverlayComponent { 
   constructor(
     private _overlay: OverlayRefWrapper,
-    private _tagService: TagsService,
-    private _tagStore: TagStore
+    private _tagService: TagsService
   ) { }
 
   public handleCancel() {

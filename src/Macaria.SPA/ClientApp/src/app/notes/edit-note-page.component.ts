@@ -15,6 +15,7 @@ import { ViewChild } from '@angular/core';
 import { MatInput, MatAutocompleteSelectedEvent } from '@angular/material';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { Store } from '../core/store';
+import { not } from '@angular/compiler/src/output/output_ast';
 
 var moment: any;
 
@@ -34,6 +35,10 @@ export class EditNotePageComponent {
     private _store: Store
   ) {
     this.editorPlaceholder = this._languageService.currentTranslations[this.editorPlaceholder];
+    if (this.slug) {
+      this.selectedItems = this._store.note$.value.tags.map(x => x.name);
+      this.itemsData = this.selectedItems;
+    }
   }
 
   canDeactivate() {
@@ -87,9 +92,20 @@ export class EditNotePageComponent {
   public quillEditorFormControl: FormControl = new FormControl('');
 
   public handleSaveClick() {
+    let note = new Note();
+
+    note.noteId = this._store.note$.value.noteId;
+    note.title = this.form.value.title;
+    note.body = this.form.value.body;
+    note.tags = [];
+
+    for (let i = 0; i < this.selectedItems.length; i++) {
+      note.tags.push(this._store.tags$.value.find(x => x.name == this.selectedItems[i]));
+    }
+
     this._notesService
       .save({
-        note: this.form.value
+        note
       })
       .pipe(takeUntil(this.onDestroy), tap(() => this._router.navigateByUrl('/notes')))
       .subscribe();
@@ -101,11 +117,9 @@ export class EditNotePageComponent {
     this._router.navigate(['notes', 'tag', tag.tagId]);
   }
 
-  public note: Note = <Note>{};
-
   public form = new FormGroup({
-    title: new FormControl(this.note.title, [Validators.required]),
-    body: new FormControl(this.note.body, [Validators.required]),
+    title: new FormControl(this._store.note$.value.title, [Validators.required]),
+    body: new FormControl(this._store.note$.value.body, [Validators.required]),
     addItems: new FormControl()
   });
 
@@ -126,9 +140,11 @@ export class EditNotePageComponent {
     this.itemsData = this.selectedItems;
     this.chipInput['nativeElement'].blur();
   }
+
   onTagClicked(tag) {
     alert('?');
   }
+
   onAddItems(event: MatAutocompleteSelectedEvent) {
     const t: any = event.option.value;
 

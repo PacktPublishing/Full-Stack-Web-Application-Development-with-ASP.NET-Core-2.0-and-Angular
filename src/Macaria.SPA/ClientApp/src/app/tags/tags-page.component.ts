@@ -23,13 +23,13 @@ import { Store } from '../core/store';
 })
 export class TagsPageComponent {
   constructor(
+    private _hubClient: HubClient,
     private _injector: Injector,
     private _overlay: Overlay,
-    private _hubClient: HubClient,
-    public _store: Store,
+    private _snackBar: MatSnackBar,
+    private _store: Store,
     private _tagsService: TagsService,
-    public _translateService: TranslateService,
-    private _snackBar: MatSnackBar
+    private _translateService: TranslateService
   ) {}
 
   public localeText: any = {};

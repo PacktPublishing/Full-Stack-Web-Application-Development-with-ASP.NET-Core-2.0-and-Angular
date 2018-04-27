@@ -17,6 +17,7 @@ import { AuthService } from './auth.service';
 import { LoginRedirectService } from './redirect.service';
 import { JwtInterceptor } from './jwt.interceptor';
 import { Store } from './store';
+import { ErrorService } from './error.service';
 
 const providers = [
   {
@@ -32,6 +33,7 @@ const providers = [
 
   AuthGuard,
   AuthService,
+  ErrorService,
   HubClient,
   HubClientGuard,
   LanguageGuard,

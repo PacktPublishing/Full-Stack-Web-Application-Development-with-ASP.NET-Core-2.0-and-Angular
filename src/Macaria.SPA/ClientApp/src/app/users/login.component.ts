@@ -15,13 +15,14 @@ import {
 } from "@angular/forms";
 
 import { takeUntil, tap, map } from "rxjs/operators";
-import { MatSnackBar } from "@angular/material";
+import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from "@angular/material";
 import { TranslateService } from "@ngx-translate/core";
 import { ENTER } from "@angular/cdk/keycodes";
 import { AuthService } from "../core/auth.service";
 import { LoginRedirectService } from "../core/redirect.service";
 import { Output } from "@angular/core";
 import { HttpErrorResponse } from "@angular/common/http";
+import { ErrorService } from "../core/error.service";
 
 @Component({
     templateUrl: "./login.component.html",
@@ -31,26 +32,18 @@ import { HttpErrorResponse } from "@angular/common/http";
 export class LoginComponent { 
   constructor(
     private _authService: AuthService,
-    public _elementRef: ElementRef,
-    public _loginRedirectService: LoginRedirectService,
-    public _matSnackBar: MatSnackBar,
-    public _renderer: Renderer,
-    public _translateService: TranslateService
+    private _elementRef: ElementRef,
+    private _errorService: ErrorService,
+    private _loginRedirectService: LoginRedirectService,
+    private _renderer: Renderer
   ) { }
 
   ngOnInit() {
     this._authService.logout();
-    this._translateService.get(["Login Failed", "An error ocurr.Try it again."])
-      .pipe(
-        takeUntil(this.onDestroy),
-        map((translations) => this.translations = translations)
-      )
-      .subscribe();
   }
 
   public onDestroy: Subject<void> = new Subject<void>();
-
-  public translations;
+  
 
   ngAfterContentInit() {
     this._renderer.invokeElementMethod(this.usernameNativeElement, 'focus', []);
@@ -61,7 +54,9 @@ export class LoginComponent {
 
   @Input()
   public password: string;
-  
+
+  private _snackBarRef: MatSnackBarRef<SimpleSnackBar>;
+
   public form = new FormGroup({
     username: new FormControl(this.username, [Validators.required]),
     password: new FormControl(this.password, [Validators.required])
@@ -73,7 +68,8 @@ export class LoginComponent {
 
   @HostListener("window:click")
   public dismissSnackBar() {
-    this._matSnackBar.dismiss();
+    if(this._snackBarRef)
+      this._snackBarRef.dismiss();
   }
 
   @Output()
@@ -82,23 +78,19 @@ export class LoginComponent {
       username: $event.value.username,
       password: $event.value.password
     })
-      .subscribe(() =>
-        this._loginRedirectService.redirectPreLogin(),
-      errorResponse => {
-        return this.handleError(errorResponse);
-      });
+    .subscribe(
+      () => this._loginRedirectService.redirectPreLogin(),
+      errorResponse => this.handleErrorResponse(errorResponse)
+    );
   }
 
-  public handleError(errorResponse) {
-    if (!errorResponse.error && !errorResponse.error.messages) {
-      this._matSnackBar.open(this.translations['Login Failed'], errorResponse.statusText, {
-        duration: 0
-      });
-      return;
-    }
-    this._matSnackBar.open(this.translations['Login Failed'], this.translations[errorResponse.error.messages[0]], {
-      duration: 0
-    });
+  public handleErrorResponse(errorResponse) {
+    this._errorService.handle$(errorResponse, 'Login Failed')
+      .pipe(
+        takeUntil(this.onDestroy),
+        map(snackBarRef => this._snackBarRef = snackBarRef)
+      )
+      .subscribe();
   }
 
   ngOnDestroy() {

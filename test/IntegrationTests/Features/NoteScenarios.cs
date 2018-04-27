@@ -86,7 +86,7 @@ namespace IntegrationTests.Features
                 Assert.True(response.Notes.Count() == 3);
             }
         }
-        
+
         [Fact]
         public async Task ShouldGetNoteById()
         {
@@ -96,7 +96,7 @@ namespace IntegrationTests.Features
                 {
                     Title = "Title",
                     Body = "Body",
-                    
+
                 });
 
                 context.SaveChanges();
@@ -106,6 +106,30 @@ namespace IntegrationTests.Features
             {
                 var response = await server.CreateClient()
                     .GetAsync<GetNoteByIdQuery.Response>(Get.NoteById(1));
+
+                Assert.True(response.Note.NoteId != default(int));
+            }
+        }
+
+        [Fact]
+        public async Task ShouldGetNoteBySlug()
+        {
+            void setUpData(MacariaContext context)
+            {
+                context.Notes.Add(new Note()
+                {
+                    Title = "Title",
+                    Body = "Body",
+                    Slug = "title"
+                });
+
+                context.SaveChanges();
+            }
+
+            using (var server = CreateServer(setUpData))
+            {
+                var response = await server.CreateClient()
+                    .GetAsync<GetNoteBySlugQuery.Response>(Get.NoteBySlug("title"));
 
                 Assert.True(response.Note.NoteId != default(int));
             }

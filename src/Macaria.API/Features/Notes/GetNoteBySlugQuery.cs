@@ -27,14 +27,16 @@ namespace Macaria.API.Features.Notes
             }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
-                => new Response()
+            {
+                return new Response()
                 {
                     Note = NoteApiModel.FromNote(await _context.Notes
                         .Include(x => x.NoteTags)
                         .Include("NoteTags.Tag")
-                        .Where(x =>x.Slug == request.Slug)
+                        .Where(x => x.Slug == request.Slug)
                         .SingleAsync())
                 };
+            }
         }
     }
 }

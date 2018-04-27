@@ -59,7 +59,7 @@ namespace UnitTests.API
                 {
                     NoteId = 1,
                     Title = "Quinntyne",
-                    
+
                 });
 
                 context.SaveChanges();
@@ -69,6 +69,35 @@ namespace UnitTests.API
                 var response = await handler.Handle(new GetNoteByIdQuery.Request()
                 {
                     NoteId = 1
+                }, default(CancellationToken));
+
+                Assert.Equal("Quinntyne", response.Note.Title);
+            }
+        }
+
+        [Fact]
+        public async Task ShouldHandleGetNoteBySlugQueryRequest()
+        {
+            var options = new DbContextOptionsBuilder<MacariaContext>()
+                .UseInMemoryDatabase(databaseName: "ShouldHandleGetNoteBySlugQueryRequest")
+                .Options;
+
+            using (var context = new MacariaContext(options))
+            {
+                context.Notes.Add(new Note()
+                {
+                    NoteId = 1,
+                    Title = "Quinntyne",
+                    Slug = "quinntyne"
+                });
+
+                context.SaveChanges();
+
+                var handler = new GetNoteBySlugQuery.Handler(context);
+
+                var response = await handler.Handle(new GetNoteBySlugQuery.Request()
+                {
+                    Slug = "quinntyne"
                 }, default(CancellationToken));
 
                 Assert.Equal("Quinntyne", response.Note.Title);

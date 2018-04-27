@@ -15,6 +15,12 @@ namespace IntegrationTests.Features
             {
                 return $"api/notes/tag/{slug}";
             }
+
+            public static string NoteBySlug(string slug)
+            {
+                return $"api/notes/slug/{slug}";
+            }
+
         }
 
         public static class Post

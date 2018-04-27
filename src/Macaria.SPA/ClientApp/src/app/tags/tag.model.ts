@@ -1,6 +1,5 @@
-export class Tag { 
+export class Tag {
+  public tagId: any;
 
-    public tagId:any;
-    
-    public name:string;
+  public name: string;
 }

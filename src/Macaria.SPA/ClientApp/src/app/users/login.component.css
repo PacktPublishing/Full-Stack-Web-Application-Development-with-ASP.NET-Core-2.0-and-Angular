@@ -1,12 +1,11 @@
 :host {
-  width:100%;
+  width: 100%;
 }
 
 .mat-typography h2 {
-  font-weight:600;
-  margin-bottom:30px;
-  color: rgb(60,60,60);
-
+  font-weight: 600;
+  margin-bottom: 30px;
+  color: rgb(60, 60, 60);
 }
 mat-card {
   margin: 0 auto;
@@ -17,18 +16,17 @@ mat-card {
 }
 
 mat-form-field {
-  display:block;
+  display: block;
 }
 
 mat-card-title {
-
 }
 
 form {
-  margin:20px 0px 0px 0px;
-  text-align:right;
+  margin: 20px 0px 0px 0px;
+  text-align: right;
 }
 
 button {
-  margin-top:40px;
+  margin-top: 40px;
 }

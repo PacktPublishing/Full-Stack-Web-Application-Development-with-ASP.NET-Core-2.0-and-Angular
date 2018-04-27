@@ -3,6 +3,6 @@
   background-color: #fff;
 }
 
-  :host .editor {
-    height: calc(100% - 42px);
-  }
+:host .editor {
+  height: calc(100% - 42px);
+}

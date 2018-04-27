@@ -1,4 +1,10 @@
-import { Routes, RouterModule, RouteReuseStrategy, DetachedRouteHandle, ActivatedRouteSnapshot } from '@angular/router';
+import {
+  Routes,
+  RouterModule,
+  RouteReuseStrategy,
+  DetachedRouteHandle,
+  ActivatedRouteSnapshot
+} from '@angular/router';
 import { LoginComponent } from './users/login.component';
 import { MasterPageComponent } from './master-page.component';
 import { AnonymousMasterPageComponent } from './anonymous-master-page.component';
@@ -28,10 +34,7 @@ export const routes: Routes = [
   {
     path: '',
     component: MasterPageComponent,
-    canActivate: [
-      AuthGuard,
-      HubClientGuard      
-    ],
+    canActivate: [AuthGuard, HubClientGuard],
     children: [
       {
         path: '',
@@ -82,4 +85,4 @@ export const routes: Routes = [
   imports: [RouterModule.forRoot(routes, { useHash: false })],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from "@angular/common";
+import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
@@ -9,7 +9,7 @@ import { HeaderInterceptor } from './headers.interceptor';
 import { HubClient } from './hub-client';
 import { HubClientGuard } from './hub-client-guard';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LanguageService } from './language.service';
 import { LanguageGuard } from './language-guard';
 import { AuthGuard } from './auth.guard';
@@ -53,7 +53,7 @@ export function TranslateHttpLoaderFactory(httpClient: HttpClient) {
     CommonModule,
     FormsModule,
     HttpClientModule,
-	  ReactiveFormsModule,
+    ReactiveFormsModule,
     RouterModule,
     TranslateModule.forRoot({
       loader: {
@@ -66,4 +66,4 @@ export function TranslateHttpLoaderFactory(httpClient: HttpClient) {
   providers,
   exports: [TranslateModule]
 })
-export class CoreModule { }
+export class CoreModule {}

@@ -1,9 +1,9 @@
-import { Injectable } from "@angular/core";
-import { HubClient } from "./hub-client";
-import { Tag } from "../tags/tag.model";
-import { BehaviorSubject } from "rxjs";
-import { Note } from "../notes/note.model";
-import { filter } from "rxjs/operators";
+import { Injectable } from '@angular/core';
+import { HubClient } from './hub-client';
+import { Tag } from '../tags/tag.model';
+import { BehaviorSubject } from 'rxjs';
+import { Note } from '../notes/note.model';
+import { filter } from 'rxjs/operators';
 
 @Injectable()
 export class Store {
@@ -20,10 +20,7 @@ export class Store {
   public tags$: BehaviorSubject<Array<Tag>>;
 
   public handleTagSaved(payload: { tag: Tag }) {
-    this.tags$.next([
-      ...this.tags$.value,
-      payload.tag
-    ]);
+    this.tags$.next([...this.tags$.value, payload.tag]);
   }
 
   public handleTagRemoved(payload: { tagId: number }) {
@@ -34,30 +31,18 @@ export class Store {
   }
 
   public get savedNotes$() {
-    return this._hubClient.messages$
-      .pipe(
-        filter(x => x.type == "[Note] Saved")
-      );
+    return this._hubClient.messages$.pipe(filter(x => x.type == '[Note] Saved'));
   }
 
   public get removedNotes$() {
-    return this._hubClient.messages$
-      .pipe(
-        filter(x => x.type == "[Note] Removed")
-      );
+    return this._hubClient.messages$.pipe(filter(x => x.type == '[Note] Removed'));
   }
 
   public get savedTags$() {
-    return this._hubClient.messages$
-      .pipe(
-        filter(x => x.type == "[Tag] Saved")
-      );
+    return this._hubClient.messages$.pipe(filter(x => x.type == '[Tag] Saved'));
   }
 
   public get removedTags$() {
-    return this._hubClient.messages$
-      .pipe(
-        filter(x => x.type == "[Tag] Removed")
-      );
+    return this._hubClient.messages$.pipe(filter(x => x.type == '[Tag] Removed'));
   }
 }

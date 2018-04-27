@@ -32,7 +32,7 @@ import {
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule
-} from "@angular/material";
+} from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { PrimaryHeaderComponent } from './primary-header.component';
 import { QuillTextEditorComponent } from './quill-text-editor.component';
@@ -41,11 +41,7 @@ import { AgGridModule } from 'ag-grid-angular';
 import { DeleteCellComponent } from './delete-cell.component';
 
 @NgModule({
-  declarations: [
-    DeleteCellComponent,
-    PrimaryHeaderComponent,
-    QuillTextEditorComponent
-  ],
+  declarations: [DeleteCellComponent, PrimaryHeaderComponent, QuillTextEditorComponent],
   imports: [
     MatAutocompleteModule,
     MatButtonModule,
@@ -83,10 +79,8 @@ import { DeleteCellComponent } from './delete-cell.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    
-    AgGridModule.withComponents([
-      DeleteCellComponent
-    ]),
+
+    AgGridModule.withComponents([DeleteCellComponent])
   ],
   exports: [
     MatAutocompleteModule,
@@ -132,4 +126,4 @@ import { DeleteCellComponent } from './delete-cell.component';
     PrimaryHeaderComponent
   ]
 })
-export class SharedModule { }
+export class SharedModule {}

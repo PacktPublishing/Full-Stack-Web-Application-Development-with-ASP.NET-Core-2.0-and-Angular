@@ -1,50 +1,57 @@
-import { Component } from "@angular/core";
-import { Subject } from "rxjs";
-import { NotesService } from "./notes.service";
-import { Note } from "./note.model";
-import { Observable } from "rxjs";
-import { map, takeUntil, tap } from "rxjs/operators";
-import { ColDef } from "ag-grid";
-import { Router } from "@angular/router";
-import { TranslateService } from "@ngx-translate/core";
-import { DeleteCellComponent } from "../shared/delete-cell.component";
-import { Store } from "../core/store";
+import { Component } from '@angular/core';
+import { Subject } from 'rxjs';
+import { NotesService } from './notes.service';
+import { Note } from './note.model';
+import { Observable } from 'rxjs';
+import { map, takeUntil, tap } from 'rxjs/operators';
+import { ColDef } from 'ag-grid';
+import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { DeleteCellComponent } from '../shared/delete-cell.component';
+import { Store } from '../core/store';
 
 @Component({
-  templateUrl: "./notes-page.component.html",
-  styleUrls: ["./notes-page.component.css"],
-  selector: "app-notes-page"
+  templateUrl: './notes-page.component.html',
+  styleUrls: ['./notes-page.component.css'],
+  selector: 'app-notes-page'
 })
-export class NotesPageComponent { 
+export class NotesPageComponent {
   constructor(
     private _notesService: NotesService,
     private _store: Store,
     private _router: Router,
     private _translateService: TranslateService
-  ) { }
+  ) {}
 
   public onDestroy: Subject<void> = new Subject<void>();
 
   public localeText: any = {};
 
   ngOnInit() {
-    this._notesService.get()
-      .pipe(
-        map(x => this._store.notes$.next(x.notes))
-      )
+    this._notesService
+      .get()
+      .pipe(map(x => this._store.notes$.next(x.notes)))
       .subscribe();
 
-    this._translateService.get(["Title", "Page", "of", "to"])
+    this._translateService
+      .get(['Title', 'Page', 'of', 'to'])
       .pipe(
-        
-        tap((translations) => {
-        this.localeText = translations;
+        tap(translations => {
+          this.localeText = translations;
           this.columnDefs = [
-            { headerName: translations["Title"], field: "title", onCellClicked: ($event) => this.handleTitleClick($event) },
-            { cellRenderer: "deleteRenderer", onCellClicked: ($event) => this.handleDelete($event), width: 20 }
+            {
+              headerName: translations['Title'],
+              field: 'title',
+              onCellClicked: $event => this.handleTitleClick($event)
+            },
+            {
+              cellRenderer: 'deleteRenderer',
+              onCellClicked: $event => this.handleDelete($event),
+              width: 20
+            }
           ];
         })
-      ) 
+      )
       .subscribe();
   }
 
@@ -54,7 +61,8 @@ export class NotesPageComponent {
 
     notes.splice(deletedNoteIndex, 1);
 
-    this._notesService.remove({ note: <Note>$event.data })
+    this._notesService
+      .remove({ note: <Note>$event.data })
       .pipe(
         takeUntil(this.onDestroy),
         tap(x => {
@@ -74,13 +82,15 @@ export class NotesPageComponent {
 
   public columnDefs: Array<ColDef> = [];
 
-  public onGridReady($event) { $event.api.sizeColumnsToFit(); }
+  public onGridReady($event) {
+    $event.api.sizeColumnsToFit();
+  }
 
   public get notes$(): Observable<Array<Note>> {
     return this._store.notes$;
   }
 
   ngOnDestroy() {
-    this.onDestroy.next();	
+    this.onDestroy.next();
   }
 }

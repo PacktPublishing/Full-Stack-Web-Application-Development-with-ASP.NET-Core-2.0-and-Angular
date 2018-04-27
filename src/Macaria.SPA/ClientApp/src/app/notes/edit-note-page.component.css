@@ -1,10 +1,11 @@
 :host {
-  height:100%;
-  position:relative;
-  display:block;
+  height: 100%;
+  position: relative;
+  display: block;
 }
 
-app-quill-text-editor, div.ql-editor.ql-blank {
+app-quill-text-editor,
+div.ql-editor.ql-blank {
   height: 100%;
 }
 

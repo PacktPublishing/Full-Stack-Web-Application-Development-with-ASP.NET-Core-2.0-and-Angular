@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { TranslateService } from "@ngx-translate/core";
+import { TranslateService } from '@ngx-translate/core';
 import { LanguageService } from './core/language.service';
 
 @Component({
@@ -10,10 +10,10 @@ import { LanguageService } from './core/language.service';
 export class AppComponent {
   constructor(
     private _languageService: LanguageService,
-    private _translateService: TranslateService) {
-
+    private _translateService: TranslateService
+  ) {
     _translateService.setDefaultLang(_languageService.default);
-    
+
     _translateService.use(_languageService.current);
   }
 }

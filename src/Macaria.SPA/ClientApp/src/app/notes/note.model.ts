@@ -1,6 +1,6 @@
-import { Tag } from "../tags/tag.model";
+import { Tag } from '../tags/tag.model';
 
-export class Note { 
+export class Note {
   public noteId: any = 0;
   public title: string;
   public body: string;

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from "@angular/common";
+import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
@@ -13,20 +13,11 @@ import { TagPageComponent } from './tag-page.component';
 import { SharedModule } from '../shared/shared.module';
 import { NoteResolver } from './note-resolver.service';
 
-const declarations = [
-  EditNotePageComponent,
-  NotesPageComponent,
-  TagPageComponent
-];
+const declarations = [EditNotePageComponent, NotesPageComponent, TagPageComponent];
 
-const providers = [
-  NotesService,
-  NoteResolver
-];
+const providers = [NotesService, NoteResolver];
 
-const entryComponents = [
-
-]
+const entryComponents = [];
 
 @NgModule({
   declarations: declarations,
@@ -36,12 +27,12 @@ const entryComponents = [
     HttpClientModule,
     ReactiveFormsModule,
     RouterModule,
-    
+
     CoreModule,
     SharedModule,
     TagsModule
   ],
   entryComponents,
-  providers,
+  providers
 })
-export class NotesModule { }
+export class NotesModule {}

@@ -8,11 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 const declarations = [SettingsPageComponent];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    CoreModule,
-    SharedModule
-  ],
+  imports: [CommonModule, CoreModule, SharedModule],
   declarations
 })
-export class SettingsModule { }
+export class SettingsModule {}

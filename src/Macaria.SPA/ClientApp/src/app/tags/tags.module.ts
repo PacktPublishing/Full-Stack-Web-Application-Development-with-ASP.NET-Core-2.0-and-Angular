@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from "@angular/common";
+import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
@@ -10,28 +10,14 @@ import { AddTagOverlayComponent } from './add-tag-overlay.component';
 import { SharedModule } from '../shared/shared.module';
 import { TagsResolver } from './tags-resolver.service';
 
-const declarations = [
-  TagsPageComponent,
-  AddTagOverlayComponent
-];
+const declarations = [TagsPageComponent, AddTagOverlayComponent];
 
-const providers = [
-  TagsService,
-  TagsResolver
-];
+const providers = [TagsService, TagsResolver];
 
 @NgModule({
   declarations: declarations,
-  imports: [
-    CommonModule,
-    HttpClientModule,
-    RouterModule,
-    CoreModule,
-    SharedModule
-  ],
+  imports: [CommonModule, HttpClientModule, RouterModule, CoreModule, SharedModule],
   providers,
-  entryComponents: [
-    AddTagOverlayComponent
-  ]
+  entryComponents: [AddTagOverlayComponent]
 })
-export class TagsModule { }
+export class TagsModule {}

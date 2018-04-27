@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
 import { Subject } from 'rxjs';
 
 @Component({
@@ -7,10 +7,11 @@ import { Subject } from 'rxjs';
     selector: "app-master-page"
 })
 export class MasterPageComponent { 
+  constructor() { }
+  
+  public onDestroy: Subject<void> = new Subject<void>();
 
-    public onDestroy: Subject<void> = new Subject<void>();
-
-    ngOnDestroy() {
-         this.onDestroy.next();	
-    }
+  ngOnDestroy() {
+        this.onDestroy.next();	
+  }
 }

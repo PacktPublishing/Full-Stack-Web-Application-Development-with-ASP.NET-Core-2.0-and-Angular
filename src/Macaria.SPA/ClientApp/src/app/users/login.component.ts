@@ -15,12 +15,10 @@ import {
 } from "@angular/forms";
 
 import { takeUntil, tap, map } from "rxjs/operators";
-import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from "@angular/material";
-import { TranslateService } from "@ngx-translate/core";
+import { MatSnackBarRef, SimpleSnackBar } from "@angular/material";
 import { ENTER } from "@angular/cdk/keycodes";
 import { AuthService } from "../core/auth.service";
 import { LoginRedirectService } from "../core/redirect.service";
-import { Output } from "@angular/core";
 import { HttpErrorResponse } from "@angular/common/http";
 import { ErrorService } from "../core/error.service";
 
@@ -48,11 +46,9 @@ export class LoginComponent {
   ngAfterContentInit() {
     this._renderer.invokeElementMethod(this.usernameNativeElement, 'focus', []);
   }
-
-  @Input()
+  
   public username: string;
-
-  @Input()
+  
   public password: string;
 
   private _snackBarRef: MatSnackBarRef<SimpleSnackBar>;
@@ -72,12 +68,14 @@ export class LoginComponent {
       this._snackBarRef.dismiss();
   }
 
-  @Output()
   public tryToLogin($event) { 
     this._authService.tryToLogin({
       username: $event.value.username,
       password: $event.value.password
     })
+    .pipe(
+      takeUntil(this.onDestroy)
+    )
     .subscribe(
       () => this._loginRedirectService.redirectPreLogin(),
       errorResponse => this.handleErrorResponse(errorResponse)

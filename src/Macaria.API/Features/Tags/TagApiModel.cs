@@ -6,13 +6,13 @@ namespace Macaria.API.Features.Tags
     {        
         public int TagId { get; set; }
         public string Name { get; set; }
-
+        public string Slug { get; set; }
         public static TagApiModel FromTag(Tag tag)
-        {
-            var model = new TagApiModel();
-            model.TagId = tag.TagId;
-            model.Name = tag.Name;
-            return model;
-        }
+            => new TagApiModel
+            {
+                TagId = tag.TagId,
+                Name = tag.Name,
+                Slug = tag.Slug
+            };
     }
 }

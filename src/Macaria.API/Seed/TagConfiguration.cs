@@ -1,5 +1,6 @@
 using Macaria.Core.Entities;
 using Macaria.Infrastructure.Data;
+using Macaria.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
@@ -10,10 +11,10 @@ namespace Macaria.API.Seed
         public static void Seed(MacariaContext context)
         {
             if (context.Tags.IgnoreQueryFilters().FirstOrDefault(x => x.Name == "Angular") == null)
-                context.Tags.Add(new Tag() { Name = "Angular"});
+                context.Tags.Add(new Tag() { Name = "Angular", Slug= "Angular".GenerateSlug() });
 
             if (context.Tags.IgnoreQueryFilters().FirstOrDefault(x => x.Name == "ASP.NET Core") == null)
-                context.Tags.Add(new Tag() { Name = "ASP.NET Core" });
+                context.Tags.Add(new Tag() { Name = "ASP.NET Core", Slug = "ASP.NET Core".GenerateSlug() });
 
             context.SaveChanges();
         }

@@ -4,6 +4,7 @@ using System.Threading;
 using FluentValidation;
 using Macaria.Infrastructure.Data;
 using Macaria.Core.Entities;
+using Macaria.Infrastructure.Extensions;
 
 namespace Macaria.API.Features.Tags
 {
@@ -40,6 +41,8 @@ namespace Macaria.API.Features.Tags
                 if (tag == null) _context.Tags.Add(tag = new Tag());
 
                 tag.Name = request.Tag.Name;
+
+                tag.Slug = request.Tag.Name.GenerateSlug();
 
                 await _context.SaveChangesAsync(cancellationToken);
 

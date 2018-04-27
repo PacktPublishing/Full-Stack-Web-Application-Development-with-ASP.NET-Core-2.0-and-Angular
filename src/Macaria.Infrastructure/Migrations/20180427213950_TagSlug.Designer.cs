@@ -10,9 +10,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Macaria.Infrastructure.Migrations
 {
     [DbContext(typeof(MacariaContext))]
-    partial class MacariaContextModelSnapshot : ModelSnapshot
+    [Migration("20180427213950_TagSlug")]
+    partial class TagSlug
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

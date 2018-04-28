@@ -4,7 +4,8 @@ import { OverlayRefWrapper } from '../core/overlay-ref-wrapper';
 import { TagsService } from './tags.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Tag } from './tag.model';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
+import { Store } from '../core/store';
 
 @Component({
   templateUrl: './add-tag-overlay.component.html',
@@ -12,7 +13,10 @@ import { tap } from 'rxjs/operators';
   selector: 'app-add-tag-overlay'
 })
 export class AddTagOverlayComponent {
-  constructor(private _overlay: OverlayRefWrapper, private _tagService: TagsService) {}
+  constructor(
+    private _overlay: OverlayRefWrapper,
+    private _store: Store,
+    private _tagService: TagsService) { }
 
   public handleCancel() {
     this._overlay.close();
@@ -21,7 +25,12 @@ export class AddTagOverlayComponent {
   public handleSave(tag: Tag) {
     this._tagService
       .save({ tag })
-      .pipe(tap(() => this._overlay.close()))
+      .pipe(map((result: any) => {
+        alert(JSON.stringify(result));
+        const tags = this._store.tags$.value;
+        tag.tagId = result.tagId;
+        this._store.tags$.next([...tags,tag])
+      }), tap(() => this._overlay.close()))
       .subscribe();
   }
 

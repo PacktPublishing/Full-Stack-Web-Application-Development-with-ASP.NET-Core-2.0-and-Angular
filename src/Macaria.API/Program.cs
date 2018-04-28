@@ -31,15 +31,14 @@ namespace Macaria.API
             var services = (IServiceScopeFactory)host.Services.GetService(typeof(IServiceScopeFactory));
             using (var scope = services.CreateScope())
             {
+                if (args.Contains("ci"))
+                    args = new string[4] { "dropdb", "migratedb", "seeddb", "stop" };
+
                 if (args.Contains("dropdb"))
-                {
                     GetMacariaContext(scope).Database.EnsureDeleted();
-                }
 
                 if (args.Contains("migratedb"))
-                {
                     GetMacariaContext(scope).Database.Migrate();
-                }
 
                 if (args.Contains("seeddb"))
                 {
@@ -48,9 +47,7 @@ namespace Macaria.API
                 }
                 
                 if (args.Contains("stop"))
-                {
                     Environment.Exit(0);
-                }
             }
         }
         private static MacariaContext GetMacariaContext(IServiceScope services)

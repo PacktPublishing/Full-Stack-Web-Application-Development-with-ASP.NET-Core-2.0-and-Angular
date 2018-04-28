@@ -36,7 +36,7 @@ import { SharedModule } from './shared/shared.module';
     TagsModule,
     UsersModule
   ],
-  providers: [{ provide: baseUrl, useValue: 'http://localhost:54193/' }],
+  providers: [{ provide: baseUrl, useValue: 'http://localhost:10372/' }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

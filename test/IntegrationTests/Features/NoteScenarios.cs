@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.SignalR.Client;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -57,22 +56,19 @@ namespace IntegrationTests.Features
                 context.Notes.Add(new Note()
                 {
                     Title = "Title1",
-                    Body = "Body",
-                    
+                    Body = "Body"                    
                 });
 
                 context.Notes.Add(new Note()
                 {
                     Title = "Title2",
-                    Body = "Body",
-                    
+                    Body = "Body"                    
                 });
 
                 context.Notes.Add(new Note()
                 {
                     Title = "Title3",
-                    Body = "Body",
-                    
+                    Body = "Body"                    
                 });
 
                 context.SaveChanges();

@@ -13,14 +13,19 @@ namespace Macaria.API.Features.Notes
         public string Body { get; set; }
 
         public ICollection<TagApiModel> Tags = new HashSet<TagApiModel>();
-        public static NoteApiModel FromNote(Note note)
+        public static NoteApiModel FromNote(Note note, bool includeTags = true)
         {
-            var model = new NoteApiModel();
-            model.NoteId = note.NoteId;
-            model.Title = note.Title;
-            model.Slug = note.Slug;
-            model.Body = note.Body;
-            model.Tags = note.NoteTags.Select(x => TagApiModel.FromTag(x.Tag)).ToList();
+            var model = new NoteApiModel
+            {
+                NoteId = note.NoteId,
+                Title = note.Title,
+                Slug = note.Slug,
+                Body = note.Body
+            };
+
+            if (includeTags)
+                model.Tags = note.NoteTags.Select(x => TagApiModel.FromTag(x.Tag)).ToList();
+
             return model;
         }
     }

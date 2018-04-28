@@ -84,11 +84,21 @@ namespace UnitTests.API
 
             using (var context = new MacariaContext(options))
             {
+                context.Tags.Add(new Tag()
+                {
+                    TagId = 1,
+                    Name = "Angular",
+                    Slug = "angular"
+                });
+
                 context.Notes.Add(new Note()
                 {
                     NoteId = 1,
                     Title = "Quinntyne",
-                    Slug = "quinntyne"
+                    Slug = "quinntyne",
+                    NoteTags = new List<NoteTag>() {
+                        new NoteTag() { TagId = 1 }
+                    }
                 });
 
                 context.SaveChanges();
@@ -101,6 +111,7 @@ namespace UnitTests.API
                 }, default(CancellationToken));
 
                 Assert.Equal("Quinntyne", response.Note.Title);
+                Assert.Single(response.Note.Tags);
             }
         }
 
@@ -127,53 +138,6 @@ namespace UnitTests.API
                 var response = await handler.Handle(new GetNotesQuery.Request(), default(CancellationToken));
 
                 Assert.Single(response.Notes);
-            }
-        }
-
-        [Fact]
-        public async Task ShouldHandleGetNotesByTagQueryRequest()
-        {
-            var options = new DbContextOptionsBuilder<MacariaContext>()
-                .UseInMemoryDatabase(databaseName: "ShouldHandleGetNotesByTagQueryRequest")
-                .Options;
-
-            using (var context = new MacariaContext(options))
-            {
-
-                context.Tags.Add(new Tag()
-                {
-                    TagId = 1,
-                    Name = "Angular",
-                    Slug = "angular"
-                });
-
-                context.Notes.Add(new Note()
-                {
-                    NoteId = 1,
-                    Title = "Tech Note",
-                    NoteTags = new List<NoteTag>()
-                    {
-                        new NoteTag() { TagId = 1 }
-                    }
-                });
-
-                context.Notes.Add(new Note()
-                {
-                    NoteId = 2,
-                    Title = "Another Tech Note",
-                    NoteTags = new List<NoteTag>()
-                    {
-                        new NoteTag() { TagId = 1 }
-                    }
-                });
-
-                context.SaveChanges();
-
-                var handler = new GetNotesByTagSlugQuery.Handler(context);
-
-                var response = await handler.Handle(new GetNotesByTagSlugQuery.Request() { Slug = "angular"}, default(CancellationToken));
-
-                Assert.Equal(2, response.Notes.Count());
             }
         }
 

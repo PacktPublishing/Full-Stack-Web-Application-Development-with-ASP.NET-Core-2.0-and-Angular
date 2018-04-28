@@ -1,0 +1,9 @@
+<app-primary-header>
+  {{ (tag$ | async)?.name }}
+</app-primary-header>
+
+<section class="notes-by-tag-content-container">
+  <mat-card *ngFor="let tag of (tag$ | async)?.notes">
+    <h1> {{ tag.title}} </h1>
+  </mat-card>
+</section>

@@ -9,11 +9,11 @@ import { CoreModule } from '../core/core.module';
 import { NotesPageComponent } from './notes-page.component';
 
 import { EditNotePageComponent } from './edit-note-page.component';
-import { TagPageComponent } from './tag-page.component';
 import { SharedModule } from '../shared/shared.module';
 import { NoteResolver } from './note-resolver.service';
+import { NotesByTagPageComponent } from './notes-by-tag-page.component';
 
-const declarations = [EditNotePageComponent, NotesPageComponent, TagPageComponent];
+const declarations = [EditNotePageComponent, NotesPageComponent, NotesByTagPageComponent];
 
 const providers = [NotesService, NoteResolver];
 

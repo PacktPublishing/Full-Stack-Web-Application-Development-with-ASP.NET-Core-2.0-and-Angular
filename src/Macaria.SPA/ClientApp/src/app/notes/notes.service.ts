@@ -12,6 +12,10 @@ export class NotesService {
     return this._httpClient.get<{ note: Note }>(`${this._baseUrl}api/notes/slug/${options.slug}`);
   }
 
+  public getByTagSlug(options: { slug: string }): Observable<{ notes: Note[] }> {
+    return this._httpClient.get<{ notes: Note[] }>(`${this._baseUrl}api/notes/tag/${options.slug}`);
+  }
+
   public save(options: { note: Note }) {
     return this._httpClient.post(`${this._baseUrl}api/notes`, options);
   }

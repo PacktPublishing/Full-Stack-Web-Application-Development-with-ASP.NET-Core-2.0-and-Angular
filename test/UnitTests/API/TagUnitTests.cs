@@ -2,6 +2,7 @@
 using Macaria.Core.Entities;
 using Macaria.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -62,6 +63,47 @@ namespace UnitTests.API.Tags
                 }, default(CancellationToken));
 
                 Assert.Equal("Quinntyne", response.Tag.Name);
+            }
+        }
+
+        [Fact]
+        public async Task ShouldHandleGetTagBySlugQueryRequest()
+        {
+            var options = new DbContextOptionsBuilder<MacariaContext>()
+                .UseInMemoryDatabase(databaseName: "ShouldHandleGetTagBySlugQueryRequest")
+                .Options;
+
+            using (var context = new MacariaContext(options))
+            {
+                context.Notes.Add(new Note()
+                {
+                    NoteId = 1,
+                    Title = "Angular",
+                    Slug = "angular"
+                });
+
+                context.Tags.Add(new Tag()
+                {
+                    TagId = 1,
+                    Name = "Routing",
+                    Slug = "routing",
+                    NoteTags = new List<NoteTag>()
+                    {
+                        new NoteTag() { NoteId = 1 }
+                    }
+                });
+                
+                context.SaveChanges();
+
+                var handler = new GetTagBySlugQuery.Handler(context);
+
+                var response = await handler.Handle(new GetTagBySlugQuery.Request()
+                {
+                    Slug = "routing"
+                }, default(CancellationToken));
+
+                Assert.Equal("angular", response.Tag.Notes.First().Slug);
+                Assert.Single(response.Tag.Notes);
             }
         }
 

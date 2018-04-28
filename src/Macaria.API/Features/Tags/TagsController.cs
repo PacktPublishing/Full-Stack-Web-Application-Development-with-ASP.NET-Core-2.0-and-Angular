@@ -14,6 +14,10 @@ namespace Macaria.API.Features.Tags
 
         public TagsController(IMediator mediator) => _mediator = mediator;
 
+        [HttpGet("slug/{slug}")]
+        public async Task<ActionResult<GetTagBySlugQuery.Response>> GetBySlug([FromRoute]GetTagBySlugQuery.Request request)
+            => await _mediator.Send(request);
+
         [HttpPost]
         public async Task<ActionResult<SaveTagCommand.Response>> Add(SaveTagCommand.Request request)
             => await _mediator.Send(request);

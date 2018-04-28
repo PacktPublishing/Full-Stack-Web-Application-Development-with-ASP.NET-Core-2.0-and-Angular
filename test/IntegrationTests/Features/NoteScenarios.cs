@@ -130,43 +130,7 @@ namespace IntegrationTests.Features
                 Assert.True(response.Note.NoteId != default(int));
             }
         }
-
-        [Fact]
-        public async Task ShouldGetNotesByTagSlug()
-        {
-            void setUpData(MacariaContext context)
-            {
-                context.Notes.Add(new Note()
-                {
-                    Title = "Angular Routing",
-                    Body = "Body",
-                    NoteTags = new List<NoteTag>() {
-                        new NoteTag() { TagId = 1 }
-                    }
-                });
-
-                context.Notes.Add(new Note()
-                {
-                    Title = "Angular Rendering",
-                    Body = "Body",
-                    NoteTags = new List<NoteTag>() {
-                        new NoteTag() { TagId = 1 }
-                    }
-                });
-
-                context.SaveChanges();
-            }
-
-            using (var server = CreateServer(setUpData))
-            {
-                var response = await server.CreateClient()
-                    .GetAsync<GetNotesByTagSlugQuery.Response>(Get.NoteByTagSlug("angular"));
-
-                Assert.True(response.Notes.Count() == 2);
-            }
-        }
-
-
+        
         [Fact]
         public async Task ShouldUpdateNote()
         {

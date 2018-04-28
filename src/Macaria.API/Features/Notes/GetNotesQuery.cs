@@ -28,7 +28,7 @@ namespace Macaria.API.Features.Notes
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
                 => new Response()
                 {
-                    Notes = await _context.Notes.Select(x => NoteApiModel.FromNote(x)).ToListAsync()
+                    Notes = await _context.Notes.Select(x => NoteApiModel.FromNote(x, true)).ToListAsync()
                 };
         }
     }

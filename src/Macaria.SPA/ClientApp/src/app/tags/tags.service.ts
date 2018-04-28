@@ -28,7 +28,9 @@ export class TagsService {
     return this._cache$;
   }
 
-  public getById(options) {}
+  public getBySlug(options: { slug: string }): Observable<{ tag: Tag }> {
+    return this._httpClient.get<{ tag: Tag }>(`${this._baseUrl}api/tags/slug/${options.slug}`);
+  }
 
   public remove(options) {
     return this._httpClient.delete<{ tags: Array<Tag> }>(

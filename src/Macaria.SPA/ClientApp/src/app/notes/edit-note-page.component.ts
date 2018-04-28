@@ -113,10 +113,7 @@ export class EditNotePageComponent {
 
   public editorPlaceholder: string = 'Compose a note...';
 
-  public handleNoteTagClick(tag: Tag) {
-    this._router.navigate(['notes', 'tag', tag.tagId]);
-  }
-
+  
   public form = new FormGroup({
     title: new FormControl(this._store.note$.value.title, [Validators.required]),
     body: new FormControl(this._store.note$.value.body, [Validators.required]),
@@ -141,8 +138,9 @@ export class EditNotePageComponent {
     this.chipInput['nativeElement'].blur();
   }
 
-  onTagClicked(tag) {
-    alert('?');
+  onTagClicked(tagName) {
+    const tag = this._store.tags$.value.find(x => x.name == tagName);
+    this._router.navigate(['tags', tag.slug]);  
   }
 
   onAddItems(event: MatAutocompleteSelectedEvent) {

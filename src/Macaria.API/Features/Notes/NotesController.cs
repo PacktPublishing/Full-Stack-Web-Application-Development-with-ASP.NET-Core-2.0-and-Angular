@@ -15,7 +15,7 @@ namespace Macaria.API.Features.Notes
         public NotesController(IMediator mediator) => _mediator = mediator;
 
         [HttpGet("slug/{slug}")]
-        public async Task<ActionResult<GetNoteBySlugQuery.Response>> GetByCurrentUser([FromRoute]GetNoteBySlugQuery.Request request)
+        public async Task<ActionResult<GetNoteBySlugQuery.Response>> GetBySlug([FromRoute]GetNoteBySlugQuery.Request request)
             => await _mediator.Send(request);
  
         [HttpPost]
@@ -24,10 +24,6 @@ namespace Macaria.API.Features.Notes
         
         [HttpDelete("{noteId}")]
         public async Task Remove([FromRoute]RemoveNoteCommand.Request request)
-            => await _mediator.Send(request);
-
-        [HttpGet("tag/{slug}")]
-        public async Task<ActionResult<GetNotesByTagSlugQuery.Response>> GetByTagSlug([FromRoute]GetNotesByTagSlugQuery.Request request)
             => await _mediator.Send(request);
 
         [HttpGet("{noteId}")]

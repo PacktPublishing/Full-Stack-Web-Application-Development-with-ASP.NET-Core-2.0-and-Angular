@@ -9,9 +9,7 @@ import { takeUntil, catchError, tap, map, startWith } from 'rxjs/operators';
 import { Tag } from '../tags/tag.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LanguageService } from '../core/language.service';
-import { ViewChild } from '@angular/core';
-import { MatInput, MatAutocompleteSelectedEvent } from '@angular/material';
-import { ENTER, COMMA } from '@angular/cdk/keycodes';
+import { MatInput } from '@angular/material';
 import { Store } from '../core/store';
 
 var moment: any;
@@ -32,11 +30,13 @@ export class EditNotePageComponent {
     private _store: Store
   ) {
     this.editorPlaceholder = this._languageService.currentTranslations[this.editorPlaceholder];
-    if (this.slug) {
-      this.selectedItems = this._store.note$.value.tags.map(x => x.name);
-      this.itemsData = this.selectedItems;
-    }
+
+    this.selectedItems = this._store.note$.value.tags.map(x => x.name);
+    this.items = this._store.tags$.value;
   }
+
+  selectedItems: any[];
+  items: any[];
 
   canDeactivate() {
     !this.form.dirty;
@@ -47,32 +47,7 @@ export class EditNotePageComponent {
       title: this.note$.value.title,
       body: this.note$.value.body
     });
-
-    this.filteredItems = this.form
-      .get('addItems')
-      .valueChanges.pipe(
-        startWith(''),
-        map(item => (item ? this.filterItems(item.toString()) : this.items.slice()))
-      );
   }
-
-  @ViewChild('chipInput') chipInput: MatInput;
-
-  selectedItems: string[] = [];
-
-  filteredItems: Observable<any[]>;
-
-  separatorKeysCodes = [ENTER, COMMA];
-
-  get itemsData(): string[] {
-    return this.selectedItems;
-  }
-
-  set itemsData(v: string[]) {
-    this.selectedItems = v;
-  }
-
-  items: any[] = this._store.tags$.value;
 
   public notes$: BehaviorSubject<Note> = new BehaviorSubject(<Note>{});
 
@@ -94,11 +69,7 @@ export class EditNotePageComponent {
     note.noteId = this._store.note$.value.noteId;
     note.title = this.form.value.title;
     note.body = this.form.value.body;
-    note.tags = [];
-
-    for (let i = 0; i < this.selectedItems.length; i++) {
-      note.tags.push(this._store.tags$.value.find(x => x.name == this.selectedItems[i]));
-    }
+    note.tags = this.form.value.tags.map(x => this._store.tags$.value.find(t => t.name == x));
 
     this._notesService
       .save({
@@ -110,11 +81,10 @@ export class EditNotePageComponent {
 
   public editorPlaceholder: string = 'Compose a note...';
 
-  
   public form = new FormGroup({
     title: new FormControl(this._store.note$.value.title, [Validators.required]),
     body: new FormControl(this._store.note$.value.body, [Validators.required]),
-    addItems: new FormControl()
+    tags: new FormControl()
   });
 
   public get slug(): string {
@@ -129,31 +99,8 @@ export class EditNotePageComponent {
     return this.items.filter(item => item.name.toLowerCase().indexOf(itemName.toLowerCase()) === 0);
   }
 
-  onRemoveItems(itemName: string): void {
-    this.selectedItems = this.selectedItems.filter((name: string) => name !== itemName);
-    this.itemsData = this.selectedItems;
-    this.chipInput['nativeElement'].blur();
-  }
-
   onTagClicked(tagName) {
     const tag = this._store.tags$.value.find(x => x.name == tagName);
-    this._router.navigate(['tags', tag.slug]);  
-  }
-
-  onAddItems(event: MatAutocompleteSelectedEvent) {
-    const t: any = event.option.value;
-
-    if (this.selectedItems.length === 0) {
-      this.selectedItems.push(t.name);
-    } else {
-      const selectTag = JSON.stringify(this.selectedItems);
-      if (selectTag.indexOf(t.name) === -1) {
-        this.selectedItems.push(t.name);
-      }
-    }
-
-    this.itemsData = this.selectedItems;
-    this.chipInput['nativeElement'].blur();
-    this.chipInput['nativeElement'].value = '';
+    this._router.navigate(['tags', tag.slug]);
   }
 }

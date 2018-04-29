@@ -13,27 +13,10 @@
 
   <app-quill-text-editor formControlName="body" [editorPlaceholder]="editorPlaceholder"></app-quill-text-editor>
 
-
-  <mat-form-field class="example-full-width">
-    <mat-chip-list #chipList>
-      <mat-chip color="primary" *ngFor="let item of selectedItems" (removed)="onRemoveItems(item)" (click)="onTagClicked(item)">
-        {{item}}
-        <mat-icon matChipRemove>cancel</mat-icon>
-      </mat-chip>
-      <input matInput placeholder="Type and Select Tags"
-              [matChipInputFor]="chipList"
-              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-              [matChipInputAddOnBlur]="true"
-              [matAutocomplete]="language"
-              formControlName ="addItems" #chipInput />
-      <mat-autocomplete #language="matAutocomplete" (optionSelected)="onAddItems($event)">
-        <mat-option *ngFor="let item of filteredItems | async" [value]="item">
-          <span>{{ item.name }}</span>
-        </mat-option>
-      </mat-autocomplete>
-    </mat-chip-list>
-
-  </mat-form-field>
+  <app-auto-complete-chip-list [items]="items"
+                               [selectedItems]="selectedItems"
+                               formControlName="tags">
+  </app-auto-complete-chip-list>
 
   <div class="actions">
     <button mat-button (click)="handleSaveClick()">{{ "Save" | translate }}</button>

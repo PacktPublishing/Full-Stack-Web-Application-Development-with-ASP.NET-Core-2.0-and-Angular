@@ -42,7 +42,12 @@ import { DeleteCellComponent } from './delete-cell.component';
 import { AutoCompleteChipListComponent } from './auto-complete-chip-list.component';
 
 @NgModule({
-  declarations: [DeleteCellComponent, PrimaryHeaderComponent, QuillTextEditorComponent],
+  declarations: [
+    AutoCompleteChipListComponent,
+    DeleteCellComponent,
+    PrimaryHeaderComponent,
+    QuillTextEditorComponent
+  ],
   imports: [
     MatAutocompleteModule,
     MatButtonModule,

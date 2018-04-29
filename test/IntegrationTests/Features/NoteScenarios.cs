@@ -51,31 +51,30 @@ namespace IntegrationTests.Features
         [Fact]
         public async Task ShouldGetAllNotes()
         {
-            void setUpData(MacariaContext context)
+            using (var server = CreateServer())
             {
+                var context = server.Host.Services.GetService(typeof(MacariaContext)) as MacariaContext;
+
                 context.Notes.Add(new Note()
                 {
                     Title = "Title1",
-                    Body = "Body"                    
+                    Body = "Body"
                 });
 
                 context.Notes.Add(new Note()
                 {
                     Title = "Title2",
-                    Body = "Body"                    
+                    Body = "Body"
                 });
 
                 context.Notes.Add(new Note()
                 {
                     Title = "Title3",
-                    Body = "Body"                    
+                    Body = "Body"
                 });
 
                 context.SaveChanges();
-            }
 
-            using (var server = CreateServer(setUpData))
-            {
                 var response = await server.CreateClient()
                     .GetAsync<GetNotesQuery.Response>(Get.Notes);
 
@@ -86,20 +85,18 @@ namespace IntegrationTests.Features
         [Fact]
         public async Task ShouldGetNoteById()
         {
-            void setUpData(MacariaContext context)
+            using (var server = CreateServer())
             {
+                var context = server.Host.Services.GetService(typeof(MacariaContext)) as MacariaContext;
+
                 context.Notes.Add(new Note()
                 {
                     Title = "Title",
                     Body = "Body",
-
                 });
 
                 context.SaveChanges();
-            }
 
-            using (var server = CreateServer(setUpData))
-            {
                 var response = await server.CreateClient()
                     .GetAsync<GetNoteByIdQuery.Response>(Get.NoteById(1));
 
@@ -109,9 +106,11 @@ namespace IntegrationTests.Features
 
         [Fact]
         public async Task ShouldGetNoteBySlug()
-        {
-            void setUpData(MacariaContext context)
+        {            
+            using (var server = CreateServer())
             {
+                var context = server.Host.Services.GetService(typeof(MacariaContext)) as MacariaContext;
+
                 context.Notes.Add(new Note()
                 {
                     Title = "Title",
@@ -120,10 +119,7 @@ namespace IntegrationTests.Features
                 });
 
                 context.SaveChanges();
-            }
 
-            using (var server = CreateServer(setUpData))
-            {
                 var response = await server.CreateClient()
                     .GetAsync<GetNoteBySlugQuery.Response>(Get.NoteBySlug("title"));
 
@@ -134,8 +130,11 @@ namespace IntegrationTests.Features
         [Fact]
         public async Task ShouldUpdateNote()
         {
-            void setUpData(MacariaContext context)
+
+            using (var server = CreateServer())
             {
+                var context = server.Host.Services.GetService(typeof(MacariaContext)) as MacariaContext;
+
                 context.Notes.Add(new Note()
                 {
                     Title = "Title",
@@ -143,11 +142,7 @@ namespace IntegrationTests.Features
                 });
 
                 context.SaveChanges();
-            }
 
-            using (var server = CreateServer(setUpData))
-            {
-                
                 var saveResponse = await server.CreateClient()
                     .PostAsAsync<SaveNoteCommand.Request, SaveNoteCommand.Response>(Post.Notes, new SaveNoteCommand.Request()
                     {
@@ -168,19 +163,18 @@ namespace IntegrationTests.Features
         {
             var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-            void setUpData(MacariaContext context)
+            using (var server = CreateServer())
             {
+                var context = server.Host.Services.GetService(typeof(MacariaContext)) as MacariaContext;
+
                 context.Notes.Add(new Note()
                 {
                     Title = "Title",
-                    Body = "Body"                    
+                    Body = "Body"
                 });
 
-                context.SaveChanges();
-            }
+                context.SaveChanges();            
 
-            using (var server = CreateServer(setUpData))
-            {
                 var hubConnection = GetHubConnection(server.CreateHandler());
 
                 hubConnection.On<dynamic>("message", (result) =>

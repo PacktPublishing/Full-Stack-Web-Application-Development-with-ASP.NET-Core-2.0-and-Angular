@@ -1,21 +1,18 @@
-import { Component, ElementRef, Injector } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { ActivatedRoute, Router, Event } from '@angular/router';
 import { NotesService } from './notes.service';
 import { Note } from './note.model';
 import { LocalStorageService } from '../core/local-storage.service';
-import { TagsService } from '../tags/tags.service';
 import { Observable } from 'rxjs';
 import { takeUntil, catchError, tap, map, startWith } from 'rxjs/operators';
 import { Tag } from '../tags/tag.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
 import { LanguageService } from '../core/language.service';
 import { ViewChild } from '@angular/core';
 import { MatInput, MatAutocompleteSelectedEvent } from '@angular/material';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { Store } from '../core/store';
-import { not } from '@angular/compiler/src/output/output_ast';
 
 var moment: any;
 
@@ -149,8 +146,8 @@ export class EditNotePageComponent {
     if (this.selectedItems.length === 0) {
       this.selectedItems.push(t.name);
     } else {
-      const selectLanguageStr = JSON.stringify(this.selectedItems);
-      if (selectLanguageStr.indexOf(t.name) === -1) {
+      const selectTag = JSON.stringify(this.selectedItems);
+      if (selectTag.indexOf(t.name) === -1) {
         this.selectedItems.push(t.name);
       }
     }

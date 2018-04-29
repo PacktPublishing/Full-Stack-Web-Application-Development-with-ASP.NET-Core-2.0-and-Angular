@@ -15,7 +15,7 @@ namespace IntegrationTests
 {
     public class ScenarioBase
     {
-        protected TestServer CreateServer(Action<MacariaContext> setUpData = null)
+        protected TestServer CreateServer()
         {
             var webHostBuilder = new WebHostBuilder()
                     .UseStartup(typeof(IntegrationTestsStartup))
@@ -29,12 +29,12 @@ namespace IntegrationTests
 
             var testServer = new TestServer(webHostBuilder);
 
-            ResetDatabase(testServer.Host, setUpData);
+            ResetDatabase(testServer.Host);
 
             return testServer;
         }
 
-        protected void ResetDatabase(IWebHost host, Action<MacariaContext> setUpData = null)
+        protected void ResetDatabase(IWebHost host)
         {
             var services = (IServiceScopeFactory)host.Services.GetService(typeof(IServiceScopeFactory));
 
@@ -49,8 +49,6 @@ namespace IntegrationTests
                 context.Database.Migrate();
 
                 ApiConfiguration.Seed(context, configuration);
-
-                setUpData?.Invoke(context);
             }
         }
 

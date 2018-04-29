@@ -39,6 +39,7 @@ import { QuillTextEditorComponent } from './quill-text-editor.component';
 import { CommonModule } from '@angular/common';
 import { AgGridModule } from 'ag-grid-angular';
 import { DeleteCellComponent } from './delete-cell.component';
+import { AutoCompleteChipListComponent } from './auto-complete-chip-list.component';
 
 @NgModule({
   declarations: [DeleteCellComponent, PrimaryHeaderComponent, QuillTextEditorComponent],
@@ -120,6 +121,7 @@ import { DeleteCellComponent } from './delete-cell.component';
     FormsModule,
     ReactiveFormsModule,
 
+    AutoCompleteChipListComponent,
     DeleteCellComponent,
     PrimaryHeaderComponent,
     QuillTextEditorComponent,

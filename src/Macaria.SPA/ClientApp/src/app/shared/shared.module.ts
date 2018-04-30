@@ -40,6 +40,7 @@ import { CommonModule } from '@angular/common';
 import { AgGridModule } from 'ag-grid-angular';
 import { DeleteCellComponent } from './delete-cell.component';
 import { AutoCompleteChipListComponent } from './auto-complete-chip-list.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -85,6 +86,7 @@ import { AutoCompleteChipListComponent } from './auto-complete-chip-list.compone
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    TranslateModule,
 
     AgGridModule.withComponents([DeleteCellComponent])
   ],

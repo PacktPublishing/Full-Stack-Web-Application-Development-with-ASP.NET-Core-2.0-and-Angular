@@ -3,7 +3,8 @@
 </app-primary-header>
 
 <section class="notes-by-tag-content-container">
-  <mat-card *ngFor="let tag of (tag$ | async)?.notes">
-    <h1> {{ tag.title}} </h1>
+  <mat-card *ngFor="let note of (tag$ | async)?.notes">    
+    <mat-card-title>{{ note.title}}</mat-card-title>    
+    <mat-card-content [innerHTML]="note.body"></mat-card-content>
   </mat-card>
 </section>

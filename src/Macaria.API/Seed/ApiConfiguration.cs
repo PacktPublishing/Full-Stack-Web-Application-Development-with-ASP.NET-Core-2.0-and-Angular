@@ -1,5 +1,6 @@
 ﻿using Macaria.Infrastructure.Data;
 using Microsoft.Extensions.Configuration;
+using System.Linq;
 
 namespace Macaria.API.Seed
 {

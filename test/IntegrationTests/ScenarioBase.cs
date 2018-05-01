@@ -1,5 +1,7 @@
-﻿using Macaria.API.Seed;
+﻿using Macaria.API;
+using Macaria.API.Seed;
 using Macaria.Infrastructure.Data;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -46,8 +48,8 @@ namespace IntegrationTests
 
                 context.Database.EnsureDeleted();
 
-                context.Database.Migrate();
-
+                context.Database.EnsureCreated();
+                
                 ApiConfiguration.Seed(context, configuration);
             }
         }

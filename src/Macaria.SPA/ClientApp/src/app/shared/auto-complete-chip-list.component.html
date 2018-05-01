@@ -1,6 +1,10 @@
 <mat-form-field>
   <mat-chip-list #chipList>
-    <mat-chip color="primary" *ngFor="let item of selectedItems" (remove)="onRemoveItems(item)">
+    <mat-chip color="primary"
+              *ngFor="let item of selectedItems"
+              (remove)="onRemoveItems(item)"
+              (click)="onChipClick.emit({ item: item })"
+              >
       {{item}}
       <mat-icon matChipRemove>cancel</mat-icon>
     </mat-chip>

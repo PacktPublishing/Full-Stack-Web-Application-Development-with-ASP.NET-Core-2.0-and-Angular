@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { ControlValueAccessor, FormControl } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
@@ -22,6 +22,10 @@ import { forwardRef } from '@angular/core';
   selector: 'app-auto-complete-chip-list'
 })
 export class AutoCompleteChipListComponent implements ControlValueAccessor {
+  constructor() {
+    this.onChipClick = new EventEmitter();
+  }
+
   writeValue(obj: any): void {
     obj = this.addItems.value;
   }
@@ -45,6 +49,8 @@ export class AutoCompleteChipListComponent implements ControlValueAccessor {
   ngOnDestroy() {
     this.onDestroy.next();
   }
+
+  @Output() public onChipClick: EventEmitter<any>;
 
   @ViewChild('chipInput') chipInput: MatInput;
   @Input() selectedItems: string[] = [];

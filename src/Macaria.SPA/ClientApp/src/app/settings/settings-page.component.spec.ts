@@ -12,13 +12,14 @@ describe('SettingsPageComponent', () => {
     TestBed.configureTestingModule({
       declarations: [SettingsPageComponent],
       imports: [CommonModule, CoreModule, SharedModule]
-    });
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SettingsPageComponent);
     component = fixture.componentInstance;
+    fixture.detectChanges();
   });
 
-  it('should be created without errors', () => {
-    expect(component).toBeDefined();
+  it('should create', () => {
+    expect(component).toBeTruthy();
   });
 });

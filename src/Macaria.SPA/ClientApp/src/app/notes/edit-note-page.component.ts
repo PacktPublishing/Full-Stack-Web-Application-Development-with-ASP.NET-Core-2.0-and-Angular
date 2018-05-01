@@ -99,8 +99,8 @@ export class EditNotePageComponent {
     return this.items.filter(item => item.name.toLowerCase().indexOf(itemName.toLowerCase()) === 0);
   }
 
-  onTagClicked(tagName) {
-    const tag = this._store.tags$.value.find(x => x.name == tagName);
+  handleChipClicked($event) {
+    const tag = this._store.tags$.value.find(x => x.name == $event.item);
     this._router.navigate(['tags', tag.slug]);
   }
 }

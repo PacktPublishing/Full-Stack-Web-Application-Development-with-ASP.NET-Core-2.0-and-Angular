@@ -15,7 +15,9 @@
 
   <app-auto-complete-chip-list [items]="items"
                                [selectedItems]="selectedItems"
-                               formControlName="tags">
+                               formControlName="tags"
+                               (onChipClick)="handleChipClicked($event)"
+                               >
   </app-auto-complete-chip-list>
 
   <div class="actions">

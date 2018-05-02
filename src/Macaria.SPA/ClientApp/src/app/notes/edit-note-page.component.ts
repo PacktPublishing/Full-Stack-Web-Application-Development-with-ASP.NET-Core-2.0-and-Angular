@@ -65,11 +65,12 @@ export class EditNotePageComponent {
 
   public handleSaveClick() {
     let note = new Note();
+    let tags = this.form.value.tags || [];
 
     note.noteId = this._store.note$.value.noteId;
     note.title = this.form.value.title;
     note.body = this.form.value.body;
-    note.tags = this.form.value.tags.map(x => this._store.tags$.value.find(t => t.name == x));
+    note.tags = tags.map(x => this._store.tags$.value.find(t => t.name == x));
 
     this._notesService
       .save({

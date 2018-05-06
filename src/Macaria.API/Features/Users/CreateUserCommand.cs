@@ -51,9 +51,10 @@ namespace Macaria.API.Features.Users
             {
                 var user = new User
                 {
-                    Username = request.Username,
-                    Password = _passwordHasher.HashPassword(request.Password)
+                    Username = request.Username
                 };
+
+                user.Password = _passwordHasher.HashPassword(user, request.Password);
 
                 _context.Users.Add(user);
 

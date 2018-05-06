@@ -22,10 +22,10 @@ namespace UnitTests.API.Users
             _passwordHasherMock = new Mock<IPasswordHasher>();
             _tokenProvider = new Mock<ITokenProvider>();
 
-            _passwordHasherMock.Setup(x => x.HashPassword("password"))
+            _passwordHasherMock.Setup(x => x.HashPassword(It.IsAny<User>(), "password"))
                 .Returns("password");
 
-            _passwordHasherMock.Setup(x => x.HashPassword("changePassword"))
+            _passwordHasherMock.Setup(x => x.HashPassword(It.IsAny<User>(),"changePassword"))
                 .Returns("passwordChanged");
 
             _tokenProvider.Setup(x => x.Get("quinntynebrown@gmail.com")).Returns("token");

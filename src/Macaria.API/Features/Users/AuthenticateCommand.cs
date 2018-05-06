@@ -44,7 +44,7 @@ namespace Macaria.API.Features.Users
                 if (user == null)
                     throw new System.Exception();
 
-                if (!ValidateUser(user, _passwordHasher.HashPassword(request.Password)))
+                if (!ValidateUser(user, _passwordHasher.HashPassword(user, request.Password)))
                     throw new System.Exception();
 
                 return new Response()

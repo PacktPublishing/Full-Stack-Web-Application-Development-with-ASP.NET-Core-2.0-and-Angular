@@ -24,11 +24,16 @@ namespace Macaria.API
         public static void Seed(MacariaContext context)
         {
             if (context.Users.IgnoreQueryFilters().FirstOrDefault(x => x.Username == "quinntynebrown@gmail.com") == null)
-                context.Users.Add(new User()
+            {
+                var user = new User()
                 {
-                    Username = "quinntynebrown@gmail.com",
-                    Password = new PasswordHasher().HashPassword("P@ssw0rd")
-                });
+                    Username = "quinntynebrown@gmail.com"
+                };
+                user.Password = new PasswordHasher().HashPassword(user,"P@ssw0rd");
+
+                context.Users.Add(user);
+
+            }
 
             context.SaveChanges();
         }

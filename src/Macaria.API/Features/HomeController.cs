@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Macaria.API.Features.Home
+namespace Macaria.API.Features
 {
     [Route("")]
     [ApiExplorerSettings(IgnoreApi = true)]
@@ -8,13 +8,11 @@ namespace Macaria.API.Features.Home
     public class HomeController
     {
         [HttpGet("health")]
-        public IActionResult Health() {
-            return new OkObjectResult(new {
+        public IActionResult Health() 
+            => new OkObjectResult(new {
                 Status = "Healthy"
             });
-        }
-            
-
+        
         [HttpGet]
         public IActionResult Index()
             => new RedirectResult("~/swagger");

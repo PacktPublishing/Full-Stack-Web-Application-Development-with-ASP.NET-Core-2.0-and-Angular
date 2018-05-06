@@ -17,10 +17,8 @@ namespace Macaria.Infrastructure.Identity
     {
         private IConfiguration _configuration;
         public TokenProvider(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
-
+            => _configuration = configuration;
+        
         public string Get(string username)
         {
             var now = DateTime.UtcNow;

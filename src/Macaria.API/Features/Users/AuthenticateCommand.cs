@@ -26,14 +26,14 @@ namespace Macaria.API.Features.Users
         public class Handler : IRequestHandler<Request, Response>
         {
             private readonly IMacariaContext _context;
-            private readonly IEncryptionService _encryptionService;
+            private readonly IPasswordHasher _passwordHasher;
             private readonly ITokenProvider _tokenProvider;
 
-            public Handler(IMacariaContext context, ITokenProvider tokenProvider, IEncryptionService encryptionService)
+            public Handler(IMacariaContext context, ITokenProvider tokenProvider, IPasswordHasher passwordHasher)
             {
                 _context = context;
                 _tokenProvider = tokenProvider;
-                _encryptionService = encryptionService;
+                _passwordHasher = passwordHasher;
             }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
@@ -44,7 +44,7 @@ namespace Macaria.API.Features.Users
                 if (user == null)
                     throw new System.Exception();
 
-                if (!ValidateUser(user, _encryptionService.TransformPassword(request.Password)))
+                if (!ValidateUser(user, _passwordHasher.HashPassword(request.Password)))
                     throw new System.Exception();
 
                 return new Response()

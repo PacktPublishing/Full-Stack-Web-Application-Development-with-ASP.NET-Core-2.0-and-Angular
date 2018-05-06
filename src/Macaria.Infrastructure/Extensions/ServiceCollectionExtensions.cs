@@ -62,7 +62,6 @@ namespace Macaria.Infrastructure.Services
         public static IServiceCollection AddDataStore(this IServiceCollection services,
                                                string connectionString)
         {
-            //Note: this has to come first
             services.AddScoped<IMacariaContext, MacariaContext>();
 
             services.AddDbContext<MacariaContext>(options =>
@@ -85,7 +84,7 @@ namespace Macaria.Infrastructure.Services
             
             services.TryAddSingleton<ITokenProvider, TokenProvider>();
 
-            services.AddSingleton<IEncryptionService, EncryptionService>();
+            services.AddSingleton<IPasswordHasher, PasswordHasher>();
 
             var jwtSecurityTokenHandler = new JwtSecurityTokenHandler
             {

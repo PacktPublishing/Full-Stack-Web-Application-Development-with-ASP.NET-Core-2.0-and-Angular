@@ -1,13 +1,10 @@
 ﻿using Macaria.Infrastructure.Data;
-using Macaria.API.Seed;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using Macaria.Core.Entities;
-using Microsoft.Extensions.Configuration;
 
 namespace Macaria.API
 {
@@ -29,31 +26,29 @@ namespace Macaria.API
         private static void ProcessDbCommands(string[] args, IWebHost host)
         {
             var services = (IServiceScopeFactory)host.Services.GetService(typeof(IServiceScopeFactory));
+
             using (var scope = services.CreateScope())
             {
+                var context = scope.ServiceProvider.GetRequiredService<MacariaContext>();
+
                 if (args.Contains("ci"))
                     args = new string[4] { "dropdb", "migratedb", "seeddb", "stop" };
 
                 if (args.Contains("dropdb"))
-                    GetMacariaContext(scope).Database.EnsureDeleted();
+                    context.Database.EnsureDeleted();
 
                 if (args.Contains("migratedb"))
-                    GetMacariaContext(scope).Database.Migrate();
+                    context.Database.Migrate();
 
                 if (args.Contains("seeddb"))
                 {
-                    GetMacariaContext(scope).Database.EnsureCreated();
-                    ApiConfiguration.Seed(GetMacariaContext(scope), GetConfiguration(scope));            
+                    context.Database.EnsureCreated();
+                    ApiConfiguration.Seed(context);            
                 }
                 
                 if (args.Contains("stop"))
                     Environment.Exit(0);
             }
-        }
-        private static MacariaContext GetMacariaContext(IServiceScope services)
-            => services.ServiceProvider.GetRequiredService<MacariaContext>();
-
-        private static IConfiguration GetConfiguration(IServiceScope services)
-            => services.ServiceProvider.GetRequiredService<IConfiguration>(); 
+        }        
     }
 }

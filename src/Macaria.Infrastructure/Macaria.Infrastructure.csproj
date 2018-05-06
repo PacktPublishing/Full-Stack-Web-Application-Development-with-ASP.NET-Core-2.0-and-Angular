@@ -17,4 +17,8 @@
     <ProjectReference Include="..\Macaria.Core\Macaria.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

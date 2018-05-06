@@ -40,31 +40,26 @@ namespace Macaria.API.Features.Users
         public class Handler : IRequestHandler<Request, Response>
         {
             public IMacariaContext _context { get; set; }
-            public IEncryptionService _encryptionService { get; set; }
-            public Handler(IMacariaContext context, IEncryptionService encryptionService)
+            public IPasswordHasher _passwordHasher { get; set; }
+            public Handler(IMacariaContext context, IPasswordHasher passwordHasher)
             {
                 _context = context;
-                _encryptionService = encryptionService;
+                _passwordHasher = passwordHasher;
             }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
-                try
+                var user = new User
                 {
-                    var user = new User
-                    {
-                        Username = request.Username,
-                        Password = _encryptionService.TransformPassword(request.Password)
-                    };
+                    Username = request.Username,
+                    Password = _passwordHasher.HashPassword(request.Password)
+                };
 
-                    _context.Users.Add(user);
-                    await _context.SaveChangesAsync(cancellationToken);
+                _context.Users.Add(user);
 
-                    return new Response() { UserId = user.UserId };
-                }catch(Exception e)
-                {
-                    throw e;
-                }
+                await _context.SaveChangesAsync(cancellationToken);
+
+                return new Response() { UserId = user.UserId };
             }
         }
     }

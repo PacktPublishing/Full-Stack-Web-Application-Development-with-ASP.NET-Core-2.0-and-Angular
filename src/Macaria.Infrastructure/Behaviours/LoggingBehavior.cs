@@ -6,11 +6,6 @@ namespace Macaria.Infrastructure.Behaviours
 {
     public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     {
-        public LoggingBehavior()
-        {
-
-        }
-
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
 

@@ -1,15 +1,11 @@
 ﻿using Macaria.API;
-using Macaria.API.Seed;
 using Macaria.Infrastructure.Data;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.AspNetCore.TestHost;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Net.Http;
 using TestUtilities;
 
@@ -44,13 +40,11 @@ namespace IntegrationTests
             {
                 var context = scope.ServiceProvider.GetRequiredService<MacariaContext>();
 
-                var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
-
                 context.Database.EnsureDeleted();
 
                 context.Database.EnsureCreated();
                 
-                ApiConfiguration.Seed(context, configuration);
+                ApiConfiguration.Seed(context);
             }
         }
 

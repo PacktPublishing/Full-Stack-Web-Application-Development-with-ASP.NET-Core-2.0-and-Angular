@@ -16,19 +16,19 @@ namespace Macaria.API.Features.Users
         
         public class Handler : IRequestHandler<Request>
         {
-            private readonly IEncryptionService _encryptionService;
+            private readonly IPasswordHasher _passwordHasher;
             private readonly IMacariaContext _context;
 
-            public Handler(IMacariaContext context, IEncryptionService encryptionService)
+            public Handler(IMacariaContext context, IPasswordHasher passwordHasher)
             {
                 _context = context;
-                _encryptionService = encryptionService;
+                _passwordHasher = passwordHasher;
             }
 
             public async Task Handle(Request request, CancellationToken cancellationToken)
             {
                 var user = await _context.Users.FindAsync(request.UserId);
-                user.Password = _encryptionService.TransformPassword(request.Password);                
+                user.Password = _passwordHasher.HashPassword(request.Password);                
                 await _context.SaveChangesAsync(cancellationToken);
             }
         }

@@ -14,18 +14,18 @@ namespace UnitTests.API.Users
 {    
     public class UserUnitTests
     {
-        protected readonly Mock<IEncryptionService> _encryptionServiceMock;
+        protected readonly Mock<IPasswordHasher> _passwordHasherMock;
         protected readonly Mock<ITokenProvider> _tokenProvider;
 
         public UserUnitTests()
         {
-            _encryptionServiceMock = new Mock<IEncryptionService>();
+            _passwordHasherMock = new Mock<IPasswordHasher>();
             _tokenProvider = new Mock<ITokenProvider>();
 
-            _encryptionServiceMock.Setup(x => x.TransformPassword("password"))
+            _passwordHasherMock.Setup(x => x.HashPassword("password"))
                 .Returns("password");
 
-            _encryptionServiceMock.Setup(x => x.TransformPassword("changePassword"))
+            _passwordHasherMock.Setup(x => x.HashPassword("changePassword"))
                 .Returns("passwordChanged");
 
             _tokenProvider.Setup(x => x.Get("quinntynebrown@gmail.com")).Returns("token");
@@ -49,7 +49,7 @@ namespace UnitTests.API.Users
 
                 context.SaveChanges();
 
-                var handler = new AuthenticateCommand.Handler(context, _tokenProvider.Object, _encryptionServiceMock.Object);
+                var handler = new AuthenticateCommand.Handler(context, _tokenProvider.Object, _passwordHasherMock.Object);
 
                 var response = await handler.Handle(new AuthenticateCommand.Request()
                 {
@@ -70,7 +70,7 @@ namespace UnitTests.API.Users
 
             using (var context = new MacariaContext(options))
             {
-                var handler = new CreateUserCommand.Handler(context, _encryptionServiceMock.Object);
+                var handler = new CreateUserCommand.Handler(context, _passwordHasherMock.Object);
 
                 var response = await handler.Handle(new CreateUserCommand.Request() {
                     Username = "quinntynebrown@gmail.com",
@@ -226,7 +226,7 @@ namespace UnitTests.API.Users
 
                 context.SaveChanges();
 
-                var handler = new UserChangePasswordCommand.Handler(context, _encryptionServiceMock.Object);
+                var handler = new UserChangePasswordCommand.Handler(context, _passwordHasherMock.Object);
 
                 await handler.Handle(new UserChangePasswordCommand.Request()
                 {

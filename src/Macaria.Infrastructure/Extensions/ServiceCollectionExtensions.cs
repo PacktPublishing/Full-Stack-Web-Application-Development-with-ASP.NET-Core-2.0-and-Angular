@@ -17,7 +17,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
-namespace Macaria.Infrastructure.Services
+namespace Macaria.Infrastructure.Identity
 {
     public static class ServiceCollectionExtensions
     {

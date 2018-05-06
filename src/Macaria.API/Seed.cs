@@ -1,7 +1,7 @@
 ﻿using Macaria.Core.Entities;
 using Macaria.Infrastructure.Data;
 using Macaria.Infrastructure.Extensions;
-using Macaria.Infrastructure.Services;
+using Macaria.Infrastructure.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Linq;

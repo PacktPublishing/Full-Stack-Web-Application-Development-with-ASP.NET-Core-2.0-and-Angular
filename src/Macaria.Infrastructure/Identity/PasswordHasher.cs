@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 //https://docs.microsoft.com/en-us/aspnet/core/security/data-protection/consumer-apis/password-hashing?view=aspnetcore-2.1
 
-namespace Macaria.Infrastructure.Services
+namespace Macaria.Infrastructure.Identity
 {
     public interface IPasswordHasher
     {

@@ -12,7 +12,7 @@ using Macaria.API.Hubs;
 using Macaria.Infrastructure.Behaviours;
 using Macaria.Infrastructure.Extensions;
 using Macaria.Infrastructure;
-using Macaria.Infrastructure.Services;
+using Macaria.Infrastructure.Identity;
 using Macaria.API.Features.Notes;
 
 namespace Macaria.API

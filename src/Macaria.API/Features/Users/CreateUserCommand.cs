@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Macaria.Infrastructure.Data;
 using Macaria.Core.Entities;
-using Macaria.Infrastructure.Services;
+using Macaria.Infrastructure.Identity;
 using MediatR;
 using System.Threading.Tasks;
 using System.Threading;

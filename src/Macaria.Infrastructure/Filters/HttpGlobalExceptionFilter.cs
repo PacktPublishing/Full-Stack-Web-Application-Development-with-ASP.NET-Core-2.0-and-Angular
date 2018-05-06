@@ -1,15 +1,10 @@
 ﻿using Macaria.Infrastructure.ActionResults;
 using Macaria.Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Text;
 
 namespace Macaria.Infrastructure.Filters
 {
@@ -17,13 +12,11 @@ namespace Macaria.Infrastructure.Filters
     {
         private readonly IHostingEnvironment env;
         private readonly ILogger<HttpGlobalExceptionFilter> logger;
-        private readonly IHttpContextAccessor httpContextAccessor;
 
-        public HttpGlobalExceptionFilter(IHostingEnvironment env, ILogger<HttpGlobalExceptionFilter> logger, IHttpContextAccessor httpContextAccessor)
+        public HttpGlobalExceptionFilter(IHostingEnvironment env, ILogger<HttpGlobalExceptionFilter> logger)
         {
             this.env = env;
             this.logger = logger;
-            this.httpContextAccessor = httpContextAccessor;
         }
 
         public void OnException(ExceptionContext context)
@@ -32,11 +25,7 @@ namespace Macaria.Infrastructure.Filters
                 context.Exception,
                 context.Exception.Message);
 
-            var rqf = httpContextAccessor.HttpContext.Features.Get<IRequestCultureFeature>();
-
-            var culture = rqf.RequestCulture.Culture;
-
-
+            
             if (context.Exception.GetType() == typeof(DomainException))
             {
                 var json = new JsonErrorResponse

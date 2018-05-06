@@ -2,7 +2,7 @@ using MediatR;
 using System.Threading.Tasks;
 using System.Threading;
 using Macaria.Infrastructure.Data;
-using Macaria.Infrastructure.Services;
+using Macaria.Infrastructure.Identity;
 
 namespace Macaria.API.Features.Users
 {

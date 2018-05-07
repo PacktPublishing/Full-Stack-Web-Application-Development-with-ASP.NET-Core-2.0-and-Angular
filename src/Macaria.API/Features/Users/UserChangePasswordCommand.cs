@@ -28,7 +28,7 @@ namespace Macaria.API.Features.Users
             public async Task Handle(Request request, CancellationToken cancellationToken)
             {
                 var user = await _context.Users.FindAsync(request.UserId);
-                user.Password = _passwordHasher.HashPassword(user, request.Password);                
+                user.Password = _passwordHasher.HashPassword(user.Salt, request.Password);                
                 await _context.SaveChangesAsync(cancellationToken);
             }
         }

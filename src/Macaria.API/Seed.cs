@@ -29,7 +29,7 @@ namespace Macaria.API
                 {
                     Username = "quinntynebrown@gmail.com"
                 };
-                user.Password = new PasswordHasher().HashPassword(user,"P@ssw0rd");
+                user.Password = new PasswordHasher().HashPassword(user.Salt,"P@ssw0rd");
 
                 context.Users.Add(user);
 

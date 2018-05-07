@@ -22,10 +22,10 @@ namespace UnitTests.API.Users
             _passwordHasherMock = new Mock<IPasswordHasher>();
             _tokenProvider = new Mock<ITokenProvider>();
 
-            _passwordHasherMock.Setup(x => x.HashPassword(It.IsAny<User>(), "password"))
+            _passwordHasherMock.Setup(x => x.HashPassword(It.IsAny<byte[]>(), "password"))
                 .Returns("password");
 
-            _passwordHasherMock.Setup(x => x.HashPassword(It.IsAny<User>(),"changePassword"))
+            _passwordHasherMock.Setup(x => x.HashPassword(It.IsAny<byte[]>(),"changePassword"))
                 .Returns("passwordChanged");
 
             _tokenProvider.Setup(x => x.Get("quinntynebrown@gmail.com")).Returns("token");
@@ -40,11 +40,10 @@ namespace UnitTests.API.Users
 
             using (var context = new MacariaContext(options))
             {                
-                context.Users.Add(new Macaria.Core.Entities.User()
+                context.Users.Add(new User()
                 {
                     Username = "quinntynebrown@gmail.com",
                     Password = "password",
-                    
                 });
 
                 context.SaveChanges();

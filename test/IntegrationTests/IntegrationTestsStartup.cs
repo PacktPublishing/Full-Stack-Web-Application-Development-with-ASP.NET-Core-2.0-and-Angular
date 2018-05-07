@@ -13,10 +13,7 @@ namespace IntegrationTests
 {
     public class IntegrationTestsStartup: Startup
     {
-        public IntegrationTestsStartup(IConfiguration configuration) : base(configuration)
-        {
-
-        }
+        public IntegrationTestsStartup(IConfiguration configuration) : base(configuration) { }
 
         public override void ConfigureAuth(IApplicationBuilder app)
         {

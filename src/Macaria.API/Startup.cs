@@ -17,9 +17,7 @@ namespace Macaria.API
     public class Startup
     {
         public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+            => Configuration = configuration;
 
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
@@ -37,7 +35,6 @@ namespace Macaria.API
             services.AddSignalR();
             services.AddCustomConfiguration(Configuration);
             services.AddSecurity(Configuration);            
-            services.AddHttpClient();
             ConfigureDataStore(services);
             services.AddCustomMvc();
             services.AddCustomSwagger();

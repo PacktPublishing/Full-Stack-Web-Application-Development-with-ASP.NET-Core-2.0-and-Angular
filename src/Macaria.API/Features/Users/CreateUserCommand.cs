@@ -54,7 +54,7 @@ namespace Macaria.API.Features.Users
                     Username = request.Username
                 };
 
-                user.Password = _passwordHasher.HashPassword(user, request.Password);
+                user.Password = _passwordHasher.HashPassword(user.Salt, request.Password);
 
                 _context.Users.Add(user);
 

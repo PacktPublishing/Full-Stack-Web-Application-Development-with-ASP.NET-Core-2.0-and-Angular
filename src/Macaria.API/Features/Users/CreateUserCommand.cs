@@ -5,7 +5,6 @@ using Macaria.Infrastructure.Identity;
 using MediatR;
 using System.Threading.Tasks;
 using System.Threading;
-using System;
 
 namespace Macaria.API.Features.Users
 {
@@ -15,11 +14,9 @@ namespace Macaria.API.Features.Users
         {
             public Validator()
             {
-                RuleFor(x => x.Username).NotEmpty().WithMessage("Email address is required")
-                    .EmailAddress().WithMessage("A valid email is required");
-
-                RuleFor(x => x.Password).Must(password => PasswordValidatorRule(password))
-                    .WithMessage("Sorry password didn't satisfy the custom logic");
+                RuleFor(x => x.Username).NotEmpty().EmailAddress();
+                
+                RuleFor(x => x.Password).Must(password => PasswordValidatorRule(password));
             }
 
             private bool PasswordValidatorRule(string password)

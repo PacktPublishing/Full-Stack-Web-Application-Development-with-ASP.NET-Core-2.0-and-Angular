@@ -2,7 +2,6 @@ using MediatR;
 using System.Threading.Tasks;
 using System.Threading;
 using Macaria.Infrastructure.Data;
-using Macaria.Core.Entities;
 using FluentValidation;
 
 namespace Macaria.API.Features.Users

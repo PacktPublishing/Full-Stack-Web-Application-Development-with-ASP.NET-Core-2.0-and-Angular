@@ -1,9 +1,8 @@
+using FluentValidation;
 using MediatR;
 using System.Threading.Tasks;
 using System.Threading;
-using FluentValidation;
 using Macaria.Infrastructure.Data;
-using System;
 
 namespace Macaria.API.Features.Users
 {

@@ -2,7 +2,7 @@
 using Macaria.Infrastructure.Configuration;
 using Macaria.Infrastructure.Data;
 using Macaria.Infrastructure.Filters;
-using Macaria.Infrastructure.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,7 +15,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Newtonsoft.Json;
 
 namespace Macaria.Infrastructure.Identity
 {
@@ -33,6 +33,23 @@ namespace Macaria.Infrastructure.Identity
             {
                 options.Filters.Add(typeof(HttpGlobalExceptionFilter));
             }).AddControllersAsServices();
+
+            return services;
+        }
+
+        public static IServiceCollection AddCustomSignalR(this IServiceCollection services)
+        {
+            var settings = new JsonSerializerSettings
+            {
+                ContractResolver = new SignalRContractResolver()
+            };
+
+            var serializer = JsonSerializer.Create(settings);
+
+            services.Add(new ServiceDescriptor(typeof(JsonSerializer),
+                                               provider => serializer,
+                                               ServiceLifetime.Transient));
+            services.AddSignalR();
 
             return services;
         }
@@ -72,15 +89,13 @@ namespace Macaria.Infrastructure.Identity
             return services;
         }
 
-        public static IServiceCollection AddSecurity(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddCustomSecurity(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddCors(options => options.AddPolicy("CorsPolicy",
                 builder => builder.AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials()));
-            
-            services.AddHttpContextAccessor();
             
             services.TryAddSingleton<ITokenProvider, TokenProvider>();
 

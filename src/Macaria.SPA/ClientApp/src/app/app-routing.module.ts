@@ -1,9 +1,6 @@
 import {
   Routes,
-  RouterModule,
-  RouteReuseStrategy,
-  DetachedRouteHandle,
-  ActivatedRouteSnapshot
+  RouterModule
 } from '@angular/router';
 import { LoginComponent } from './users/login.component';
 import { MasterPageComponent } from './master-page.component';

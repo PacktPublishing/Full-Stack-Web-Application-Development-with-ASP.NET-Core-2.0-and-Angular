@@ -2,7 +2,6 @@
 using Macaria.Core.Entities;
 using Macaria.Infrastructure.Data;
 using Macaria.Infrastructure.Identity;
-using Macaria.Infrastructure.Identity;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using System.Linq;

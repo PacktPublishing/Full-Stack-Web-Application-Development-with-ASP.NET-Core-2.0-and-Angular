@@ -119,10 +119,8 @@ namespace UnitTests.API.Users
                 .Options;
 
             using (var context = new MacariaContext(options))
-            {
-                
-
-                context.Users.Add(new Macaria.Core.Entities.User()
+            {                
+                context.Users.Add(new User()
                 {
                     UserId = 1,
                     Username = "quinntynebrown@gmail.com",

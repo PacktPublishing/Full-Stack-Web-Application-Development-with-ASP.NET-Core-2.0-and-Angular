@@ -18,10 +18,9 @@ namespace Macaria.API
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCustomSignalR();
-            services.AddCustomConfiguration(Configuration);
-            services.AddCustomSecurity(Configuration);                        
             services.AddCustomMvc();
+            services.AddCustomSecurity(Configuration);
+            services.AddCustomSignalR();                        
             services.AddCustomSwagger();
 
             ConfigureDataStore(services);

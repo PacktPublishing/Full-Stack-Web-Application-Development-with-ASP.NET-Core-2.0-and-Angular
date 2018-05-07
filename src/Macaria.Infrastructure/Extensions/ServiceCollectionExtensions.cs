@@ -20,13 +20,7 @@ using Newtonsoft.Json;
 namespace Macaria.Infrastructure.Identity
 {
     public static class ServiceCollectionExtensions
-    {
-        public static IServiceCollection AddCustomConfiguration(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.Configure<AuthenticationSettings>(configuration.GetSection("Authentication"));            
-            return services;
-        }
-        
+    {        
         public static IServiceCollection AddCustomMvc(this IServiceCollection services)
         {
             services.AddMvc(options =>

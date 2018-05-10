@@ -18,13 +18,15 @@
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="1.0.0-preview2-final" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Macaria.API\Macaria.API.csproj" />
+    <ProjectReference Include="..\..\src\Macaria.Core\Macaria.Core.csproj" />
+    <ProjectReference Include="..\..\src\Macaria.Infrastructure\Macaria.Infrastructure.csproj" />
+  </ItemGroup>
   
   <ItemGroup> 
     <None Update="xunit.runner.json"> <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory> </None> 
-  </ItemGroup>
-  
-  <ItemGroup>
-    <ProjectReference Include="..\TestUtilities\TestUtilities.csproj" />
   </ItemGroup>
   
   <ItemGroup>

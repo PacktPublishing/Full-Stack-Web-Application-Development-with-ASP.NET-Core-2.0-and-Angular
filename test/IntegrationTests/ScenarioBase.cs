@@ -1,13 +1,14 @@
 ﻿using Macaria.API;
 using Macaria.Infrastructure.Data;
+using Macaria.Infrastructure.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.IO;
 using System.Net.Http;
-using TestUtilities;
 
 namespace IntegrationTests
 {
@@ -18,7 +19,7 @@ namespace IntegrationTests
             var webHostBuilder = new WebHostBuilder()
                     .UseStartup(typeof(IntegrationTestsStartup))
                     .UseKestrel()
-                    .UseConfiguration(TestUtilities.ConfigurationProvider.Get())
+                    .UseConfiguration(GetConfiguration())
                     .ConfigureAppConfiguration((builderContext, config) =>
                     {
                         config
@@ -43,17 +44,27 @@ namespace IntegrationTests
                 context.Database.EnsureDeleted();
 
                 context.Database.EnsureCreated();
-                
+
                 ApiConfiguration.Seed(context);
             }
         }
 
         protected HubConnection GetHubConnection(HttpMessageHandler httpMessageHandler) {
             return new HubConnectionBuilder()
-                            .WithUrl($"http://integrationtests/hub?token={TokenFactory.Get("quinntynebrown@gmail.com")}")
+                            .WithUrl($"http://integrationtests/hub?token={GetAccessToken()}")
                             .WithMessageHandler((h) => httpMessageHandler)
                             .WithTransport(TransportType.LongPolling)
                             .Build();
+        }
+
+        protected IConfiguration GetConfiguration() => new ConfigurationBuilder()
+                .SetBasePath(Path.GetFullPath(@"../../../../../src/Macaria.API/"))
+                .AddJsonFile("appsettings.json", optional: false)
+                .Build();
+
+        protected string GetAccessToken() {
+            var tokenProvider = new TokenProvider(GetConfiguration());
+            return tokenProvider.Get("integration@tests.com");
         }
     }
 }

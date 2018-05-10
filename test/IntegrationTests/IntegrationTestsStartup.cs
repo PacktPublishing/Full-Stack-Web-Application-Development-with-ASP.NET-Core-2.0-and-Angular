@@ -16,9 +16,7 @@ namespace IntegrationTests
         public IntegrationTestsStartup(IConfiguration configuration) : base(configuration) { }
 
         public override void ConfigureAuth(IApplicationBuilder app)
-        {
-            app.UseMiddleware<AutoAuthorizeMiddleware>();
-        }
+            => app.UseMiddleware<AutoAuthorizeMiddleware>();
 
         public override void ConfigureDataStore(IServiceCollection services)
         {

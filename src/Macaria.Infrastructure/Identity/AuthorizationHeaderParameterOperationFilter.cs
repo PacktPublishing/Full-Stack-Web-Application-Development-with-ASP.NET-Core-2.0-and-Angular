@@ -4,7 +4,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Macaria.Infrastructure.OperationFilters
+namespace Macaria.Infrastructure.Identity
 {
     public class AuthorizationHeaderParameterOperationFilter: IOperationFilter
     {

@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace UnitTests.API.Users
+namespace UnitTests.API
 {    
     public class UserUnitTests
     {
@@ -75,7 +75,8 @@ namespace UnitTests.API.Users
                     Password ="password"
                 }, default(CancellationToken));
 
-                Assert.Equal(1, response.UserId);
+                Assert.Single(context.Users.ToList());
+                Assert.Equal("quinntynebrown@gmail.com", context.Users.First().Username);
             }
         }
 

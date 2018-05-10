@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace UnitTests.API.Tags
+namespace UnitTests.API
 {
     public class TagUnitTests
     {     

@@ -23,18 +23,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="codeGeneratorSettings.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="ClientApp\src\app\core\error.service.ts" />
     <None Remove="ClientApp\src\app\notes\note-resolver.service.ts" />
     <None Remove="ClientApp\src\app\shared\shared.module.ts" />
     <None Remove="ClientApp\src\app\tags\tags-resolver.service.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="codeGeneratorSettings.json" />
   </ItemGroup>
 
   <ItemGroup>

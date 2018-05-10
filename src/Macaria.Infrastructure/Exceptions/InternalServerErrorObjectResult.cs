@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Macaria.Infrastructure.ActionResults
+namespace Macaria.Infrastructure.Exceptions
 {
     public class InternalServerErrorObjectResult : ObjectResult
     {

@@ -5,15 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="codeGeneratorSettings.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="wwwroot\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="codeGeneratorSettings.json" />
   </ItemGroup>
 
   <ItemGroup>

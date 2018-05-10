@@ -1,7 +1,7 @@
-﻿using Macaria.Infrastructure.OperationFilters;
-using Macaria.Infrastructure.Configuration;
+﻿using Macaria.Infrastructure.Identity;
+using Macaria.Infrastructure.Identity;
 using Macaria.Infrastructure.Data;
-using Macaria.Infrastructure.Filters;
+using Macaria.Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Macaria.API.Behaviors;
 using Macaria.API.Hubs;
 using Macaria.Infrastructure.Behaviours;
-using Macaria.Infrastructure.Extensions;
 using Macaria.Infrastructure.Identity;
 
 namespace Macaria.API
@@ -43,7 +42,9 @@ namespace Macaria.API
             ConfigureAuth(app);            
             app.UseMvc();
             app.UseSignalR(routes => routes.MapHub<AppHub>("/hub"));
-            app.UseCustomSwagger();
+            app.UseSwagger();
+            app.UseSwaggerUI(options 
+                => options.SwaggerEndpoint("/swagger/v1/swagger.json", "Macaria API"));
         }
     }
 }

@@ -125,8 +125,7 @@ namespace UnitTests.API
                 {
                     UserId = 1,
                     Username = "quinntynebrown@gmail.com",
-                    Password = "password",
-                    
+                    Password = "password"                    
                 });
 
                 context.SaveChanges();
@@ -148,14 +147,11 @@ namespace UnitTests.API
 
             using (var context = new MacariaContext(options))
             {
-                
-
                 context.Users.Add(new User()
                 {
                     UserId = 1,
                     Username = "quinntynebrown@gmail.com",
-                    Password = "password",
-                    
+                    Password = "password"                    
                 });
 
                 context.SaveChanges();
@@ -179,15 +175,12 @@ namespace UnitTests.API
                 .Options;
 
             using (var context = new MacariaContext(options))
-            {
-                
-
+            {                
                 context.Users.Add(new User()
                 {
                     UserId = 1,
                     Username = "quinntynebrown@gmail.com",
-                    Password = "password",
-                    
+                    Password = "password"                    
                 });
 
                 context.SaveChanges();
@@ -231,8 +224,7 @@ namespace UnitTests.API
                     Password = "changePassword",
                     ConfirmPassword = "changePassword"
                 }, default(CancellationToken));
-
-
+                
                 Assert.Equal("passwordChanged", context.Users.Single(x => x.UserId == 1).Password);
             }
         }

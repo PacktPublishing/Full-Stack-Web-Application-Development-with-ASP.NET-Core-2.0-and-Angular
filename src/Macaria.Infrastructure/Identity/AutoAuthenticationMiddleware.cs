@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace Macaria.Infrastructure.Identity
 {
-    public class AutoAuthorizeMiddleware
+    public class AutoAuthenticationMiddleware
     {
         private readonly RequestDelegate _next;
-        public AutoAuthorizeMiddleware(RequestDelegate next) => _next = next;
+        public AutoAuthenticationMiddleware(RequestDelegate next) => _next = next;
 
         public async Task Invoke(HttpContext httpContext)
         {

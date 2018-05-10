@@ -15,19 +15,18 @@ namespace Macaria.API
         public Startup(IConfiguration configuration)
             => Configuration = configuration;
 
-        public bool IsTest { get { return Convert.ToBoolean(Configuration["isTest"]); } }
+        public bool IsTest() => Convert.ToBoolean(Configuration["isTest"]);
 
         public IConfiguration Configuration { get; }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCustomMvc();
             services.AddCustomSecurity(Configuration);
             services.AddCustomSignalR();                        
             services.AddCustomSwagger();
-
-            var s = Configuration["Data:IntegrationTestConnection:ConnectionString"];
-
-            services.AddDataStore(IsTest
+            
+            services.AddDataStore(IsTest()
                 ? Configuration["Data:IntegrationTestConnection:ConnectionString"]
                 : Configuration["Data:DefaultConnection:ConnectionString"]);
   
@@ -38,17 +37,17 @@ namespace Macaria.API
         }
         
         public void Configure(IApplicationBuilder app)
-        {            
-            app.UseCors("CorsPolicy");
-            if(IsTest)
+        {
+            if (IsTest())
             {
-                app.UseMiddleware<AutoAuthorizeMiddleware>();                
+                app.UseMiddleware<AutoAuthenticationMiddleware>();
             }
             else
             {
                 app.UseAuthentication();
             }
-            
+
+            app.UseCors("CorsPolicy");            
             app.UseMvc();
             app.UseSignalR(routes => routes.MapHub<AppHub>("/hub"));
             app.UseSwagger();

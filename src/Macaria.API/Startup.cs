@@ -38,14 +38,9 @@ namespace Macaria.API
         
         public void Configure(IApplicationBuilder app)
         {
-            if (IsTest())
-            {
-                app.UseMiddleware<AutoAuthenticationMiddleware>();
-            }
-            else
-            {
-                app.UseAuthentication();
-            }
+            _ = IsTest() 
+                ? app.UseMiddleware<AutoAuthenticationMiddleware>()
+                : app.UseAuthentication();
 
             app.UseCors("CorsPolicy");            
             app.UseMvc();

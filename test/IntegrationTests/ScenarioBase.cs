@@ -17,7 +17,7 @@ namespace IntegrationTests
         protected TestServer CreateServer()
         {
             var webHostBuilder = new WebHostBuilder()
-                    .UseStartup(typeof(IntegrationTestsStartup))
+                    .UseStartup(typeof(Startup))
                     .UseKestrel()
                     .UseConfiguration(GetConfiguration())
                     .ConfigureAppConfiguration((builderContext, config) =>
@@ -49,13 +49,12 @@ namespace IntegrationTests
             }
         }
 
-        protected HubConnection GetHubConnection(HttpMessageHandler httpMessageHandler) {
-            return new HubConnectionBuilder()
+        protected HubConnection GetHubConnection(HttpMessageHandler httpMessageHandler) 
+            => new HubConnectionBuilder()
                             .WithUrl($"http://integrationtests/hub?token={GetAccessToken()}")
                             .WithMessageHandler((h) => httpMessageHandler)
                             .WithTransport(TransportType.LongPolling)
                             .Build();
-        }
 
         protected IConfiguration GetConfiguration() => new ConfigurationBuilder()
                 .SetBasePath(Path.GetFullPath(@"../../../../../src/Macaria.API/"))

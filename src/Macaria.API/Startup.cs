@@ -41,7 +41,7 @@ namespace Macaria.API
             _ = IsTest() 
                 ? app.UseMiddleware<AutoAuthenticationMiddleware>()
                 : app.UseAuthentication();
-
+            
             app.UseCors("CorsPolicy");            
             app.UseMvc();
             app.UseSignalR(routes => routes.MapHub<AppHub>("/hub"));

@@ -1,5 +1,7 @@
 ﻿using Macaria.Core.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
 using System;
 using System.Linq;
 using System.Threading;
@@ -15,10 +17,17 @@ namespace Macaria.Infrastructure.Data
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 
+
     public class MacariaContext : DbContext, IMacariaContext
     {
         public MacariaContext(DbContextOptions options)
             :base(options) { }
+
+        public static readonly LoggerFactory ConsoleLoggerFactory
+            = new LoggerFactory(new[] {
+                new ConsoleLoggerProvider((category, level)
+                    => category == DbLoggerCategory.Database.Command.Name 
+                && level == LogLevel.Information, true) });
 
         public DbSet<Note> Notes { get; set; }
         public DbSet<Tag> Tags { get; set; }

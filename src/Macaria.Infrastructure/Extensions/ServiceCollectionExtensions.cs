@@ -75,7 +75,9 @@ namespace Macaria.Infrastructure.Identity
 
             services.AddDbContext<MacariaContext>(options =>
             {                
-                options.UseSqlServer(connectionString, b=> b.MigrationsAssembly("Macaria.Infrastructure"));
+                options
+                .UseLoggerFactory(MacariaContext.ConsoleLoggerFactory)
+                .UseSqlServer(connectionString, b=> b.MigrationsAssembly("Macaria.Infrastructure"));
             });
 
             return services;

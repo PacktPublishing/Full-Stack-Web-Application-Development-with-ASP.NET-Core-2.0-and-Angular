@@ -31,9 +31,7 @@ namespace Macaria.API.Features.Notes
         {
             public IMacariaContext _context { get; set; }
             public Handler(IMacariaContext context)
-            {
-                _context = context;
-            }
+                => _context = context;
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {

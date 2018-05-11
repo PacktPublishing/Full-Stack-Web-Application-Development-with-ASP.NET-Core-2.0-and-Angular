@@ -5,11 +5,22 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using System.Threading;
+using FluentValidation;
+using Macaria.Infrastructure.Exceptions;
 
 namespace Macaria.API.Features.Users
 {
     public class AuthenticateCommand
     {
+        public class Validator : AbstractValidator<Request>
+        {
+            public Validator()
+            {
+                RuleFor(request => request.Username).NotEqual(default(string));
+                RuleFor(request => request.Password).NotEqual(default(string));
+            }
+        }
+
         public class Request : IRequest<Response>
         {
             public string Username { get; set; }
@@ -41,10 +52,10 @@ namespace Macaria.API.Features.Users
                     .SingleOrDefaultAsync(x => x.Username.ToLower() == request.Username.ToLower());
 
                 if (user == null)
-                    throw new System.Exception();
+                    throw new DomainException();
 
                 if (!ValidateUser(user, _passwordHasher.HashPassword(user.Salt, request.Password)))
-                    throw new System.Exception();
+                    throw new DomainException();
 
                 return new Response()
                 {

@@ -1,7 +1,7 @@
 ﻿using Macaria.API.Features.Users;
 using Macaria.Core.Entities;
 using Macaria.Infrastructure.Data;
-using Macaria.Infrastructure.Identity;
+using Macaria.Core.Identity;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using System.Threading;

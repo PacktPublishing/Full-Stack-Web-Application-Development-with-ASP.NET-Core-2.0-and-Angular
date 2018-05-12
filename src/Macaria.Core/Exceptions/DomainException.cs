@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Macaria.Infrastructure.Exceptions
+namespace Macaria.Core.Exceptions
 {
     public class DomainException: Exception
     {

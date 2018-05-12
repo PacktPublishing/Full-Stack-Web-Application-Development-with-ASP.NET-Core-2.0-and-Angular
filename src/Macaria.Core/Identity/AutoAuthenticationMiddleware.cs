@@ -3,7 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Macaria.Infrastructure.Identity
+namespace Macaria.Core.Identity
 {
     public class AutoAuthenticationMiddleware
     {

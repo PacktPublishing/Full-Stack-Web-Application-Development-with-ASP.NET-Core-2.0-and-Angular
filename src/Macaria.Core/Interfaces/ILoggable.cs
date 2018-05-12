@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Macaria.Core.Entities
+namespace Macaria.Core.Interfaces
 {
     public interface ILoggable
     {

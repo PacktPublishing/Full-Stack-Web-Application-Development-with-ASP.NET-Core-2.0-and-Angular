@@ -2,9 +2,9 @@ using MediatR;
 using System.Threading.Tasks;
 using System.Threading;
 using FluentValidation;
-using Macaria.Infrastructure.Data;
+using Macaria.Core.Interfaces;
 using Macaria.Core.Entities;
-using Macaria.Infrastructure.Extensions;
+using Macaria.Core.Extensions;
 
 namespace Macaria.API.Features.Tags
 {

@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
-using Macaria.Infrastructure.Extensions;
+using Macaria.Core.Extensions;
 
 namespace IntegrationTests.Features
 {

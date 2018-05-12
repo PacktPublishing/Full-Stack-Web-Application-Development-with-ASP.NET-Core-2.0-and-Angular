@@ -1,12 +1,12 @@
 using Macaria.Core.Entities;
-using Macaria.Infrastructure.Data;
-using Macaria.Infrastructure.Identity;
+using Macaria.Core.Interfaces;
+using Macaria.Core.Identity;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using System.Threading;
 using FluentValidation;
-using Macaria.Infrastructure.Exceptions;
+using Macaria.Core.Exceptions;
 
 namespace Macaria.API.Features.Users
 {
@@ -18,7 +18,7 @@ namespace Macaria.API.Features.Users
             {
                 RuleFor(request => request.Username).NotEqual(default(string));
                 RuleFor(request => request.Password).NotEqual(default(string));
-            }
+            }            
         }
 
         public class Request : IRequest<Response>

@@ -4,7 +4,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Macaria.Infrastructure.Identity
+namespace Macaria.Core.Identity
 {
     public class AuthorizationHeaderParameterOperationFilter: IOperationFilter
     {
@@ -23,7 +23,7 @@ namespace Macaria.Infrastructure.Identity
                 {
                     Name = "Authorization",
                     In = "header",
-                    Description = "access token",
+                    Description = "Access Token",
                     Required = true,
                     Type = "string"
                 });

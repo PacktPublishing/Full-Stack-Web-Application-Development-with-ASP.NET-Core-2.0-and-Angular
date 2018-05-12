@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Xunit;
 using Macaria.API.Features.Notes;
 using Macaria.Core.Entities;
+using Macaria.Core.Extensions;
 using Macaria.Infrastructure.Data;
-using Macaria.Infrastructure.Extensions;
 using System.Collections.Generic;
 using Macaria.API.Features.Tags;
 

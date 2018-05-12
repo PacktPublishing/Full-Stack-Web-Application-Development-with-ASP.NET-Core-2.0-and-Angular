@@ -1,9 +1,8 @@
 ﻿using Macaria.Core.Entities;
+using Macaria.Core.Extensions;
+using Macaria.Core.Identity;
 using Macaria.Infrastructure.Data;
-using Macaria.Infrastructure.Extensions;
-using Macaria.Infrastructure.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using System.Linq;
 
 namespace Macaria.API

@@ -1,10 +1,7 @@
-﻿using Macaria.Core.Entities;
-using System;
+﻿using System;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
-//https://docs.microsoft.com/en-us/aspnet/core/security/data-protection/consumer-apis/password-hashing?view=aspnetcore-2.1
-
-namespace Macaria.Infrastructure.Identity
+namespace Macaria.Core.Identity
 {
     public interface IPasswordHasher
     {

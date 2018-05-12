@@ -1,4 +1,4 @@
-﻿namespace Macaria.Infrastructure.Identity
+﻿namespace Macaria.Core.Identity
 {
     public class AuthenticationSettings
     {

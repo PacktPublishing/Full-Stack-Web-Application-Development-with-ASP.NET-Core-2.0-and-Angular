@@ -2,11 +2,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using Macaria.API.Behaviors;
 using Macaria.API.Hubs;
-using Macaria.Infrastructure.Behaviours;
-using Macaria.Infrastructure.Identity;
-using System;
+using Macaria.Core.Behaviours;
+using Macaria.Core.Identity;
+using Macaria.Core.Extensions;
+using Macaria.Infrastructure.Extensions;
 
 namespace Macaria.API
 {

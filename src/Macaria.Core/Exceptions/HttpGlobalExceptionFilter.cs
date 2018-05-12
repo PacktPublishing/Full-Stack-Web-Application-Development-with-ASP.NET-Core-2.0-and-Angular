@@ -1,11 +1,10 @@
-﻿using Macaria.Infrastructure.Exceptions;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 using System.Net;
 
-namespace Macaria.Infrastructure.Exceptions
+namespace Macaria.Core.Exceptions
 {
     public class HttpGlobalExceptionFilter : IExceptionFilter
     {
@@ -23,7 +22,6 @@ namespace Macaria.Infrastructure.Exceptions
             logger.LogError(new EventId(context.Exception.HResult),
                 context.Exception,
                 context.Exception.Message);
-
             
             if (context.Exception.GetType() == typeof(DomainException))
             {
@@ -42,11 +40,8 @@ namespace Macaria.Infrastructure.Exceptions
                     Messages = new[] { $"An error ocurr.Try it again."}
                 };
 
-                if (env.IsDevelopment())
-                {
-                    json.DeveloperMeesage = context.Exception;
-                }
-
+                if(env.IsDevelopment()) json.DeveloperMeesage = context.Exception;
+                
                 context.Result = new InternalServerErrorObjectResult(json);
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             }

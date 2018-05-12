@@ -1,3 +1,4 @@
+using Macaria.Core.Interfaces;
 using System;
 
 namespace Macaria.Core.Entities

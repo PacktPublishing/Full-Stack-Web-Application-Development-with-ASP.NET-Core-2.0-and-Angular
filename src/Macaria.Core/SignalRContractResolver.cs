@@ -3,7 +3,7 @@ using System.Reflection;
 using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json.Serialization;
 
-namespace Macaria.Infrastructure
+namespace Macaria.Core
 {    
     public class SignalRContractResolver : IContractResolver
     {

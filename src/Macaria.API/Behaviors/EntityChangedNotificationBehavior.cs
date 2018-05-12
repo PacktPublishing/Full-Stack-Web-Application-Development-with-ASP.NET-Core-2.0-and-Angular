@@ -1,7 +1,7 @@
 ﻿using Macaria.API.Features.Notes;
 using Macaria.API.Features.Tags;
 using Macaria.API.Hubs;
-using Macaria.Infrastructure.Data;
+using Macaria.Core.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading;

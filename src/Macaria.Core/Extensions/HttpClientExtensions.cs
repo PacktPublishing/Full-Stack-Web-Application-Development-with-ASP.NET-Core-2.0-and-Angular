@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Macaria.Infrastructure.Extensions
+namespace Macaria.Core.Extensions
 {
     public static class HttpClientExtensions
     {

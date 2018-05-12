@@ -1,7 +1,7 @@
-﻿using Macaria.Infrastructure.Identity;
+﻿using Macaria.Core.Identity;
 using Xunit;
 
-namespace UnitTests.Infrastructure
+namespace UnitTests.Core
 {
     public class PasswordHasherTests
     {

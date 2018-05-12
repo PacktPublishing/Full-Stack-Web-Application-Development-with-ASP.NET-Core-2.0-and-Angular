@@ -1,4 +1,5 @@
 ﻿using Macaria.Core.Entities;
+using Macaria.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
@@ -8,16 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace Macaria.Infrastructure.Data
-{
-    public interface IMacariaContext
-    {
-        DbSet<Note> Notes { get; set; }
-        DbSet<Tag> Tags { get; set; }
-        DbSet<User> Users { get; set; }
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
-    }
-
-
+{    
     public class MacariaContext : DbContext, IMacariaContext
     {
         public MacariaContext(DbContextOptions options)
@@ -51,6 +43,7 @@ namespace Macaria.Infrastructure.Data
                 item.State = EntityState.Modified;
                 item.CurrentValues["IsDeleted"] = true;
             }
+
             return base.SaveChangesAsync(cancellationToken);
         }
         

@@ -6,7 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Macaria.Infrastructure.Identity
+namespace Macaria.Core.Identity
 {
     public interface ITokenProvider
     {
@@ -19,15 +19,15 @@ namespace Macaria.Infrastructure.Identity
         public TokenProvider(IConfiguration configuration)
             => _configuration = configuration;
         
-        public string Get(string username)
+        public string Get(string uniqueName)
         {
             var now = DateTime.UtcNow;
             var nowDateTimeOffset = new DateTimeOffset(now);
 
             var claims = new List<Claim>()
                 {
-                    new Claim(JwtRegisteredClaimNames.UniqueName, username),
-                    new Claim(JwtRegisteredClaimNames.Sub, username),
+                    new Claim(JwtRegisteredClaimNames.UniqueName, uniqueName),
+                    new Claim(JwtRegisteredClaimNames.Sub, uniqueName),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim(JwtRegisteredClaimNames.Iat, nowDateTimeOffset.ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64),
                 };

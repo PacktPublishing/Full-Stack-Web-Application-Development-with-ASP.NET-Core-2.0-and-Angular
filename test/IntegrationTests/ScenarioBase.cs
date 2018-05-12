@@ -1,6 +1,6 @@
 ﻿using Macaria.API;
 using Macaria.Infrastructure.Data;
-using Macaria.Infrastructure.Identity;
+using Macaria.Core.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.SignalR.Client;

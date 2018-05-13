@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Macaria.Core.Entities
 {
-    public class Note: BaseModel
+    public class Note: BaseEntity
     {
         public int NoteId { get; set; }
         public string Title { get; set; }

@@ -8,18 +8,18 @@ namespace Macaria.Core.Exceptions
 {
     public class HttpGlobalExceptionFilter : IExceptionFilter
     {
-        private readonly IHostingEnvironment env;
-        private readonly ILogger<HttpGlobalExceptionFilter> logger;
+        private readonly IHostingEnvironment _env;
+        private readonly ILogger<HttpGlobalExceptionFilter> _logger;
 
         public HttpGlobalExceptionFilter(IHostingEnvironment env, ILogger<HttpGlobalExceptionFilter> logger)
         {
-            this.env = env;
-            this.logger = logger;
+            _env = env;
+            _logger = logger;
         }
 
         public void OnException(ExceptionContext context)
         {
-            logger.LogError(new EventId(context.Exception.HResult),
+            _logger.LogError(new EventId(context.Exception.HResult),
                 context.Exception,
                 context.Exception.Message);
             
@@ -40,7 +40,7 @@ namespace Macaria.Core.Exceptions
                     Messages = new[] { $"An error ocurr.Try it again."}
                 };
 
-                if(env.IsDevelopment()) json.DeveloperMeesage = context.Exception;
+                if(_env.IsDevelopment()) json.DeveloperMeesage = context.Exception;
                 
                 context.Result = new InternalServerErrorObjectResult(json);
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;

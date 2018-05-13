@@ -3,7 +3,7 @@ using System;
 
 namespace Macaria.Core.Entities
 {
-    public class BaseModel: ILoggable
+    public class BaseEntity: ILoggable
     {
         public DateTime CreatedOn { get; set; }
         public DateTime LastModifiedOn { get; set; }

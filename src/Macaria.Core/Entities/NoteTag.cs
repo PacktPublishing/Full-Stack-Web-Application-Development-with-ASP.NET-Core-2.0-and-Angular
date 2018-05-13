@@ -1,6 +1,6 @@
 namespace Macaria.Core.Entities
 {
-    public class NoteTag: BaseModel
+    public class NoteTag: BaseEntity
     {
         public int NoteTagId { get; set; }
         public int NoteId { get; set; }

@@ -2,7 +2,7 @@
 
 namespace Macaria.Core.Entities
 {
-    public class User: BaseModel
+    public class User: BaseEntity
     {
         public User()
         {

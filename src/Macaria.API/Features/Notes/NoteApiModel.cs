@@ -11,8 +11,8 @@ namespace Macaria.API.Features.Notes
         public string Title { get; set; }
         public string Slug { get; set; }
         public string Body { get; set; }
-
         public ICollection<TagApiModel> Tags = new HashSet<TagApiModel>();
+
         public static NoteApiModel FromNote(Note note, bool includeTags = true)
         {
             var model = new NoteApiModel

@@ -27,7 +27,8 @@ namespace Macaria.API.Features.Tags
 
         public class Handler : IRequestHandler<Request, Response>
         {
-            public IMacariaContext _context { get; set; }
+            private readonly IMacariaContext _context;
+
             public Handler(IMacariaContext context) => _context = context;
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)

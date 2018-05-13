@@ -29,9 +29,9 @@ namespace Macaria.API.Features.Notes
 
         public class Handler : IRequestHandler<Request, Response>
         {
-            public IMacariaContext _context { get; set; }
-            public Handler(IMacariaContext context)
-                => _context = context;
+            private readonly IMacariaContext _context;
+
+            public Handler(IMacariaContext context) => _context = context;
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {

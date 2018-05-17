@@ -1,9 +1,9 @@
-using Macaria.API.Features.Tags;
 using Microsoft.AspNetCore.SignalR.Client;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
+using Macaria.API.Features.Tags;
 using Macaria.Core.Extensions;
 
 namespace IntegrationTests.Features

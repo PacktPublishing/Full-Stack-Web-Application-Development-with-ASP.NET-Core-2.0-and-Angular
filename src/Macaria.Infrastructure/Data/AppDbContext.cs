@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace Macaria.Infrastructure.Data
 {    
-    public class MacariaContext : DbContext, IMacariaContext
+    public class AppDbContext : DbContext, IAppDbContext
     {
-        public MacariaContext(DbContextOptions options)
+        public AppDbContext(DbContextOptions options)
             :base(options) { }
 
         public static readonly LoggerFactory ConsoleLoggerFactory

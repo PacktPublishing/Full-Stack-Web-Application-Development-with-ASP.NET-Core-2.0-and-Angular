@@ -15,9 +15,9 @@ namespace Macaria.API.Behaviors
         
     {
         private readonly IHubContext<AppHub> _hubContext;
-        private readonly IMacariaContext _context;
+        private readonly IAppDbContext _context;
 
-        public EntityChangedNotificationBehavior(IHubContext<AppHub> hubContext, IMacariaContext context)
+        public EntityChangedNotificationBehavior(IHubContext<AppHub> hubContext, IAppDbContext context)
         {
             _hubContext = hubContext;
             _context = context;

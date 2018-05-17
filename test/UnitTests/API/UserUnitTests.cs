@@ -32,11 +32,11 @@ namespace UnitTests.API
         [Fact]
         public async Task ShouldHandleAuthenticateUserCommandRequest()
         {
-            var options = new DbContextOptionsBuilder<MacariaContext>()
+            var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "ShouldHandleAuthenticateUserCommandRequest")
                 .Options;
 
-            using (var context = new MacariaContext(options))
+            using (var context = new AppDbContext(options))
             {                
                 context.Users.Add(new User()
                 {

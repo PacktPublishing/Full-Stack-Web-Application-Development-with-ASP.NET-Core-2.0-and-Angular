@@ -29,7 +29,7 @@ namespace Macaria.API
 
             using (var scope = services.CreateScope())
             {
-                var context = scope.ServiceProvider.GetRequiredService<MacariaContext>();
+                var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
                 if (args.Contains("ci"))
                     args = new string[4] { "dropdb", "migratedb", "seeddb", "stop" };

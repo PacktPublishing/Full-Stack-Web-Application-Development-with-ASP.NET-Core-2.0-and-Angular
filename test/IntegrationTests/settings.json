@@ -1,9 +1,3 @@
 ﻿{
-  "Logging": {
-    "IncludeScopes": false,
-    "LogLevel": {
-      "Default": "Debug"
-    }
-  },
   "isTest": "true"
 }

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Macaria.Infrastructure.Migrations
 {
-    [DbContext(typeof(MacariaContext))]
+    [DbContext(typeof(AppDbContext))]
     [Migration("20180506133211_Initial")]
     partial class Initial
     {

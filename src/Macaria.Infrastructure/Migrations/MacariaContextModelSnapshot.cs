@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Macaria.Infrastructure.Migrations
 {
-    [DbContext(typeof(MacariaContext))]
+    [DbContext(typeof(AppDbContext))]
     partial class MacariaContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

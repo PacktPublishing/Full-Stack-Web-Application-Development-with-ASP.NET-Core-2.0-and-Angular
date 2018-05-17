@@ -34,12 +34,12 @@ namespace IntegrationTests
         }
 
         protected void ResetDatabase(IWebHost host)
-        {
+        {            
             var services = (IServiceScopeFactory)host.Services.GetService(typeof(IServiceScopeFactory));
 
             using (var scope = services.CreateScope())
             {
-                var context = scope.ServiceProvider.GetRequiredService<MacariaContext>();
+                var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
                 context.Database.EnsureDeleted();
 

@@ -17,11 +17,11 @@ namespace UnitTests.API
         public async Task ShouldHandleSaveNoteCommandRequest()
         {
 
-            var options = new DbContextOptionsBuilder<MacariaContext>()
+            var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "ShouldHandleSaveNoteCommandRequest")
                 .Options;
 
-            using (var context = new MacariaContext(options))
+            using (var context = new AppDbContext(options))
             {
                 var handler = new SaveNoteCommand.Handler(context);
 
@@ -49,11 +49,11 @@ namespace UnitTests.API
         [Fact]
         public async Task ShouldHandleGetNoteByIdQueryRequest()
         {
-            var options = new DbContextOptionsBuilder<MacariaContext>()
+            var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "ShouldHandleGetNoteByIdQueryRequest")
                 .Options;
 
-            using (var context = new MacariaContext(options))
+            using (var context = new AppDbContext(options))
             {
                 context.Notes.Add(new Note()
                 {
@@ -78,11 +78,11 @@ namespace UnitTests.API
         [Fact]
         public async Task ShouldHandleGetNoteBySlugQueryRequest()
         {
-            var options = new DbContextOptionsBuilder<MacariaContext>()
+            var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "ShouldHandleGetNoteBySlugQueryRequest")
                 .Options;
 
-            using (var context = new MacariaContext(options))
+            using (var context = new AppDbContext(options))
             {
                 context.Tags.Add(new Tag()
                 {
@@ -118,11 +118,11 @@ namespace UnitTests.API
         [Fact]
         public async Task ShouldHandleGetNotesQueryRequest()
         {
-            var options = new DbContextOptionsBuilder<MacariaContext>()
+            var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "ShouldHandleGetNotesQueryRequest")
                 .Options;
 
-            using (var context = new MacariaContext(options))
+            using (var context = new AppDbContext(options))
             {
                 context.Notes.Add(new Macaria.Core.Entities.Note()
                 {
@@ -144,11 +144,11 @@ namespace UnitTests.API
         [Fact]
         public async Task ShouldHandleRemoveNoteCommandRequest()
         {
-            var options = new DbContextOptionsBuilder<MacariaContext>()
+            var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "ShouldHandleRemoveNoteCommandRequest")
                 .Options;
 
-            using (var context = new MacariaContext(options))
+            using (var context = new AppDbContext(options))
             {
                 context.Notes.Add(new Note()
                 {
@@ -172,11 +172,11 @@ namespace UnitTests.API
         [Fact]
         public async Task ShouldHandleUpdateNoteCommandRequest()
         {
-            var options = new DbContextOptionsBuilder<MacariaContext>()
+            var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "ShouldHandleUpdateNoteCommandRequest")
                 .Options;
 
-            using (var context = new MacariaContext(options))
+            using (var context = new AppDbContext(options))
             {
                 context.Notes.Add(new Note()
                 {

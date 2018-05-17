@@ -9,7 +9,7 @@ namespace Macaria.API
 {
     public class ApiConfiguration
     {
-        public static void Seed(MacariaContext context)
+        public static void Seed(AppDbContext context)
         {
             UserConfiguration.Seed(context);
             TagConfiguration.Seed(context);
@@ -20,7 +20,7 @@ namespace Macaria.API
 
     public class UserConfiguration
     {
-        public static void Seed(MacariaContext context)
+        public static void Seed(AppDbContext context)
         {
             if (context.Users.IgnoreQueryFilters().FirstOrDefault(x => x.Username == "quinntynebrown@gmail.com") == null)
             {
@@ -40,7 +40,7 @@ namespace Macaria.API
 
     public class TagConfiguration
     {
-        public static void Seed(MacariaContext context)
+        public static void Seed(AppDbContext context)
         {
             if (context.Tags.IgnoreQueryFilters().FirstOrDefault(x => x.Name == "Angular") == null)
                 context.Tags.Add(new Tag() { Name = "Angular", Slug = "Angular".GenerateSlug() });

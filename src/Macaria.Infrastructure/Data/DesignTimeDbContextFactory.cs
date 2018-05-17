@@ -5,22 +5,22 @@ using System.IO;
 
 namespace Macaria.Infrastructure.Data
 {
-    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<MacariaContext>
+    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
     {
-        public MacariaContext CreateDbContext(string[] args)
+        public AppDbContext CreateDbContext(string[] args)
         {
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
                 .Build();
 
-            var builder = new DbContextOptionsBuilder<MacariaContext>();
+            var builder = new DbContextOptionsBuilder<AppDbContext>();
 
             var connectionString = configuration["Data:DefaultConnection:ConnectionString"];
 
             builder.UseSqlServer(connectionString);
 
-            return new MacariaContext(builder.Options);
+            return new AppDbContext(builder.Options);
         }
     }
 }

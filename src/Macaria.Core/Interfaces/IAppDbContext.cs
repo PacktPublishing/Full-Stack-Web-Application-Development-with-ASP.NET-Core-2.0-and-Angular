@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Macaria.Core.Interfaces
 {
-    public interface IMacariaContext
+    public interface IAppDbContext
     {
         DbSet<Note> Notes { get; set; }
         DbSet<Tag> Tags { get; set; }

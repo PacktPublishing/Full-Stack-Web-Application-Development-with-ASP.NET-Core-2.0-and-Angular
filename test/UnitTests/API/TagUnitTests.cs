@@ -17,11 +17,11 @@ namespace UnitTests.API
         public async Task ShouldHandleSaveTagCommandRequest()
         {
 
-            var options = new DbContextOptionsBuilder<MacariaContext>()
+            var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "ShouldHandleSaveTagCommandRequest")
                 .Options;
 
-            using (var context = new MacariaContext(options))
+            using (var context = new AppDbContext(options))
             {
                 var handler = new SaveTagCommand.Handler(context);
 
@@ -40,11 +40,11 @@ namespace UnitTests.API
         [Fact]
         public async Task ShouldHandleGetTagByIdQueryRequest()
         {
-            var options = new DbContextOptionsBuilder<MacariaContext>()
+            var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "ShouldHandleGetTagByIdQueryRequest")
                 .Options;
 
-            using (var context = new MacariaContext(options))
+            using (var context = new AppDbContext(options))
             {
                 context.Tags.Add(new Tag()
                 {
@@ -69,11 +69,11 @@ namespace UnitTests.API
         [Fact]
         public async Task ShouldHandleGetTagBySlugQueryRequest()
         {
-            var options = new DbContextOptionsBuilder<MacariaContext>()
+            var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "ShouldHandleGetTagBySlugQueryRequest")
                 .Options;
 
-            using (var context = new MacariaContext(options))
+            using (var context = new AppDbContext(options))
             {
                 context.Notes.Add(new Note()
                 {
@@ -110,11 +110,11 @@ namespace UnitTests.API
         [Fact]
         public async Task ShouldHandleGetTagsQueryRequest()
         {
-            var options = new DbContextOptionsBuilder<MacariaContext>()
+            var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "ShouldHandleGetTagsQueryRequest")
                 .Options;
 
-            using (var context = new MacariaContext(options))
+            using (var context = new AppDbContext(options))
             {                
                 context.Tags.Add(new Macaria.Core.Entities.Tag()
                 {
@@ -136,11 +136,11 @@ namespace UnitTests.API
         [Fact]
         public async Task ShouldHandleRemoveTagCommandRequest()
         {
-            var options = new DbContextOptionsBuilder<MacariaContext>()
+            var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "ShouldHandleRemoveTagCommandRequest")
                 .Options;
 
-            using (var context = new MacariaContext(options))
+            using (var context = new AppDbContext(options))
             {
                 context.Tags.Add(new Tag()
                 {
@@ -165,11 +165,11 @@ namespace UnitTests.API
         [Fact]
         public async Task ShouldHandleUpdateTagCommandRequest()
         {
-            var options = new DbContextOptionsBuilder<MacariaContext>()
+            var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "ShouldHandleUpdateTagCommandRequest")
                 .Options;
 
-            using (var context = new MacariaContext(options))
+            using (var context = new AppDbContext(options))
             {
                 context.Tags.Add(new Tag()
                 {

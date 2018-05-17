@@ -1,14 +1,14 @@
 using Microsoft.AspNetCore.SignalR.Client;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 using Macaria.API.Features.Notes;
+using Macaria.API.Features.Tags;
 using Macaria.Core.Entities;
 using Macaria.Core.Extensions;
 using Macaria.Infrastructure.Data;
-using System.Collections.Generic;
-using Macaria.API.Features.Tags;
 
 namespace IntegrationTests.Features
 {
@@ -53,7 +53,7 @@ namespace IntegrationTests.Features
         {
             using (var server = CreateServer())
             {
-                var context = server.Host.Services.GetService(typeof(MacariaContext)) as MacariaContext;
+                var context = server.Host.Services.GetService(typeof(AppDbContext)) as AppDbContext;
 
                 context.Notes.Add(new Note()
                 {
@@ -87,7 +87,7 @@ namespace IntegrationTests.Features
         {
             using (var server = CreateServer())
             {
-                var context = server.Host.Services.GetService(typeof(MacariaContext)) as MacariaContext;
+                var context = server.Host.Services.GetService(typeof(AppDbContext)) as AppDbContext;
 
                 context.Notes.Add(new Note()
                 {
@@ -109,7 +109,7 @@ namespace IntegrationTests.Features
         {            
             using (var server = CreateServer())
             {
-                var context = server.Host.Services.GetService(typeof(MacariaContext)) as MacariaContext;
+                var context = server.Host.Services.GetService(typeof(AppDbContext)) as AppDbContext;
 
                 context.Notes.Add(new Note()
                 {
@@ -133,7 +133,7 @@ namespace IntegrationTests.Features
 
             using (var server = CreateServer())
             {
-                var context = server.Host.Services.GetService(typeof(MacariaContext)) as MacariaContext;
+                var context = server.Host.Services.GetService(typeof(AppDbContext)) as AppDbContext;
 
                 context.Notes.Add(new Note()
                 {
@@ -165,7 +165,7 @@ namespace IntegrationTests.Features
 
             using (var server = CreateServer())
             {
-                var context = server.Host.Services.GetService(typeof(MacariaContext)) as MacariaContext;
+                var context = server.Host.Services.GetService(typeof(AppDbContext)) as AppDbContext;
 
                 context.Notes.Add(new Note()
                 {

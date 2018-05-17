@@ -35,11 +35,11 @@ namespace Macaria.API.Features.Users
 
         public class Handler : IRequestHandler<Request, Response>
         {
-            private readonly IMacariaContext _context;
+            private readonly IAppDbContext _context;
             private readonly IPasswordHasher _passwordHasher;
             private readonly ITokenProvider _tokenProvider;
 
-            public Handler(IMacariaContext context, ITokenProvider tokenProvider, IPasswordHasher passwordHasher)
+            public Handler(IAppDbContext context, ITokenProvider tokenProvider, IPasswordHasher passwordHasher)
             {
                 _context = context;
                 _tokenProvider = tokenProvider;

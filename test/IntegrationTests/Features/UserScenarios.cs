@@ -1,7 +1,7 @@
-using Macaria.API.Features.Users;
 using System.Threading.Tasks;
-using Macaria.Core.Extensions;
 using Xunit;
+using Macaria.API.Features.Users;
+using Macaria.Core.Extensions;
 
 namespace IntegrationTests.Features
 {

@@ -18,11 +18,11 @@ namespace UnitTests.API
         [Fact]
         public async Task ShouldSendNotificationAfterSaveNoteCommand()
         {
-            var options = new DbContextOptionsBuilder<MacariaContext>()
+            var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "ShouldSendNotificationAfterSaveNoteCommand")
                 .Options;
 
-            using (var context = new MacariaContext(options))
+            using (var context = new AppDbContext(options))
             {
 
                 var mockClients = new Mock<IHubClients>();
@@ -73,11 +73,11 @@ namespace UnitTests.API
         [Fact]
         public async Task ShouldSendNotificationAfterRemoveNoteCommand()
         {
-            var options = new DbContextOptionsBuilder<MacariaContext>()
+            var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "ShouldSendNotificationAfterRemoveNoteCommand")
                 .Options;
 
-            using (var context = new MacariaContext(options))
+            using (var context = new AppDbContext(options))
             {
 
                 var mockClients = new Mock<IHubClients>();
@@ -127,11 +127,11 @@ namespace UnitTests.API
         [Fact]
         public async Task ShouldSendNotificationAfterSaveTagCommand()
         {
-            var options = new DbContextOptionsBuilder<MacariaContext>()
+            var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "ShouldSendNotificationAfterSaveTagCommand")
                 .Options;
 
-            using (var context = new MacariaContext(options))
+            using (var context = new AppDbContext(options))
             {
 
                 var mockClients = new Mock<IHubClients>();
@@ -184,11 +184,11 @@ namespace UnitTests.API
         [Fact]
         public async Task ShouldSendNotificationAfterRemoveTagCommand()
         {
-            var options = new DbContextOptionsBuilder<MacariaContext>()
+            var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "ShouldSendNotificationAfterRemoveTagCommand")
                 .Options;
 
-            using (var context = new MacariaContext(options))
+            using (var context = new AppDbContext(options))
             {
 
                 var mockClients = new Mock<IHubClients>();

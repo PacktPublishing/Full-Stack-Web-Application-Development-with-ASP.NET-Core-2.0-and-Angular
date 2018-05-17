@@ -10,12 +10,12 @@ namespace Macaria.Infrastructure.Extensions
         public static IServiceCollection AddDataStore(this IServiceCollection services,
                                                string connectionString)
         {
-            services.AddScoped<IMacariaContext, MacariaContext>();
+            services.AddScoped<IAppDbContext, AppDbContext>();
 
-            services.AddDbContext<MacariaContext>(options =>
+            services.AddDbContext<AppDbContext>(options =>
             {                
                 options
-                .UseLoggerFactory(MacariaContext.ConsoleLoggerFactory)
+                .UseLoggerFactory(AppDbContext.ConsoleLoggerFactory)
                 .UseSqlServer(connectionString, b=> b.MigrationsAssembly("Macaria.Infrastructure"));
             });
 

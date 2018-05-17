@@ -43,7 +43,7 @@ namespace Macaria.API
                 if (args.Contains("seeddb"))
                 {
                     context.Database.EnsureCreated();
-                    ApiConfiguration.Seed(context);            
+                    SeedData.Seed(context);            
                 }
                 
                 if (args.Contains("stop"))

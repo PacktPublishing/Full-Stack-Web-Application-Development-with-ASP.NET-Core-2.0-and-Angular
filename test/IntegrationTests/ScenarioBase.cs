@@ -45,7 +45,7 @@ namespace IntegrationTests
 
                 context.Database.EnsureCreated();
 
-                ApiConfiguration.Seed(context);
+                SeedData.Seed(context);
             }
         }
 

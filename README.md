@@ -19,6 +19,12 @@ Full Stack Web Application Development with ASP.NET Core 2.0 and Angular [Video]
 * Using the Controller attribute 
 * Using the Angular SPA Template
 * Using the dotnet CLI
+* Attribute Routing
+* SignalR
+* Advanced Testing and Mocking
+* Basic OAuth2 User Identity Implemetation
+* Basic Change Tracking Implementation
+* Validation using the `FluentValidation` package
 
 ## Angular Concepts Covered
 * Using the Angular CLI
@@ -28,6 +34,9 @@ Full Stack Web Application Development with ASP.NET Core 2.0 and Angular [Video]
 * Localiziation
 * Using RxJS 6
 * Referencing the Angular Style Guide
+* Testing
+* Error Handling
+* Handling realtime streams
 
 ## Running the Application
 1. Install `Node.js 8.9` or higher.

@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.SignalR;
 using System.Threading;
 using System.Threading.Tasks;
 
-
 namespace Macaria.API.Behaviors
 {
     public class EntityChangedNotificationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
@@ -27,22 +26,22 @@ namespace Macaria.API.Behaviors
         {
             var response = await next();
 
-            if (typeof(TRequest) == typeof(SaveNoteCommand.Request))
-                return await (HandleSaveNoteCommand(request as SaveNoteCommand.Request, cancellationToken, response as SaveNoteCommand.Response) as Task<TResponse>);
+            if (request is SaveNoteCommand.Request)
+                return await HandleSaveNoteCommand(request, cancellationToken, response);
 
-            if (typeof(TRequest) == typeof(RemoveNoteCommand.Request))
-                return await (HandleRemoveNoteCommand(request as RemoveNoteCommand.Request, cancellationToken, response as RemoveNoteCommand.Response) as Task<TResponse>);
+            if (request is RemoveNoteCommand.Request)
+                return await HandleRemoveNoteCommand(request, cancellationToken, response);
 
-            if (typeof(TRequest) == typeof(SaveTagCommand.Request))
-                return await (HandleSaveTagCommand(request as SaveTagCommand.Request, cancellationToken, response as SaveTagCommand.Response) as Task<TResponse>);
+            if (request is SaveTagCommand.Request)
+                return await HandleSaveTagCommand(request, cancellationToken, response);
 
-            if (typeof(TRequest) == typeof(RemoveTagCommand.Request))
-                return await (HandleRemoveTagCommand(request as RemoveTagCommand.Request, cancellationToken, response as RemoveTagCommand.Response) as Task<TResponse>);
+            if (request is RemoveTagCommand.Request)
+                return await HandleRemoveTagCommand(request, cancellationToken, response);
 
             return response;
         }
 
-        public async Task<SaveNoteCommand.Response> HandleSaveNoteCommand(SaveNoteCommand.Request request, CancellationToken cancellationToken, SaveNoteCommand.Response response)
+        public async Task<dynamic> HandleSaveNoteCommand(dynamic request, CancellationToken cancellationToken, dynamic response)
         {
             var note = await _context.Notes.FindAsync(response.NoteId);
 
@@ -55,7 +54,7 @@ namespace Macaria.API.Behaviors
             return response;
         }
 
-        public async Task<RemoveNoteCommand.Response> HandleRemoveNoteCommand(RemoveNoteCommand.Request request, CancellationToken cancellationToken, RemoveNoteCommand.Response response)
+        public async Task<dynamic> HandleRemoveNoteCommand(dynamic request, CancellationToken cancellationToken, dynamic response)
         {
             await _hubContext.Clients.All.SendAsync("message", new
             {
@@ -66,7 +65,7 @@ namespace Macaria.API.Behaviors
             return response;
         }
 
-        public async Task<SaveTagCommand.Response> HandleSaveTagCommand(SaveTagCommand.Request request, CancellationToken cancellationToken, SaveTagCommand.Response response)
+        public async Task<dynamic> HandleSaveTagCommand(dynamic request, CancellationToken cancellationToken, dynamic response)
         {
             var tag = await _context.Tags.FindAsync(response.TagId);
 
@@ -79,7 +78,7 @@ namespace Macaria.API.Behaviors
             return response;
         }
 
-        public async Task<RemoveTagCommand.Response> HandleRemoveTagCommand(RemoveTagCommand.Request request, CancellationToken cancellationToken, RemoveTagCommand.Response response)
+        public async Task<dynamic> HandleRemoveTagCommand(dynamic request, CancellationToken cancellationToken, dynamic response)
         {
             await _hubContext.Clients.All.SendAsync("message", new
             {

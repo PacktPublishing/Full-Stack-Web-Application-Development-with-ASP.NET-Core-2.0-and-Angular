@@ -11,6 +11,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LanguageService } from '../core/language.service';
 import { MatInput } from '@angular/material';
 import { Store } from '../core/store';
+import { TranslateService } from '@ngx-translate/core';
 
 var moment: any;
 
@@ -27,10 +28,10 @@ export class EditNotePageComponent {
     private _localStorageService: LocalStorageService,
     private _notesService: NotesService,
     private _router: Router,
-    private _store: Store
+    private _store: Store,
+    private _translateService: TranslateService
   ) {
-    this.editorPlaceholder = this._languageService.currentTranslations[this.editorPlaceholder];
-
+    
     this.selectedItems = this._store.note$.value.tags.map(x => x.name);
     this.items = this._store.tags$.value;
   }
@@ -80,7 +81,7 @@ export class EditNotePageComponent {
       .subscribe();
   }
 
-  public editorPlaceholder: string = 'Compose a note...';
+  public editorPlaceholder: string = this._translateService.instant('Compose a note...');
 
   public form = new FormGroup({
     title: new FormControl(this._store.note$.value.title, [Validators.required]),

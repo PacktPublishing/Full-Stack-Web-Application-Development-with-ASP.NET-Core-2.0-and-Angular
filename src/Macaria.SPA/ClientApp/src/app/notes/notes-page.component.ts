@@ -25,33 +25,17 @@ export class NotesPageComponent {
 
   public onDestroy: Subject<void> = new Subject<void>();
 
-  public localeText: any = {};
+  public localeText: any = {
+    "of": this._translateService.instant("of"),
+    noRowsToShow: this._translateService.instant("No Rows To Show"),
+    "Page": this._translateService.instant("Page"),
+    "to": this._translateService.instant("to")
+  };
 
   ngOnInit() {
     this._notesService
       .get()
       .pipe(map(x => this._store.notes$.next(x.notes)))
-      .subscribe();
-
-    this._translateService
-      .get(['Title', 'Page', 'of', 'to'])
-      .pipe(
-        tap(translations => {
-          this.localeText = translations;
-          this.columnDefs = [
-            {
-              headerName: translations['Title'],
-              field: 'title',
-              onCellClicked: $event => this.handleTitleClick($event)
-            },
-            {
-              cellRenderer: 'deleteRenderer',
-              onCellClicked: $event => this.handleDelete($event),
-              width: 20
-            }
-          ];
-        })
-      )
       .subscribe();
   }
 
@@ -80,7 +64,18 @@ export class NotesPageComponent {
     deleteRenderer: DeleteCellComponent
   };
 
-  public columnDefs: Array<ColDef> = [];
+  public columnDefs: Array<ColDef> = [
+    {
+      headerName: this._translateService.instant('Title'),
+      field: 'title',
+      onCellClicked: $event => this.handleTitleClick($event)
+    },
+    {
+      cellRenderer: 'deleteRenderer',
+      onCellClicked: $event => this.handleDelete($event),
+      width: 20
+    }
+  ];
 
   public onGridReady($event) {
     $event.api.sizeColumnsToFit();

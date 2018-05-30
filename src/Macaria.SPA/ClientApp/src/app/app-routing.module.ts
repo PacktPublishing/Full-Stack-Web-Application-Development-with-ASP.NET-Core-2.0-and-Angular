@@ -36,7 +36,6 @@ export const routes: Routes = [
       {
         path: '',
         component: EditNotePageComponent,
-        canActivate: [LanguageGuard],
         resolve: {
           tags: TagsResolver,
           note: NoteResolver
@@ -44,18 +43,15 @@ export const routes: Routes = [
       },
       {
         path: 'notes',
-        component: NotesPageComponent,
-        canActivate: [LanguageGuard]
+        component: NotesPageComponent
       },
       {
         path: 'tags/:slug',
-        component: NotesByTagPageComponent,
-        canActivate: [LanguageGuard]
+        component: NotesByTagPageComponent
       },
       {
         path: 'notes/:slug',
-        component: EditNotePageComponent,
-        canActivate: [LanguageGuard],
+        component: EditNotePageComponent,        
         resolve: {
           tags: TagsResolver,
           note: NoteResolver
@@ -63,13 +59,11 @@ export const routes: Routes = [
       },
       {
         path: 'settings',
-        component: SettingsPageComponent,
-        canActivate: [LanguageGuard]
+        component: SettingsPageComponent
       },
       {
         path: 'tags',
         component: TagsPageComponent,
-        canActivate: [LanguageGuard],
         resolve: {
           tags: TagsResolver
         }

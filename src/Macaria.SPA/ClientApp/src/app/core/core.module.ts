@@ -11,13 +11,13 @@ import { HubClientGuard } from './hub-client-guard';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LanguageService } from './language.service';
-import { LanguageGuard } from './language-guard';
 import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 import { LoginRedirectService } from './redirect.service';
 import { JwtInterceptor } from './jwt.interceptor';
 import { Store } from './store';
 import { ErrorService } from './error.service';
+import { OverlayRefProvider } from './overlay-ref-provider';
 
 const providers = [
   {
@@ -36,11 +36,11 @@ const providers = [
   ErrorService,
   HubClient,
   HubClientGuard,
-  LanguageGuard,
   LanguageService,
   LocalStorageService,
   LoginRedirectService,
   LoggerService,
+  OverlayRefProvider,
   Store
 ];
 

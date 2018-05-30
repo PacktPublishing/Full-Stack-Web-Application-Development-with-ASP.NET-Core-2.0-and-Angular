@@ -27,21 +27,21 @@ namespace Macaria.API.Behaviors
             var response = await next();
 
             if (request is SaveNoteCommand.Request)
-                return await HandleSaveNoteCommand(request, cancellationToken, response);
+                return await HandleSaveNoteCommand(request, response);
 
             if (request is RemoveNoteCommand.Request)
-                return await HandleRemoveNoteCommand(request, cancellationToken, response);
+                return await HandleRemoveNoteCommand(request,  response);
 
             if (request is SaveTagCommand.Request)
-                return await HandleSaveTagCommand(request, cancellationToken, response);
+                return await HandleSaveTagCommand(request,  response);
 
             if (request is RemoveTagCommand.Request)
-                return await HandleRemoveTagCommand(request, cancellationToken, response);
+                return await HandleRemoveTagCommand(request,  response);
 
             return response;
         }
 
-        public async Task<dynamic> HandleSaveNoteCommand(dynamic request, CancellationToken cancellationToken, dynamic response)
+        private async Task<dynamic> HandleSaveNoteCommand(dynamic request, dynamic response)
         {
             var note = await _context.Notes.FindAsync(response.NoteId);
 
@@ -54,7 +54,7 @@ namespace Macaria.API.Behaviors
             return response;
         }
 
-        public async Task<dynamic> HandleRemoveNoteCommand(dynamic request, CancellationToken cancellationToken, dynamic response)
+        private async Task<dynamic> HandleRemoveNoteCommand(dynamic request, dynamic response)
         {
             await _hubContext.Clients.All.SendAsync("message", new
             {
@@ -65,7 +65,7 @@ namespace Macaria.API.Behaviors
             return response;
         }
 
-        public async Task<dynamic> HandleSaveTagCommand(dynamic request, CancellationToken cancellationToken, dynamic response)
+        private async Task<dynamic> HandleSaveTagCommand(dynamic request, dynamic response)
         {
             var tag = await _context.Tags.FindAsync(response.TagId);
 
@@ -78,7 +78,7 @@ namespace Macaria.API.Behaviors
             return response;
         }
 
-        public async Task<dynamic> HandleRemoveTagCommand(dynamic request, CancellationToken cancellationToken, dynamic response)
+        private async Task<dynamic> HandleRemoveTagCommand(dynamic request, dynamic response)
         {
             await _hubContext.Clients.All.SendAsync("message", new
             {

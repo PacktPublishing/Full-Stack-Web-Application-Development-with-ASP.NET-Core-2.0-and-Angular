@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Macaria.Core.Identity
@@ -8,14 +6,18 @@ namespace Macaria.Core.Identity
     public class AutoAuthenticationMiddleware
     {
         private readonly RequestDelegate _next;
-        public AutoAuthenticationMiddleware(RequestDelegate next) => _next = next;
+        private readonly ITokenProvider _tokenProvider;
+
+        public AutoAuthenticationMiddleware(ITokenProvider tokenProvider, RequestDelegate next) {
+            _next = next;
+            _tokenProvider = tokenProvider;
+        }
 
         public async Task Invoke(HttpContext httpContext)
         {
-            var identity = new ClaimsIdentity("Macaria");
-            identity.AddClaim(new Claim(JwtRegisteredClaimNames.UniqueName, "quinntynebrown@gmail.com"));
-            httpContext.User.AddIdentity(identity);
-            await _next.Invoke(httpContext);
+            var token = _tokenProvider.Get("quinntynebrown@gmail.com");
+            httpContext.Request.Headers.Add("Authorization", $"Bearer {token}");
+            await _next.Invoke(httpContext);            
         }
     }
 }

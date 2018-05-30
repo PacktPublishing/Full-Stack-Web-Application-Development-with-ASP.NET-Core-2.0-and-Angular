@@ -2,13 +2,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using Macaria.API.Behaviors;
 using Macaria.API.Hubs;
 using Macaria.Core.Behaviours;
 using Macaria.Core.Identity;
 using Macaria.Core.Extensions;
 using Macaria.Infrastructure.Extensions;
+using static System.Boolean;
 
 namespace Macaria.API
 {
@@ -16,9 +16,7 @@ namespace Macaria.API
     {
         public Startup(IConfiguration configuration)
             => Configuration = configuration;
-
-        public bool IsTest() => Convert.ToBoolean(Configuration["isTest"]);
-
+        
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
@@ -27,11 +25,7 @@ namespace Macaria.API
             services.AddCustomSecurity(Configuration);
             services.AddCustomSignalR();                        
             services.AddCustomSwagger();
-            
-            services.AddDataStore(IsTest()
-                ? Configuration["Data:IntegrationTestConnection:ConnectionString"]
-                : Configuration["Data:DefaultConnection:ConnectionString"]);
-  
+            services.AddDataStore(Configuration["Data:DefaultConnection:ConnectionString"]);            
             services.AddMediatR(typeof(Startup));                        
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(EntityChangedNotificationBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
@@ -40,10 +34,10 @@ namespace Macaria.API
         
         public void Configure(IApplicationBuilder app)
         {
-            _ = IsTest() 
-                ? app.UseMiddleware<AutoAuthenticationMiddleware>()
-                : app.UseAuthentication();
-            
+            if (Parse(Configuration["isTest"]))
+                app.UseMiddleware<AutoAuthenticationMiddleware>();
+                    
+            app.UseAuthentication();            
             app.UseCors("CorsPolicy");            
             app.UseMvc();
             app.UseSignalR(routes => routes.MapHub<AppHub>("/hub"));

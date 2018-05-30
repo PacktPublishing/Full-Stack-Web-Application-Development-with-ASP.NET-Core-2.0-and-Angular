@@ -10,8 +10,8 @@ import { Tag } from '../tags/tag.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LanguageService } from '../core/language.service';
 import { MatInput } from '@angular/material';
-import { Store } from '../core/store';
 import { TranslateService } from '@ngx-translate/core';
+import { TagsService } from '../tags/tags.service';
 
 var moment: any;
 
@@ -28,38 +28,41 @@ export class EditNotePageComponent {
     private _localStorageService: LocalStorageService,
     private _notesService: NotesService,
     private _router: Router,
-    private _store: Store,
+    private _tagService: TagsService,
     private _translateService: TranslateService
-  ) {
-    
-    this.selectedItems = this._store.note$.value.tags.map(x => x.name);
-    this.items = this._store.tags$.value;
+  ) { }
+
+  public ngOnInit() {
+    if (this.slug)
+      this._notesService
+        .getBySlug({ slug: this.slug })
+        .pipe(tap(x => {
+          this.note = x.note;
+          this.selectedItems = this.note.tags.map(x => x.name);
+          this.form.patchValue({
+            title: this.note.title,
+            body: this.note.body
+          });
+        })).subscribe();
+
+    this._tagService.get().pipe(map(x => {
+      this.items = x.tags;
+      this.items$.next(x.tags);
+    })).subscribe();
   }
 
-  selectedItems: any[];
+  note: Note = new Note();
+
+  selectedItems: any[] = this.note.tags.map(x => x.name);
+
   items: any[];
+
+  items$: Subject<any> = new Subject();
 
   canDeactivate() {
     !this.form.dirty;
   }
-
-  ngAfterViewInit() {
-    this.form.patchValue({
-      title: this.note$.value.title,
-      body: this.note$.value.body
-    });
-  }
-
-  public notes$: BehaviorSubject<Note> = new BehaviorSubject(<Note>{});
-
-  public get tags$(): Observable<Array<Tag>> {
-    return this._store.tags$;
-  }
-
-  public get note$(): BehaviorSubject<Note> {
-    return this._store.note$;
-  }
-
+  
   public onDestroy: Subject<void> = new Subject();
 
   public quillEditorFormControl: FormControl = new FormControl('');
@@ -68,15 +71,13 @@ export class EditNotePageComponent {
     let note = new Note();
     let tags = this.form.value.tags || [];
 
-    note.noteId = this._store.note$.value.noteId;
+    note.noteId = this.note.noteId;
     note.title = this.form.value.title;
     note.body = this.form.value.body;
-    note.tags = tags.map(x => this._store.tags$.value.find(t => t.name == x));
+    note.tags = tags.map(x => this.items.find(t => t.name == x));
 
     this._notesService
-      .save({
-        note
-      })
+      .save({ note })
       .pipe(takeUntil(this.onDestroy), tap(() => this._router.navigateByUrl('/notes')))
       .subscribe();
   }
@@ -84,8 +85,8 @@ export class EditNotePageComponent {
   public editorPlaceholder: string = this._translateService.instant('Compose a note...');
 
   public form = new FormGroup({
-    title: new FormControl(this._store.note$.value.title, [Validators.required]),
-    body: new FormControl(this._store.note$.value.body, [Validators.required]),
+    title: new FormControl(this.note.title, [Validators.required]),
+    body: new FormControl(this.note.body, [Validators.required]),
     tags: new FormControl()
   });
 
@@ -102,7 +103,7 @@ export class EditNotePageComponent {
   }
 
   handleChipClicked($event) {
-    const tag = this._store.tags$.value.find(x => x.name == $event.item);
+    const tag = this.items.find(x => x.name == $event.item);
     this._router.navigate(['tags', tag.slug]);
   }
 }

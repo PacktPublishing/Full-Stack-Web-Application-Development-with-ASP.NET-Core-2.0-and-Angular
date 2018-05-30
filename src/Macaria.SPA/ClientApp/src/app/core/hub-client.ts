@@ -4,11 +4,17 @@ import { Subject } from 'rxjs';
 import { HubConnection } from '@aspnet/signalr';
 import { LocalStorageService } from './local-storage.service';
 import { accessTokenKey, baseUrl } from './constants';
+import { filter } from 'rxjs/operators';
 
 @Injectable()
 export class HubClient {
   private _connection: HubConnection;
+
   public messages$: Subject<any> = new Subject();
+
+  public selectByType$(type: string):Observable<any> {
+    return this.messages$.pipe(filter(x => x.type == type));
+  }
 
   constructor(
     @Inject(baseUrl) private _baseUrl: string,

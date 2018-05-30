@@ -8,7 +8,7 @@ using Macaria.Core.Behaviours;
 using Macaria.Core.Identity;
 using Macaria.Core.Extensions;
 using Macaria.Infrastructure.Extensions;
-using static System.Boolean;
+using static System.Convert;
 
 namespace Macaria.API
 {
@@ -34,7 +34,7 @@ namespace Macaria.API
         
         public void Configure(IApplicationBuilder app)
         {
-            if (Parse(Configuration["isTest"]))
+            if (ToBoolean(Configuration["isTest"]))
                 app.UseMiddleware<AutoAuthenticationMiddleware>();
                     
             app.UseAuthentication();            
@@ -44,6 +44,6 @@ namespace Macaria.API
             app.UseSwagger();
             app.UseSwaggerUI(options 
                 => options.SwaggerEndpoint("/swagger/v1/swagger.json", "Macaria API"));
-        }
+        }        
     }
 }

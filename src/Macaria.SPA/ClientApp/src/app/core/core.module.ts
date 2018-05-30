@@ -15,7 +15,6 @@ import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 import { LoginRedirectService } from './redirect.service';
 import { JwtInterceptor } from './jwt.interceptor';
-import { Store } from './store';
 import { ErrorService } from './error.service';
 import { OverlayRefProvider } from './overlay-ref-provider';
 
@@ -40,8 +39,7 @@ const providers = [
   LocalStorageService,
   LoginRedirectService,
   LoggerService,
-  OverlayRefProvider,
-  Store
+  OverlayRefProvider
 ];
 
 export function TranslateHttpLoaderFactory(httpClient: HttpClient) {

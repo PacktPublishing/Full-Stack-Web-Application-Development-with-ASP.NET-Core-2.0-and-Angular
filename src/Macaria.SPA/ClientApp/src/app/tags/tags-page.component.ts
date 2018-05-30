@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Subject, pipe } from 'rxjs';
+import { Subject, pipe, BehaviorSubject } from 'rxjs';
 import { TagsService } from './tags.service';
 import { Tag } from './tag.model';
 import { Observable } from 'rxjs';
@@ -9,8 +9,6 @@ import { takeUntil } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material';
 import { HubClient } from '../core/hub-client';
 import { TranslateService } from '@ngx-translate/core';
-import { DeleteCellComponent } from '../shared/delete-cell.component';
-import { Store } from '../core/store';
 import { AddTagOverlay } from './add-tag-overlay';
 
 @Component({
@@ -23,22 +21,15 @@ export class TagsPageComponent {
     private _addTagOverlay: AddTagOverlay,
     private _hubClient: HubClient,    
     private _snackBar: MatSnackBar,
-    private _store: Store,
     private _tagsService: TagsService,
     private _translateService: TranslateService
   ) {}
 
-  public localeText: any = {
-    "of": this._translateService.instant("of"),
-    noRowsToShow: this._translateService.instant("No Rows To Show"),
-    "Page": this._translateService.instant("Page"),
-    "to": this._translateService.instant("to")
-  };
 
   ngOnInit() {
     this._tagsService
       .get()
-      .pipe(takeUntil(this.onDestroy), map(x => this._store.tags$.next(x.tags)))
+      .pipe(takeUntil(this.onDestroy), map(x => this.tags$.next(x.tags)))
       .subscribe();
   }
 
@@ -63,17 +54,7 @@ export class TagsPageComponent {
     }
   ];
 
-  public frameworkComponents = {
-    deleteRenderer: DeleteCellComponent
-  };
-
-  public onGridReady(params) {
-    params.api.sizeColumnsToFit();
-  }
-
-  public get tags$(): Observable<Array<Tag>> {
-    return this._store.tags$;
-  }
+  public tags$: BehaviorSubject<Tag[]> = new BehaviorSubject([]);
 
   public onDestroy: Subject<void> = new Subject<void>();
 
@@ -85,10 +66,10 @@ export class TagsPageComponent {
     this._tagsService
       .remove({ tagId: $event.data.tagId })
       .pipe(takeUntil(this.onDestroy), tap(() => {
-        const tags = [...this._store.tags$.value];
+        const tags = [...this.tags$.value];
         const deletedTag = tags.findIndex(x => x.tagId == $event.data.tagId);
         tags.splice(deletedTag, 1);
-        this._store.tags$.next(tags);
+        this.tags$.next(tags);
       })
       )
       .subscribe();
@@ -99,7 +80,7 @@ export class TagsPageComponent {
       .pipe(
         takeUntil(this.onDestroy),
         filter(x => x != null),
-        map(x => this._store.tags$.next([...this._store.tags$.value, x]))
+        map(x => this.tags$.next([...this.tags$.value, x]))
       )
       .subscribe();
   }

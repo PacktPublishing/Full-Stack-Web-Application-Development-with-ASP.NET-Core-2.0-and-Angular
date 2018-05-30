@@ -24,16 +24,12 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\core\error.service.ts" />
-    <None Remove="ClientApp\src\app\notes\note-resolver.service.ts" />
     <None Remove="ClientApp\src\app\shared\shared.module.ts" />
-    <None Remove="ClientApp\src\app\tags\tags-resolver.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\core\error.service.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\notes\note-resolver.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\shared.module.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\tags\tags-resolver.service.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

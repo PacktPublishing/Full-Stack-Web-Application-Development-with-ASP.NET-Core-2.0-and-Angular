@@ -4,11 +4,6 @@
   height: calc(100% - 80px);
 }
 
-ag-grid-angular {
-  width: 100%;
-  height: 100%;
-}
-
 section {
   padding: 16px 0px 0px 0px;
 }

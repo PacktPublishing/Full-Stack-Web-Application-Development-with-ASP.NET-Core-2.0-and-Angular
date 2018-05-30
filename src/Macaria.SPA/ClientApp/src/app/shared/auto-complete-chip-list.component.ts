@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { ControlValueAccessor, FormControl } from '@angular/forms';
-import { startWith, map } from 'rxjs/operators';
+import { startWith, map, takeUntil } from 'rxjs/operators';
 import { ViewChild } from '@angular/core';
 import { COMMA } from '@angular/cdk/keycodes';
 import { MatInput, MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material';
@@ -67,15 +67,26 @@ export class AutoCompleteChipListComponent implements ControlValueAccessor {
     this.selectedItems = v;
   }
 
-  @Input() items: Item[] = [];
+  @Input()
+  items$: Subject<Item[]>;
+
+  items: Item[] = [];
 
   ngOnInit() {
     this.addItems = new FormControl();
 
-    this.filteredItems = this.addItems.valueChanges.pipe(
-      startWith(''),
-      map(item => (item ? this.filterItems(item.toString()) : this.items.slice()))
-    );
+    this.items$.pipe(map(x => {
+      this.items = x;
+      this.filteredItems = this.addItems.valueChanges.pipe(
+        startWith(''),
+        map(item => (item ? this.filterItems(item.toString()) : this.items.slice()))
+      );
+      }),
+      takeUntil(this.onDestroy)
+    )
+      .subscribe();
+
+    
   }
 
   filterItems(itemName: string) {

@@ -3,13 +3,7 @@
 </app-primary-header>
 
 <section class="page-content-container">
-  <ag-grid-angular class="ag-theme-material"
-                   [columnDefs]="columnDefs"
-                   [rowData]="notes$ | async"
-                   [pagination]="true"
-                   [paginationPageSize]="5"
-                   [localeText]="localeText"
-                   [frameworkComponents]="frameworkComponents"
-                   (gridReady)="onGridReady($event)">
-  </ag-grid-angular>
+  <app-grid [columnDefs]="columnDefs"
+            [rowData]="notes$ | async">
+  </app-grid>
 </section>

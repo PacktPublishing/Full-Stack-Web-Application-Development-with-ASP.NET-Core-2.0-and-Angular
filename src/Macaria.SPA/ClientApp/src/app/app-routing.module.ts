@@ -12,8 +12,6 @@ import { SettingsPageComponent } from './settings/settings-page.component';
 import { HubClientGuard } from './core/hub-client-guard';
 import { EditNotePageComponent } from './notes/edit-note-page.component';
 import { AuthGuard } from './core/auth.guard';
-import { TagsResolver } from './tags/tags-resolver.service';
-import { NoteResolver } from './notes/note-resolver.service';
 import { NotesByTagPageComponent } from './notes/notes-by-tag-page.component';
 
 export const routes: Routes = [
@@ -34,11 +32,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        component: EditNotePageComponent,
-        resolve: {
-          tags: TagsResolver,
-          note: NoteResolver
-        }
+        component: EditNotePageComponent
       },
       {
         path: 'notes',
@@ -50,11 +44,7 @@ export const routes: Routes = [
       },
       {
         path: 'notes/:slug',
-        component: EditNotePageComponent,        
-        resolve: {
-          tags: TagsResolver,
-          note: NoteResolver
-        }
+        component: EditNotePageComponent
       },
       {
         path: 'settings',
@@ -62,10 +52,7 @@ export const routes: Routes = [
       },
       {
         path: 'tags',
-        component: TagsPageComponent,
-        resolve: {
-          tags: TagsResolver
-        }
+        component: TagsPageComponent
       }
     ]
   }

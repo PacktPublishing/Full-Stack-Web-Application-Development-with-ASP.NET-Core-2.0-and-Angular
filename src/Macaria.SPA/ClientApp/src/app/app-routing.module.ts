@@ -11,7 +11,6 @@ import { NotesPageComponent } from './notes/notes-page.component';
 import { SettingsPageComponent } from './settings/settings-page.component';
 import { HubClientGuard } from './core/hub-client-guard';
 import { EditNotePageComponent } from './notes/edit-note-page.component';
-import { LanguageGuard } from './core/language-guard';
 import { AuthGuard } from './core/auth.guard';
 import { TagsResolver } from './tags/tags-resolver.service';
 import { NoteResolver } from './notes/note-resolver.service';

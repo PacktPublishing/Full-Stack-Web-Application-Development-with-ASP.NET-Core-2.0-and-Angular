@@ -28,11 +28,8 @@ export class AddTagOverlayComponent {
       .save({ tag })
       .pipe(
         takeUntil(this.onDestroy),
-        map((result: any) => {
-          tag.tagId = result.tagId;
-          this._store.tags$.next([...this._store.tags$.value, tag]);
-        }),
-        tap(() => this._overlay.close())
+        map((result: { tagId: number }) => tag.tagId = result.tagId),
+        tap(() => this._overlay.close(tag))
       )
       .subscribe();
   }

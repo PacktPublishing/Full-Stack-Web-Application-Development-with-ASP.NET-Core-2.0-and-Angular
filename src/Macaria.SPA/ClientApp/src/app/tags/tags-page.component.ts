@@ -96,7 +96,11 @@ export class TagsPageComponent {
 
   public handleCreateClick() {
     this._addTagOverlay.create()
-      .pipe(takeUntil(this.onDestroy))
+      .pipe(
+        takeUntil(this.onDestroy),
+        filter(x => x != null),
+        map(x => this._store.tags$.next([...this._store.tags$.value, x]))
+      )
       .subscribe();
   }
 }

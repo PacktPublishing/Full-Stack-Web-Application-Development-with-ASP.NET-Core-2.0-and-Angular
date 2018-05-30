@@ -17,7 +17,7 @@ export class TagsService {
   }
 
   public save(options) {
-    return this._httpClient.post<{ tag: Tag }>(`${this._baseUrl}api/tags`, options);
+    return this._httpClient.post<{ tagId: number }>(`${this._baseUrl}api/tags`, options);
   }
 
   public get(): Observable<{ tags: Array<Tag> }> {

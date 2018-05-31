@@ -22,14 +22,49 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "module 1", "module 1", "{57C6A63F-E5D8-40D2-B354-81293D8621FF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "module 2", "module 2", "{9D0A13E5-C1F3-45CB-ACD8-72D6D4F291AF}"
+	ProjectSection(SolutionItems) = preProject
+		specs\module 2\ EnablingSoftDeleteFunctionality.md = specs\module 2\ EnablingSoftDeleteFunctionality.md
+		specs\module 2\1. ApiCodeOrganization.md = specs\module 2\1. ApiCodeOrganization.md
+		specs\module 2\2. EntityFrameworkCoreEntitiesAndDataContext.md = specs\module 2\2. EntityFrameworkCoreEntitiesAndDataContext.md
+		specs\module 2\CreateAndUnitTestAPIControllersAndSignalRHub.md = specs\module 2\CreateAndUnitTestAPIControllersAndSignalRHub.md
+		specs\module 2\CreateAndUnitTestTheCommandsAndQueriesForTheApplication.md = specs\module 2\CreateAndUnitTestTheCommandsAndQueriesForTheApplication.md
+		specs\module 2\IntroductionToMediatRAndCQRS.md = specs\module 2\IntroductionToMediatRAndCQRS.md
+		specs\module 2\RunningIntegrationTests.md = specs\module 2\RunningIntegrationTests.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "module 3", "module 3", "{88C2E33B-04DD-4B81-AF88-0E64A74D7AC8}"
+	ProjectSection(SolutionItems) = preProject
+		specs\module 3\ImplementFluentValidation.md = specs\module 3\ImplementFluentValidation.md
+		specs\module 3\SecureAndTestTheApplication.md = specs\module 3\SecureAndTestTheApplication.md
+		specs\module 3\SecurityInAspNetCore.md = specs\module 3\SecurityInAspNetCore.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "module 4", "module 4", "{2F12E2F0-D359-4ECF-B43D-6822AADACE33}"
+	ProjectSection(SolutionItems) = preProject
+		specs\module 4\Adding components to your application.md = specs\module 4\Adding components to your application.md
+		specs\module 4\Convert the initial component to use Angular Material.md = specs\module 4\Convert the initial component to use Angular Material.md
+		specs\module 4\Exploring the Angular CLI.md = specs\module 4\Exploring the Angular CLI.md
+		specs\module 4\IntroducingYouToTheDemoApplicationClientArchitecture.md = specs\module 4\IntroducingYouToTheDemoApplicationClientArchitecture.md
+		specs\module 4\Material Design and the Angular material library.md = specs\module 4\Material Design and the Angular material library.md
+		specs\module 4\Working with TypeScript and RxJS.md = specs\module 4\Working with TypeScript and RxJS.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "module 5", "module 5", "{ACB2FE3F-0CE2-4F57-9470-83A3E6B73719}"
+	ProjectSection(SolutionItems) = preProject
+		specs\module 5\Adding components, services and routing.md = specs\module 5\Adding components, services and routing.md
+		specs\module 5\Angular Architecture best practices.md = specs\module 5\Angular Architecture best practices.md
+		specs\module 5\Implementing i18n.md = specs\module 5\Implementing i18n.md
+		specs\module 5\Securing the client.md = specs\module 5\Securing the client.md
+		specs\module 5\Working with Interceptors and guards.md = specs\module 5\Working with Interceptors and guards.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "module 6", "module 6", "{C7BBBF36-7D51-4AD7-B1DB-02D850D78E24}"
+	ProjectSection(SolutionItems) = preProject
+		specs\module 6\CreatingASQLDatabaseInTheCloud.md = specs\module 6\CreatingASQLDatabaseInTheCloud.md
+		specs\module 6\RunningTestsInTheBuild.md = specs\module 6\RunningTestsInTheBuild.md
+		specs\module 6\SettingUpCICDUsingAppVeyor.md = specs\module 6\SettingUpCICDUsingAppVeyor.md
+		specs\module 6\SigningUpForAzureAndCreatingAnAppServiceInTheCloud.md = specs\module 6\SigningUpForAzureAndCreatingAnAppServiceInTheCloud.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A6F2127A-392D-4691-A3FE-BFF381BD435D}"
 	ProjectSection(SolutionItems) = preProject

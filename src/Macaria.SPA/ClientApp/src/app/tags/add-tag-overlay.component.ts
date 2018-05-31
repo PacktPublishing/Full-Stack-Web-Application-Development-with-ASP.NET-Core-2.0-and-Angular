@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
 import { OverlayRefWrapper } from '../core/overlay-ref-wrapper';
-import { TagsService } from './tags.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Tag } from './tag.model';
-import { map, tap, takeUntil } from 'rxjs/operators';
+import { TagsService } from './tags.service';
 
 @Component({
   templateUrl: './add-tag-overlay.component.html',
@@ -26,10 +26,9 @@ export class AddTagOverlayComponent {
       .save({ tag })
       .pipe(
         takeUntil(this.onDestroy),
-        map((result: { tagId: number }) => tag.tagId = result.tagId),
-        tap(() => this._overlay.close(tag))
+        map((result: { tagId: number }) => tag.tagId = result.tagId)
       )
-      .subscribe();
+      .subscribe(() => this._overlay.close(tag));
   }
 
   public tag: Tag = <Tag>{};

@@ -6,7 +6,7 @@ export class LaunchSettings {
   constructor() {
     this.logLevel$ = new BehaviorSubject(0);
     this.supportedLanguages$ = new BehaviorSubject([]);
-    this.defaultLanguage$ = new BehaviorSubject("");
+    this.defaultLanguage$ = new BehaviorSubject('');
   }
 
   public logLevel$: BehaviorSubject<number>;

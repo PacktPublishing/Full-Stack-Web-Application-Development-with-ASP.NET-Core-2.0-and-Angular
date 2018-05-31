@@ -1,11 +1,11 @@
 import { Injectable, NgZone, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs';
-import { HubConnection } from '@aspnet/signalr';
+import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
 import { LocalStorageService } from './local-storage.service';
 import { accessTokenKey, baseUrl } from './constants';
 import { filter } from 'rxjs/operators';
-import { LoggerService } from './logger.service';
+import { Logger } from './logger.service';
 
 @Injectable()
 export class HubClient {
@@ -13,28 +13,28 @@ export class HubClient {
 
   public messages$: Subject<any> = new Subject();
 
-  public selectByType$(type: string):Observable<any> {
+  public selectByMessageType$(type: string):Observable<any> {
     return this.messages$.pipe(filter(x => x.type == type));
   }
 
   constructor(
     @Inject(baseUrl) private _baseUrl: string,
-    private _logger: LoggerService,
+    private _logger: Logger,
     private _storage: LocalStorageService,
     private _ngZone: NgZone
   ) {}
 
   private _connect: Promise<any>;
-
+  
   public connect(): Promise<any> {
     if (this._connect) return this._connect;
 
     this._connect = new Promise(resolve => {
       this._connection =
-        this._connection ||
-        new HubConnection(
-          `${this._baseUrl}hub?token=${this._storage.get({ name: accessTokenKey })}`
-        );
+        this._connection || new HubConnectionBuilder()
+          .configureLogging(this._logger)
+          .withUrl(`${this._baseUrl}hub?token=${this._storage.get({ name: accessTokenKey })}`)
+          .build();
 
       this._connection.on('message', value => {
         this._logger.trace(`HubClient`, JSON.stringify(value));

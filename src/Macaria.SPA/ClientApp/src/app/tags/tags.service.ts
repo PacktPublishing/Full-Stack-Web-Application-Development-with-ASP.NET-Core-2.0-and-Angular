@@ -4,14 +4,14 @@ import { baseUrl } from '../core/constants';
 import { Tag } from './tag.model';
 import { Observable } from 'rxjs';
 import { shareReplay, tap } from 'rxjs/operators';
-import { LoggerService } from '../core/logger.service';
+import { Logger } from '../core/logger.service';
 
 @Injectable()
 export class TagsService {
   constructor(
     @Inject(baseUrl) private _baseUrl: string,
     private _httpClient: HttpClient,
-    private _loggerService: LoggerService    
+    private _loggerService: Logger    
   ) { }
 
   public save(options) {

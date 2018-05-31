@@ -1,15 +1,13 @@
 import { Component } from '@angular/core';
-import { Subject, pipe, BehaviorSubject } from 'rxjs';
-import { TagsService } from './tags.service';
-import { Tag } from './tag.model';
-import { Observable } from 'rxjs';
-import { map, tap, filter } from 'rxjs/operators';
-import { ColDef } from 'ag-grid';
-import { takeUntil } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material';
-import { HubClient } from '../core/hub-client';
 import { TranslateService } from '@ngx-translate/core';
+import { ColDef } from 'ag-grid';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { filter, map, takeUntil } from 'rxjs/operators';
+import { HubClient } from '../core/hub-client';
 import { AddTagOverlay } from './add-tag-overlay';
+import { Tag } from './tag.model';
+import { TagsService } from './tags.service';
 
 @Component({
   templateUrl: './tags-page.component.html',
@@ -29,7 +27,7 @@ export class TagsPageComponent {
   ngOnInit() {
     this._tagsService
       .get()
-      .pipe(takeUntil(this.onDestroy), map(x => this.tags$.next(x.tags)))
+      .pipe(map(x => this.tags$.next(x.tags)), takeUntil(this.onDestroy))
       .subscribe();
   }
 
@@ -65,22 +63,21 @@ export class TagsPageComponent {
   public handleDelete($event) {
     this._tagsService
       .remove({ tagId: $event.data.tagId })
-      .pipe(takeUntil(this.onDestroy), tap(() => {
+      .pipe(takeUntil(this.onDestroy))
+      .subscribe(() => {
         const tags = [...this.tags$.value];
         const deletedTag = tags.findIndex(x => x.tagId == $event.data.tagId);
         tags.splice(deletedTag, 1);
         this.tags$.next(tags);
-      })
-      )
-      .subscribe();
+      });
   }
 
   public handleCreateClick() {
     this._addTagOverlay.create()
       .pipe(
-        takeUntil(this.onDestroy),
         filter(x => x != null),
-        map(x => this.tags$.next([...this.tags$.value, x]))
+        map(x => this.tags$.next([...this.tags$.value, x])),
+        takeUntil(this.onDestroy)
       )
       .subscribe();
   }

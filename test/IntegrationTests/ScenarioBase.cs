@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System.IO;
 using System.Net.Http;
 
@@ -52,9 +53,10 @@ namespace IntegrationTests
         protected HubConnection GetHubConnection(HttpMessageHandler httpMessageHandler) 
             => new HubConnectionBuilder()
                             .WithUrl($"http://integrationtests/hub?token={GetAccessToken()}",(options) => {
-                                options.Transports = HttpTransportType.LongPolling;
+                                options.Transports = HttpTransportType.ServerSentEvents;
                                 options.HttpMessageHandlerFactory = h => httpMessageHandler;
                             })
+                            .ConfigureLogging(logging => logging.AddConsole())
                             .Build();
 
         protected IConfiguration GetConfiguration() => new ConfigurationBuilder()

@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { LocalStorageService } from './local-storage.service';
-import { LoggerService } from './logger.service';
+import { Logger } from './logger.service';
 import { HeaderInterceptor } from './headers.interceptor';
 import { HubClient } from './hub-client';
 import { HubClientGuard } from './hub-client-guard';
@@ -42,7 +42,7 @@ const providers = [
   LaunchSettings,
   LocalStorageService,
   LoginRedirectService,
-  LoggerService,
+  Logger,
   OverlayRefProvider
 ];
 

@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -38,19 +38,22 @@ import { map } from 'rxjs/operators';
     TagsModule,
     UsersModule
   ],
-  providers: [{ provide: baseUrl, useValue: 'http://localhost:4023/' }],
+  providers: [{ provide: baseUrl, useValue: 'http://localhost:4023/' }, {
+    provide: APP_INITIALIZER,
+    useFactory: AppModule.onLaunch,
+    multi: true,
+    deps: [HttpClient, LaunchSettings]
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule {
   public static onLaunch(client: HttpClient, launchSettings: LaunchSettings) {
     return function () {
-      const _launchSettingsService = launchSettings;
+      const _launchSettingsService = launchSettings;      
       client.get("/assets/launchSettings.json")
         .pipe(
-          map((result: any) => {
+          map((result: any) => {            
             launchSettings.logLevel$.next(result.logLevel);
-            launchSettings.supportedLanguages$.next(result.supportedLanguages);
-            launchSettings.defaultLanguage$.next(result.defaultLanguage);
           })
         ).subscribe();
     }

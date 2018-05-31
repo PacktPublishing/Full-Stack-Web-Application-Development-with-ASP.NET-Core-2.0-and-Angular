@@ -36,8 +36,8 @@ export class NotesPageComponent {
         map(dialogResult => { return { messageResult, dialogResult } }),
         filter(x => x.dialogResult == true),
         map(x => {
-          var removedNoteId = x.messageResult.payload.noteId;
-          var index = this.notes$.value.findIndex(y => y.noteId == removedNoteId);
+          const removedNoteId = x.messageResult.payload.noteId;
+          const index = this.notes$.value.findIndex(y => y.noteId == removedNoteId);
           if (index > -1) {
             const notes = this.notes$.value;
             notes.splice(index, 1);
@@ -62,26 +62,25 @@ export class NotesPageComponent {
   ngOnInit() {
     this._notesService
       .get()
-      .pipe(map(x => this.notes$.next(x.notes)), takeUntil(this.onDestroy))
-      .subscribe();
+      .pipe(takeUntil(this.onDestroy))
+      .subscribe(x => this.notes$.next(x.notes));
 
     this._hubClient.messages$
       .pipe(
         takeUntil(this.onDestroy),
         switchMap(messageResult => {
-
-          if (messageResult.type == "[Note] Removed" && this.notes$.value.findIndex(y => y.noteId == messageResult.payload.noteId) > -1)
+          if (messageResult.type == "[Note] Removed" && this.hasNote(messageResult.payload.noteId))
             return this._handleNoteRemovedMessage$(messageResult);
 
           if (messageResult.type == "[Note] Saved")
             return this._handleNoteSavedMessage$(messageResult);
-
-          return of(false);
         })
       )
       .subscribe();
   }
 
+  public hasNote(noteId: number) { return this.notes$.value.findIndex(x => x.noteId == noteId) > -1; }
+  
   public handleDelete($event) {
     const notes = this.notes$.value;
     const index = notes.findIndex(x => x.noteId == $event.data.noteId);

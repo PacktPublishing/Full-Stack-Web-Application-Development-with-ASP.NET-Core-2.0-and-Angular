@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
-import { map, takeUntil, tap } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { IDeactivatable } from '../core/deactivatable';
 import { LanguageService } from '../core/language.service';
 import { LocalStorageService } from '../core/local-storage.service';
@@ -13,8 +13,6 @@ import { Tag } from '../tags/tag.model';
 import { TagsService } from '../tags/tags.service';
 import { Note } from './note.model';
 import { NotesService } from './notes.service';
-
-var moment: any;
 
 @Component({
   selector: 'app-edit-note-page',
@@ -38,20 +36,18 @@ export class EditNotePageComponent implements IDeactivatable {
     if (this.slug)
       this._notesService
         .getBySlug({ slug: this.slug })
-        .pipe(tap(x => {
+        .subscribe(x => {
           this.note = x.note;
           this.selectedItems = this.note.tags.map(x => x.name);
           this.form.patchValue({
             title: this.note.title,
             body: this.note.body
           });
-        })).subscribe();
+        });
 
-    this._tagService.get().pipe(
-        map(x => this.items$.next(x.tags)),
-        takeUntil(this.onDestroy)
-      )
-      .subscribe();
+    this._tagService.get()
+      .pipe(takeUntil(this.onDestroy))
+      .subscribe(x => this.items$.next(x.tags));
   }
 
   note: Note = new Note();
@@ -61,19 +57,16 @@ export class EditNotePageComponent implements IDeactivatable {
   items$: BehaviorSubject<Tag[]> = new BehaviorSubject([]);
 
   public canDeactivate(): Observable<boolean> {
-    if (this.form.dirty) {
-      let dialogRef = this._dialog.open(AreYouSureOverlayComponent, {
+    if (this.form.dirty)
+      return this._dialog.open(AreYouSureOverlayComponent, {
         width: '250px'
-      });
-      return dialogRef.afterClosed();
-    }
+      }).afterClosed();
+    
     return of(true);
   }
   
   public onDestroy: Subject<void> = new Subject();
-
-  public quillEditorFormControl: FormControl = new FormControl('');
-
+  
   public handleSaveClick() {
     let note = new Note();
     let tags = this.form.value.tags || [];
@@ -85,16 +78,16 @@ export class EditNotePageComponent implements IDeactivatable {
 
     this._notesService
       .save({ note })
-      .pipe(takeUntil(this.onDestroy), tap(() => {
+      .pipe(takeUntil(this.onDestroy))
+      .subscribe(() => {
         this.form.reset();
         this._router.navigateByUrl('/notes');
-      }))
-      .subscribe();
+      });
   }
 
   public editorPlaceholder: string = this._translateService.instant('Compose a note...');
 
-  public form = new FormGroup({
+  public form: FormGroup = new FormGroup({
     title: new FormControl(this.note.title, [Validators.required]),
     body: new FormControl(this.note.body, [Validators.required]),
     tags: new FormControl()

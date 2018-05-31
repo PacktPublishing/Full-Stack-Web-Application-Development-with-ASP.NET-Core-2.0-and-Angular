@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { accessTokenKey, baseUrl } from '../core/constants';
 import { HubClient } from '../core/hub-client';
 import { LocalStorageService } from '../core/local-storage.service';
-import { LoggerService } from './logger.service';
+import { Logger } from './logger.service';
 
 @Injectable()
 export class AuthService {
@@ -13,7 +13,7 @@ export class AuthService {
     private _httpClient: HttpClient,
     private _hubClient: HubClient,
     private _localStorageService: LocalStorageService,
-    private _loggerService: LoggerService
+    private _loggerService: Logger
   ) {}
 
   public logout() {

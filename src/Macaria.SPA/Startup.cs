@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,9 +14,7 @@ namespace Macaria.SPA
         public IConfiguration Configuration { get; }
         
         public void ConfigureServices(IServiceCollection services)
-        {   
-            services.AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/dist/ClientApp");
-        }
+            => services.AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/dist/ClientApp");
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
@@ -25,7 +24,7 @@ namespace Macaria.SPA
             {
                 spa.Options.SourcePath = "ClientApp";                
                 if (env.IsDevelopment())
-                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+                    spa.UseAngularCliServer("start");
             });
         }
     }

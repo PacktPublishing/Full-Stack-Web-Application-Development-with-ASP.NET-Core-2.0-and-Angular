@@ -51,9 +51,10 @@ namespace IntegrationTests
 
         protected HubConnection GetHubConnection(HttpMessageHandler httpMessageHandler) 
             => new HubConnectionBuilder()
-                            .WithUrl($"http://integrationtests/hub?token={GetAccessToken()}")
-                            //.WithMessageHandler((h) => httpMessageHandler)
-                            //.WithTransport(TransportType.LongPolling)
+                            .WithUrl($"http://integrationtests/hub?token={GetAccessToken()}",(options) => {
+                                options.Transports = HttpTransportType.LongPolling;
+                                options.HttpMessageHandlerFactory = h => httpMessageHandler;
+                            })
                             .Build();
 
         protected IConfiguration GetConfiguration() => new ConfigurationBuilder()

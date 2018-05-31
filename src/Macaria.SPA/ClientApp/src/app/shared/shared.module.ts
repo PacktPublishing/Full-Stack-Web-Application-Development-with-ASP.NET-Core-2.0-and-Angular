@@ -42,10 +42,14 @@ import { DeleteCellComponent } from './delete-cell.component';
 import { AutoCompleteChipListComponent } from './auto-complete-chip-list.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { GridComponent } from './grid.component';
+import { AreYouSureOverlayComponent } from './are-you-sure-overlay.component';
+import { ConfirmRefreshOverlayComponent } from './confirm-refresh-overlay.component';
 
 @NgModule({
   declarations: [
+    AreYouSureOverlayComponent,
     AutoCompleteChipListComponent,
+    ConfirmRefreshOverlayComponent,
     DeleteCellComponent,
     GridComponent,
     PrimaryHeaderComponent,
@@ -136,6 +140,10 @@ import { GridComponent } from './grid.component';
     PrimaryHeaderComponent,
     QuillTextEditorComponent,
     PrimaryHeaderComponent
+  ],
+  entryComponents: [
+    AreYouSureOverlayComponent,
+    ConfirmRefreshOverlayComponent
   ]
 })
 export class SharedModule {}

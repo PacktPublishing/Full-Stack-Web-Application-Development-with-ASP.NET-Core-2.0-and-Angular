@@ -20,11 +20,10 @@ namespace Macaria.SPA
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseStaticFiles();
-            app.UseSpaStaticFiles();            
+            app.UseSpaStaticFiles();
             app.UseSpa(spa =>
             {
-                spa.Options.SourcePath = "ClientApp";
-
+                spa.Options.SourcePath = "ClientApp";                
                 if (env.IsDevelopment())
                     spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
             });

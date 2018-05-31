@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
-import { Subject, BehaviorSubject } from 'rxjs';
-import { NotesService } from './notes.service';
-import { Note } from './note.model';
-import { Observable } from 'rxjs';
-import { map, takeUntil, tap } from 'rxjs/operators';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ColDef } from 'ag-grid';
+import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
+import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
+import { HubClient } from '../core/hub-client';
+import { ConfirmRefreshOverlayComponent } from '../shared/confirm-refresh-overlay.component';
+import { Note } from './note.model';
+import { NotesService } from './notes.service';
 
 @Component({
   templateUrl: './notes-page.component.html',
@@ -14,7 +16,40 @@ import { ColDef } from 'ag-grid';
   selector: 'app-notes-page'
 })
 export class NotesPageComponent {
+  private _openConfirmRefreshDialog$(): Observable<any> {
+    return this._dialog.open(ConfirmRefreshOverlayComponent, { width: '250px' }).afterClosed();
+  }
+
+  private _handleNoteSavedMessage$(messageResult:any): Observable<any> {
+    return this._openConfirmRefreshDialog$()
+      .pipe(
+        map(dialogResult => { return { messageResult, dialogResult } }),
+        filter(x => x.dialogResult == true),
+        switchMap(x => this._notesService.get()),
+        map(x => this.notes$.next(x.notes))
+    );
+  }
+
+  private _handleNoteRemovedMessage$(messageResult:any): Observable<any> {
+    return this._openConfirmRefreshDialog$()
+      .pipe(
+        map(dialogResult => { return { messageResult, dialogResult } }),
+        filter(x => x.dialogResult == true),
+        map(x => {
+          var removedNoteId = x.messageResult.payload.noteId;
+          var index = this.notes$.value.findIndex(y => y.noteId == removedNoteId);
+          if (index > -1) {
+            const notes = this.notes$.value;
+            notes.splice(index, 1);
+            this.notes$.next([...notes]);
+          }
+        })
+      );
+  }
+
   constructor(
+    private _dialog: MatDialog,
+    private _hubClient: HubClient,
     private _notesService: NotesService,
     private _router: Router,
     private _translateService: TranslateService
@@ -27,24 +62,35 @@ export class NotesPageComponent {
   ngOnInit() {
     this._notesService
       .get()
-      .pipe(map(x => this.notes$.next(x.notes)))
+      .pipe(map(x => this.notes$.next(x.notes)), takeUntil(this.onDestroy))
+      .subscribe();
+
+    this._hubClient.messages$
+      .pipe(
+        takeUntil(this.onDestroy),
+        switchMap(messageResult => {
+
+          if (messageResult.type == "[Note] Removed" && this.notes$.value.findIndex(y => y.noteId == messageResult.payload.noteId) > -1)
+            return this._handleNoteRemovedMessage$(messageResult);
+
+          if (messageResult.type == "[Note] Saved")
+            return this._handleNoteSavedMessage$(messageResult);
+
+          return of(false);
+        })
+      )
       .subscribe();
   }
 
   public handleDelete($event) {
     const notes = this.notes$.value;
-    const deletedNoteIndex = notes.findIndex(x => x.noteId == $event.data.noteId);
-
-    notes.splice(deletedNoteIndex, 1);
+    const index = notes.findIndex(x => x.noteId == $event.data.noteId);
+    notes.splice(index, 1);
+    this.notes$.next([...notes]);
 
     this._notesService
       .remove({ note: <Note>$event.data })
-      .pipe(
-        takeUntil(this.onDestroy),
-        tap(x => {
-          this.notes$.next([...notes]);
-        })
-      )
+      .pipe(takeUntil(this.onDestroy))
       .subscribe();
   }
 

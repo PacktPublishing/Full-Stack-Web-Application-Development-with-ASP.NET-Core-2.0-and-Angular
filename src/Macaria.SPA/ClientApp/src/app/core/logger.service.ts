@@ -1,10 +1,11 @@
-import { Injectable, Inject } from '@angular/core';
-import { minimumLogLevel } from './constants';
+import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
+import { LaunchSettings } from './launch-settings';
 
 export interface ILogger {
-  log(logLevel: LogLevel, message: string): void;
-  error(message: string): void;
-  trace(message: string): void;
+  log(logLevel: LogLevel, title:string, message: string): void;
+  error(tite: string, message: string): void;
+  trace(title:string, message: string): void;
 }
 
 export enum LogLevel {
@@ -17,17 +18,23 @@ export enum LogLevel {
 
 @Injectable()
 export class LoggerService implements ILogger {
-  constructor(@Inject(minimumLogLevel) private _minimumLogLevel: LogLevel) {}
-
-  public log(logLevel: LogLevel, message: string) {
-    if (logLevel >= this._minimumLogLevel) console.log(`${LogLevel[logLevel]}: ${message}`);
+  constructor(launchSettings: LaunchSettings) {
+    launchSettings.logLevel$
+      .pipe(map(x => this._minimumLogLevel = x))
+      .subscribe();
   }
 
-  public trace(message: string) {
-    this.log(LogLevel.Trace, message);
+  private _minimumLogLevel: LogLevel;
+
+  public log(logLevel: LogLevel, title:string, message: string) {
+    if (logLevel >= this._minimumLogLevel) console.log(`${LogLevel[logLevel]}: (${title}) ${message}`);
   }
 
-  public error(message: string) {
-    this.log(LogLevel.Error, message);
+  public trace(title:string, message: string) {
+    this.log(LogLevel.Trace, title, message);
+  }
+
+  public error(title:string, message: string) {
+    this.log(LogLevel.Error,title, message);
   }
 }

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Xunit;
 
 namespace UnitTests.API
-{    
+{
     public class EntityChangedNotificationBehaviorTests
     {
         [Fact]

@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -18,6 +18,8 @@ import { TagsModule } from './tags/tags.module';
 import { TagsPageComponent } from './tags/tags-page.component';
 import { SettingsModule } from './settings/settings.module';
 import { SharedModule } from './shared/shared.module';
+import { LaunchSettings } from './core/launch-settings';
+import { map } from 'rxjs/operators';
 
 @NgModule({
   declarations: [AppComponent, AnonymousMasterPageComponent, MasterPageComponent],
@@ -39,4 +41,18 @@ import { SharedModule } from './shared/shared.module';
   providers: [{ provide: baseUrl, useValue: 'http://localhost:4023/' }],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+  public static onLaunch(client: HttpClient, launchSettings: LaunchSettings) {
+    return function () {
+      const _launchSettingsService = launchSettings;
+      client.get("/assets/launchSettings.json")
+        .pipe(
+          map((result: any) => {
+            launchSettings.logLevel$.next(result.logLevel);
+            launchSettings.supportedLanguages$.next(result.supportedLanguages);
+            launchSettings.defaultLanguage$.next(result.defaultLanguage);
+          })
+        ).subscribe();
+    }
+  }
+}

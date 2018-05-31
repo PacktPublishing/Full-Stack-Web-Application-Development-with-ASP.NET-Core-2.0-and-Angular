@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { LocalStorageService } from './local-storage.service';
 import { cultureKey } from './constants';
 import { TranslateService } from '@ngx-translate/core';
+import { LaunchSettings } from './launch-settings';
 
 @Injectable()
 export class LanguageService {
   constructor(
+    private _launchSettings: LaunchSettings,
     private _localStorageService: LocalStorageService,
     private _translateService: TranslateService
   ) {}
@@ -19,13 +21,13 @@ export class LanguageService {
   }
 
   private _getBrowserLanguage() {
-    if (['en', 'fr'].indexOf(this._translateService.getBrowserLang()) > -1)
+    if (this.supportedLanguages.indexOf(this._translateService.getBrowserLang()) > -1)
       return this._translateService.getBrowserLang();
     return null;
   }
 
   public get default() {
-    return 'en';
+    return this._launchSettings.defaultLanguage$.value;
   }
 
   public setCurrent(value: string) {
@@ -34,4 +36,8 @@ export class LanguageService {
   }
 
   public currentTranslations: any = {};
+
+  public get supportedLanguages(): string[] {
+    return this._launchSettings.supportedLanguages$.value;
+  }
 }

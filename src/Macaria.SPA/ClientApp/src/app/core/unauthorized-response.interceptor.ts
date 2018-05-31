@@ -1,21 +1,13 @@
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpEventType,
-  HttpInterceptor,
-  HttpErrorResponse
-} from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { accessTokenKey } from '../core/constants';
 import { LocalStorageService } from '../core/local-storage.service';
 import { LoginRedirectService } from './redirect.service';
-import { accessTokenKey } from '../core/constants';
-import { tap } from 'rxjs/operators';
 
 @Injectable()
-export class JwtInterceptor implements HttpInterceptor {
+export class UnauthorizedResponseInterceptor implements HttpInterceptor {
   constructor(
     private _localStorageService: LocalStorageService,
     private _loginRedirectService: LoginRedirectService

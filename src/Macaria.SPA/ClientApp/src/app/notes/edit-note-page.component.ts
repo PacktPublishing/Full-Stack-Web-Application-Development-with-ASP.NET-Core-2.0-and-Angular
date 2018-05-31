@@ -1,17 +1,18 @@
 import { Component, ElementRef } from '@angular/core';
-import { Subject, BehaviorSubject } from 'rxjs';
-import { ActivatedRoute, Router, Event } from '@angular/router';
-import { NotesService } from './notes.service';
-import { Note } from './note.model';
-import { LocalStorageService } from '../core/local-storage.service';
-import { Observable } from 'rxjs';
-import { takeUntil, catchError, tap, map, startWith } from 'rxjs/operators';
-import { Tag } from '../tags/tag.model';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { LanguageService } from '../core/language.service';
-import { MatInput } from '@angular/material';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
+import { map, takeUntil, tap } from 'rxjs/operators';
+import { IDeactivatable } from '../core/deactivatable';
+import { LanguageService } from '../core/language.service';
+import { LocalStorageService } from '../core/local-storage.service';
+import { AreYouSureOverlayComponent } from '../shared/are-you-sure-overlay.component';
+import { Tag } from '../tags/tag.model';
 import { TagsService } from '../tags/tags.service';
+import { Note } from './note.model';
+import { NotesService } from './notes.service';
 
 var moment: any;
 
@@ -20,9 +21,10 @@ var moment: any;
   templateUrl: './edit-note-page.component.html',
   styleUrls: ['./edit-note-page.component.css']
 })
-export class EditNotePageComponent {
+export class EditNotePageComponent implements IDeactivatable {
   constructor(
     private _activatedRoute: ActivatedRoute,
+    private _dialog: MatDialog,
     private _elementRef: ElementRef,
     private _languageService: LanguageService,
     private _localStorageService: LocalStorageService,
@@ -45,22 +47,27 @@ export class EditNotePageComponent {
           });
         })).subscribe();
 
-    this._tagService.get().pipe(map(x => {
-      this.items = x.tags;
-      this.items$.next(x.tags);
-    })).subscribe();
+    this._tagService.get().pipe(
+        map(x => this.items$.next(x.tags)),
+        takeUntil(this.onDestroy)
+      )
+      .subscribe();
   }
 
   note: Note = new Note();
 
   selectedItems: any[] = this.note.tags.map(x => x.name);
+  
+  items$: BehaviorSubject<Tag[]> = new BehaviorSubject([]);
 
-  items: any[];
-
-  items$: Subject<any> = new Subject();
-
-  canDeactivate() {
-    !this.form.dirty;
+  public canDeactivate(): Observable<boolean> {
+    if (this.form.dirty) {
+      let dialogRef = this._dialog.open(AreYouSureOverlayComponent, {
+        width: '250px'
+      });
+      return dialogRef.afterClosed();
+    }
+    return of(true);
   }
   
   public onDestroy: Subject<void> = new Subject();
@@ -74,11 +81,14 @@ export class EditNotePageComponent {
     note.noteId = this.note.noteId;
     note.title = this.form.value.title;
     note.body = this.form.value.body;
-    note.tags = tags.map(x => this.items.find(t => t.name == x));
+    note.tags = tags.map(x => this.items$.value.find(t => t.name == x));
 
     this._notesService
       .save({ note })
-      .pipe(takeUntil(this.onDestroy), tap(() => this._router.navigateByUrl('/notes')))
+      .pipe(takeUntil(this.onDestroy), tap(() => {
+        this.form.reset();
+        this._router.navigateByUrl('/notes');
+      }))
       .subscribe();
   }
 
@@ -99,11 +109,11 @@ export class EditNotePageComponent {
   }
 
   filterItems(itemName: string) {
-    return this.items.filter(item => item.name.toLowerCase().indexOf(itemName.toLowerCase()) === 0);
+    return this.items$.value.filter(item => item.name.toLowerCase().indexOf(itemName.toLowerCase()) === 0);
   }
 
   handleChipClicked($event) {
-    const tag = this.items.find(x => x.name == $event.item);
+    const tag = this.items$.value.find(x => x.name == $event.item);
     this._router.navigate(['tags', tag.slug]);
   }
 }

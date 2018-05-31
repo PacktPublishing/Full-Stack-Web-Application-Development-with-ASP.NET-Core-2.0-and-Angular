@@ -1,1 +1,5 @@
-{}
+{
+  "logLevel": 3,
+  "defaultLanguage": "en",
+  "supportedLanguages": ["en","fr"]
+}

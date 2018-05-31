@@ -13,6 +13,7 @@ import { HubClientGuard } from './core/hub-client-guard';
 import { EditNotePageComponent } from './notes/edit-note-page.component';
 import { AuthGuard } from './core/auth.guard';
 import { NotesByTagPageComponent } from './notes/notes-by-tag-page.component';
+import { CanDeactivateComponentGuard } from './core/can-deactivate-component.guard';
 
 export const routes: Routes = [
   {
@@ -32,7 +33,8 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        component: EditNotePageComponent
+        component: EditNotePageComponent,
+        canDeactivate:[CanDeactivateComponentGuard]
       },
       {
         path: 'notes',

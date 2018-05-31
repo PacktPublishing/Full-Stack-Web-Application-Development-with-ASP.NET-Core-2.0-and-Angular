@@ -1,7 +1,4 @@
 import { Component } from '@angular/core';
-import { Subject } from 'rxjs';
-import { LocalStorageService } from '../core/local-storage.service';
-import { accessTokenKey } from '../core/constants';
 import { LanguageService } from '../core/language.service';
 
 @Component({

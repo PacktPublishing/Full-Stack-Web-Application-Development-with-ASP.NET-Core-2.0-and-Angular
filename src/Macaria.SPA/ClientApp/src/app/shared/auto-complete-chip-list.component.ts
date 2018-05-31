@@ -1,13 +1,9 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
-import { ControlValueAccessor, FormControl } from '@angular/forms';
-import { startWith, map, takeUntil } from 'rxjs/operators';
-import { ViewChild } from '@angular/core';
-import { COMMA } from '@angular/cdk/keycodes';
-import { MatInput, MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material';
-import { ENTER } from '@angular/cdk/keycodes';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { forwardRef } from '@angular/core';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { Component, EventEmitter, Input, Output, ViewChild, forwardRef } from '@angular/core';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { MatAutocompleteSelectedEvent, MatInput } from '@angular/material';
+import { Observable, Subject } from 'rxjs';
+import { map, startWith, takeUntil } from 'rxjs/operators';
 
 @Component({
   templateUrl: './auto-complete-chip-list.component.html',

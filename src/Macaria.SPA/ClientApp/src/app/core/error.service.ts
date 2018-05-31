@@ -9,21 +9,13 @@ import { tap, map } from 'rxjs/operators';
 export class ErrorService {
   constructor(private _snackBar: MatSnackBar, private _translateService: TranslateService) {}
 
-  public translations$(values: Array<string>): Observable<any> {
-    return this._translateService.get(values);
-  }
-
-  public handle$(
+  public handle(
     httpErrorResponse: HttpErrorResponse,
     message: string = 'Error',
     action: string = 'An error ocurr.Try it again.'
-  ) {
-    return this.translations$([message, action]).pipe(
-      map(translations =>
-        this._snackBar.open(translations[message], translations[action], {
-          duration: 0
-        })
-      )
-    );
+  ): MatSnackBarRef<SimpleSnackBar> {
+    return this._snackBar.open(this._translateService.instant(message), this._translateService.instant(action), {
+      duration: 0
+    });
   }
 }

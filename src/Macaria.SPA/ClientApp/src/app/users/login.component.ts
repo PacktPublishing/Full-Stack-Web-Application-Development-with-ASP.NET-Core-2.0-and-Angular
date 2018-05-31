@@ -3,7 +3,6 @@ import { Subject } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { takeUntil, tap, map } from 'rxjs/operators';
 import { MatSnackBarRef, SimpleSnackBar } from '@angular/material';
-import { ENTER } from '@angular/cdk/keycodes';
 import { AuthService } from '../core/auth.service';
 import { LoginRedirectService } from '../core/redirect.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -67,10 +66,7 @@ export class LoginComponent {
   }
 
   public handleErrorResponse(errorResponse) {
-    this._errorService
-      .handle$(errorResponse, 'Login Failed')
-      .pipe(takeUntil(this.onDestroy), map(snackBarRef => (this._snackBarRef = snackBarRef)))
-      .subscribe();
+    this._snackBarRef = this._errorService.handle(errorResponse, 'Login Failed');
   }
 
   ngOnDestroy() {

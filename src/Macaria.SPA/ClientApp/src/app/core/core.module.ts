@@ -14,9 +14,11 @@ import { LanguageService } from './language.service';
 import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 import { LoginRedirectService } from './redirect.service';
-import { JwtInterceptor } from './jwt.interceptor';
 import { ErrorService } from './error.service';
 import { OverlayRefProvider } from './overlay-ref-provider';
+import { UnauthorizedResponseInterceptor } from './unauthorized-response.interceptor';
+import { CanDeactivateComponentGuard } from './can-deactivate-component.guard';
+import { LaunchSettings } from './launch-settings';
 
 const providers = [
   {
@@ -26,16 +28,18 @@ const providers = [
   },
   {
     provide: HTTP_INTERCEPTORS,
-    useClass: JwtInterceptor,
+    useClass: UnauthorizedResponseInterceptor,
     multi: true
   },
 
   AuthGuard,
   AuthService,
+  CanDeactivateComponentGuard,
   ErrorService,
   HubClient,
   HubClientGuard,
   LanguageService,
+  LaunchSettings,
   LocalStorageService,
   LoginRedirectService,
   LoggerService,

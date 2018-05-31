@@ -1,7 +1,7 @@
 ﻿using Macaria.API.Features.Users;
 using Macaria.Core.Entities;
-using Macaria.Infrastructure.Data;
 using Macaria.Core.Identity;
+using Macaria.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using System.Threading;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Xunit;
 
 namespace UnitTests.API
-{    
+{
     public class UserUnitTests
     {
         protected readonly Mock<IPasswordHasher> _passwordHasherMock;

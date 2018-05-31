@@ -1,14 +1,14 @@
+using Macaria.API.Features.Notes;
+using Macaria.API.Features.Tags;
+using Macaria.Core.Entities;
+using Macaria.Core.Extensions;
+using Macaria.Infrastructure.Data;
 using Microsoft.AspNetCore.SignalR.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
-using Macaria.API.Features.Notes;
-using Macaria.API.Features.Tags;
-using Macaria.Core.Entities;
-using Macaria.Core.Extensions;
-using Macaria.Infrastructure.Data;
 
 namespace IntegrationTests.Features
 {

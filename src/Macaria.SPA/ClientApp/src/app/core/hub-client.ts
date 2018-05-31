@@ -5,6 +5,7 @@ import { HubConnection } from '@aspnet/signalr';
 import { LocalStorageService } from './local-storage.service';
 import { accessTokenKey, baseUrl } from './constants';
 import { filter } from 'rxjs/operators';
+import { LoggerService } from './logger.service';
 
 @Injectable()
 export class HubClient {
@@ -18,6 +19,7 @@ export class HubClient {
 
   constructor(
     @Inject(baseUrl) private _baseUrl: string,
+    private _logger: LoggerService,
     private _storage: LocalStorageService,
     private _ngZone: NgZone
   ) {}
@@ -35,6 +37,8 @@ export class HubClient {
         );
 
       this._connection.on('message', value => {
+        this._logger.trace(`HubClient`, JSON.stringify(value));
+
         this._ngZone.run(() => this.messages$.next(value));
       });
 

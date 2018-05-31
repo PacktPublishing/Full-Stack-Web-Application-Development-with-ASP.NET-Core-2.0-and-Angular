@@ -31,7 +31,7 @@ namespace UnitTests.API
 
                 var mockContext = new Mock<IHubContext<AppHub>>();
 
-                mockGroups.Setup(x => x.SendCoreAsync(It.IsAny<string>(), It.IsAny<object[]>())).Returns(Task.CompletedTask).Verifiable();
+                //mockGroups.Setup(x => x.SendCoreAsync(It.IsAny<string>(), It.IsAny<object[]>())).Returns(Task.CompletedTask).Verifiable();
                 
                 mockClients.Setup(x => x.All).Returns(mockGroups.Object);
 
@@ -86,7 +86,7 @@ namespace UnitTests.API
 
                 var mockContext = new Mock<IHubContext<AppHub>>();
 
-                mockGroups.Setup(x => x.SendCoreAsync(It.IsAny<string>(), It.IsAny<object[]>())).Returns(Task.CompletedTask).Verifiable();
+                mockGroups.Setup(x => x.SendCoreAsync(It.IsAny<string>(), It.IsAny<object[]>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask).Verifiable();
 
                 mockClients.Setup(x => x.All).Returns(mockGroups.Object);
 
@@ -140,7 +140,7 @@ namespace UnitTests.API
 
                 var mockContext = new Mock<IHubContext<AppHub>>();
 
-                mockGroups.Setup(x => x.SendCoreAsync(It.IsAny<string>(), It.IsAny<object[]>())).Returns(Task.CompletedTask).Verifiable();
+                mockGroups.Setup(x => x.SendCoreAsync(It.IsAny<string>(), It.IsAny<object[]>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask).Verifiable();
 
                 mockClients.Setup(x => x.All).Returns(mockGroups.Object);
 
@@ -197,7 +197,7 @@ namespace UnitTests.API
 
                 var mockContext = new Mock<IHubContext<AppHub>>();
 
-                mockGroups.Setup(x => x.SendCoreAsync(It.IsAny<string>(), It.IsAny<object[]>())).Returns(Task.CompletedTask).Verifiable();
+                mockGroups.Setup(x => x.SendCoreAsync(It.IsAny<string>(), It.IsAny<object[]>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask).Verifiable();
 
                 mockClients.Setup(x => x.All).Returns(mockGroups.Object);
 

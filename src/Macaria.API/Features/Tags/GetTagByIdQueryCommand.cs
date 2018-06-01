@@ -1,8 +1,8 @@
-using MediatR;
-using System.Threading.Tasks;
-using System.Threading;
-using Macaria.Core.Interfaces;
 using FluentValidation;
+using Macaria.Core.Interfaces;
+using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Macaria.API.Features.Tags
 {

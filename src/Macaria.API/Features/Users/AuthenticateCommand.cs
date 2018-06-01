@@ -1,12 +1,12 @@
+using FluentValidation;
 using Macaria.Core.Entities;
-using Macaria.Core.Interfaces;
+using Macaria.Core.Exceptions;
 using Macaria.Core.Identity;
+using Macaria.Core.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 using System.Threading;
-using FluentValidation;
-using Macaria.Core.Exceptions;
+using System.Threading.Tasks;
 
 namespace Macaria.API.Features.Users
 {

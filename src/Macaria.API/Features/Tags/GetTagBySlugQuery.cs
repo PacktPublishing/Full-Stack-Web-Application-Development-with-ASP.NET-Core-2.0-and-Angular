@@ -1,9 +1,9 @@
-using MediatR;
-using System.Threading.Tasks;
-using System.Threading;
 using Macaria.Core.Interfaces;
-using System.Linq;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Macaria.API.Features.Tags
 {

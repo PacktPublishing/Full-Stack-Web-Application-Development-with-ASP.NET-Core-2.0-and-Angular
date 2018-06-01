@@ -1,13 +1,13 @@
-﻿using MediatR;
+﻿using Macaria.API.Behaviors;
+using Macaria.API.Hubs;
+using Macaria.Core.Behaviours;
+using Macaria.Core.Extensions;
+using Macaria.Core.Identity;
+using Macaria.Infrastructure.Extensions;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Macaria.API.Behaviors;
-using Macaria.API.Hubs;
-using Macaria.Core.Behaviours;
-using Macaria.Core.Identity;
-using Macaria.Core.Extensions;
-using Macaria.Infrastructure.Extensions;
 using static System.Convert;
 
 namespace Macaria.API

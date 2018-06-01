@@ -1,10 +1,10 @@
-using MediatR;
-using System.Threading.Tasks;
-using System.Threading;
-using System.Collections.Generic;
 using Macaria.Core.Interfaces;
-using System.Linq;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Macaria.API.Features.Tags
 {

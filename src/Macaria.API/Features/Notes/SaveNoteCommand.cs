@@ -1,11 +1,11 @@
 using FluentValidation;
 using Macaria.Core.Entities;
-using Macaria.Core.Interfaces;
 using Macaria.Core.Extensions;
+using Macaria.Core.Interfaces;
 using MediatR;
-using System.Threading.Tasks;
-using System.Threading;
 using Microsoft.EntityFrameworkCore;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Macaria.API.Features.Notes
 {

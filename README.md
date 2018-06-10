@@ -1,6 +1,8 @@
 # Full-Stack-Web-Application-Development-with-ASP.NET-Core-2.0-and-Angular
 Full Stack Web Application Development with ASP.NET Core 2.0 and Angular [Video], Published by Packt
 
+## Recommended Documentation
+
 ## .NET Archictecture Concepts Covered
 * Solution Organiztion and Project organiztion
 * Command Query Responsibility Seperation

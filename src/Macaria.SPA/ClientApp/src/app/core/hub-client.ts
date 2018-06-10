@@ -10,12 +10,7 @@ import { Logger } from './logger.service';
 @Injectable()
 export class HubClient {
   private _connection: HubConnection;
-
-  public messages$: Subject<any> = new Subject();
-
-  public selectByMessageType$(type: string):Observable<any> {
-    return this.messages$.pipe(filter(x => x.type == type));
-  }
+  private _connect: Promise<any>;
 
   constructor(
     @Inject(baseUrl) private _baseUrl: string,
@@ -23,10 +18,10 @@ export class HubClient {
     private _storage: LocalStorageService,
     private _ngZone: NgZone
   ) {}
-
-  private _connect: Promise<any>;
   
-  public connect(): Promise<any> {
+  public messages$: Subject<any> = new Subject();
+
+  public connect(): Promise<any> {    
     if (this._connect) return this._connect;
 
     this._connect = new Promise(resolve => {

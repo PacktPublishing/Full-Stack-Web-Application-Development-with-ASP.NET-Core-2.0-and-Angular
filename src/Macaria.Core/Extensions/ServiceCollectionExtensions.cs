@@ -1,7 +1,6 @@
-﻿using Macaria.Core.Identity;
-using Macaria.Core.Exceptions;
+﻿using Macaria.Core.Exceptions;
+using Macaria.Core.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;

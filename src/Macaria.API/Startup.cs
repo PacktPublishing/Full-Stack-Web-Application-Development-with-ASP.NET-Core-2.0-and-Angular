@@ -20,7 +20,7 @@ namespace Macaria.API
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
-        {
+        {            
             services.AddCustomMvc();
             services.AddCustomSecurity(Configuration);
             services.AddCustomSignalR();                        

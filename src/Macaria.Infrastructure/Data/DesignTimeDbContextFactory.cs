@@ -14,13 +14,9 @@ namespace Macaria.Infrastructure.Data
                 .AddJsonFile("appsettings.json")
                 .Build();
 
-            var builder = new DbContextOptionsBuilder<AppDbContext>();
-
-            var connectionString = configuration["Data:DefaultConnection:ConnectionString"];
-
-            builder.UseSqlServer(connectionString);
-
-            return new AppDbContext(builder.Options);
+            return new AppDbContext(new DbContextOptionsBuilder<AppDbContext>()
+                .UseSqlServer(configuration["Data:DefaultConnection:ConnectionString"])
+                .Options);
         }
     }
 }

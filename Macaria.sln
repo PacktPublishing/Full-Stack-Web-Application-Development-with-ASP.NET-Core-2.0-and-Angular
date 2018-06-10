@@ -41,12 +41,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "module 3", "module 3", "{88
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "module 4", "module 4", "{2F12E2F0-D359-4ECF-B43D-6822AADACE33}"
 	ProjectSection(SolutionItems) = preProject
-		specs\module 4\Adding components to your application.md = specs\module 4\Adding components to your application.md
+		specs\module 4\AddingComponentsToYourApplication.md = specs\module 4\AddingComponentsToYourApplication.md
 		specs\module 4\Convert the initial component to use Angular Material.md = specs\module 4\Convert the initial component to use Angular Material.md
-		specs\module 4\Exploring the Angular CLI.md = specs\module 4\Exploring the Angular CLI.md
+		specs\module 4\ExploringTheAngularCLI.md = specs\module 4\ExploringTheAngularCLI.md
 		specs\module 4\IntroducingYouToTheDemoApplicationClientArchitecture.md = specs\module 4\IntroducingYouToTheDemoApplicationClientArchitecture.md
-		specs\module 4\Material Design and the Angular material library.md = specs\module 4\Material Design and the Angular material library.md
-		specs\module 4\Working with TypeScript and RxJS.md = specs\module 4\Working with TypeScript and RxJS.md
+		specs\module 4\MaterialDesignAndTheAngularMaterialLibrary.md = specs\module 4\MaterialDesignAndTheAngularMaterialLibrary.md
+		specs\module 4\WorkingWithTypeScriptAndRxJS.md = specs\module 4\WorkingWithTypeScriptAndRxJS.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "module 5", "module 5", "{ACB2FE3F-0CE2-4F57-9470-83A3E6B73719}"

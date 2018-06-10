@@ -1,10 +1,10 @@
-﻿using System;
-using System.Reflection;
-using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json.Serialization;
+using System;
+using System.Reflection;
 
 namespace Macaria.Core
-{    
+{
     public class SignalRContractResolver : IContractResolver
     {
         private readonly Assembly _assembly;

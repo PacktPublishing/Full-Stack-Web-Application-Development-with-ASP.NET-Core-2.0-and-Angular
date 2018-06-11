@@ -74,6 +74,8 @@ export class NotesPageComponent {
 
           if (messageResult.type == "[Note] Saved")
             return this._handleNoteSavedMessage$(messageResult);
+
+          return of(null);
         })
       )
       .subscribe();

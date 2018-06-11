@@ -2,7 +2,9 @@ using Macaria.API.Features.Notes;
 using Macaria.API.Features.Tags;
 using Macaria.Core.Entities;
 using Macaria.Infrastructure.Data;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Moq;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -21,7 +23,11 @@ namespace UnitTests.API
                 .UseInMemoryDatabase(databaseName: "ShouldHandleSaveNoteCommandRequest")
                 .Options;
 
-            using (var context = new AppDbContext(options))
+            var mediator = new Mock<IMediator>();
+            mediator.Setup(m => m.Publish(It.IsAny<NoteSavedEvent.DomainEvent>(), It.IsAny<CancellationToken>()))
+                .Verifiable();
+
+            using (var context = new AppDbContext(options, mediator.Object))
             {
                 var handler = new SaveNoteCommand.Handler(context);
 
@@ -144,11 +150,15 @@ namespace UnitTests.API
         [Fact]
         public async Task ShouldHandleRemoveNoteCommandRequest()
         {
+            var mediator = new Mock<IMediator>();
+            mediator.Setup(m => m.Publish(It.IsAny<NoteRemovedEvent.DomainEvent>(), It.IsAny<CancellationToken>()))
+                .Verifiable();
+
             var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase(databaseName: "ShouldHandleRemoveNoteCommandRequest")
                 .Options;
 
-            using (var context = new AppDbContext(options))
+            using (var context = new AppDbContext(options, mediator.Object))
             {
                 context.Notes.Add(new Note()
                 {
@@ -176,7 +186,11 @@ namespace UnitTests.API
                 .UseInMemoryDatabase(databaseName: "ShouldHandleUpdateNoteCommandRequest")
                 .Options;
 
-            using (var context = new AppDbContext(options))
+            var mediator = new Mock<IMediator>();
+            mediator.Setup(m => m.Publish(It.IsAny<NoteSavedEvent.DomainEvent>(), It.IsAny<CancellationToken>()))
+                .Verifiable();
+
+            using (var context = new AppDbContext(options, mediator.Object))
             {
                 context.Notes.Add(new Note()
                 {

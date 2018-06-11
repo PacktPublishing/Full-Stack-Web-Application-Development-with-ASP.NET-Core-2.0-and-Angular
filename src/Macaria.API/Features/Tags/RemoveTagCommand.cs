@@ -30,7 +30,9 @@ namespace Macaria.API.Features.Tags
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
-                _context.Tags.Remove(await _context.Tags.FindAsync(request.TagId));
+                var tag = await _context.Tags.FindAsync(request.TagId);
+                _context.Tags.Remove(tag);
+                tag.RaiseDomainEvent(new TagRemovedEvent.DomainEvent(tag.TagId));
                 await _context.SaveChangesAsync(cancellationToken);
                 return new Response() { };
             }

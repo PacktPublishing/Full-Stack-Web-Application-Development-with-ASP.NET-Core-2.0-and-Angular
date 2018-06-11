@@ -42,6 +42,8 @@ namespace Macaria.API.Features.Tags
 
                 tag.Slug = request.Tag.Name.GenerateSlug();
 
+                tag.RaiseDomainEvent(new TagSavedEvent.DomainEvent(tag));
+
                 await _context.SaveChangesAsync(cancellationToken);
 
                 return new Response() { TagId = tag.TagId };

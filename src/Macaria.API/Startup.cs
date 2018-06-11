@@ -1,4 +1,4 @@
-﻿using Macaria.API.Behaviors;
+﻿
 using Macaria.API.Hubs;
 using Macaria.Core.Behaviours;
 using Macaria.Core.Extensions;
@@ -27,7 +27,6 @@ namespace Macaria.API
             services.AddCustomSwagger();
             services.AddDataStore(Configuration["Data:DefaultConnection:ConnectionString"]);            
             services.AddMediatR(typeof(Startup));                        
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(EntityChangedNotificationBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));            
         }

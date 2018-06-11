@@ -30,7 +30,9 @@ namespace Macaria.API.Features.Notes
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
-                _context.Notes.Remove(await _context.Notes.FindAsync(request.NoteId));
+                var note = await _context.Notes.FindAsync(request.NoteId);
+                _context.Notes.Remove(note);
+                note.RaiseDomainEvent(new NoteRemovedEvent.DomainEvent(note.NoteId));
                 await _context.SaveChangesAsync(cancellationToken);
                 return new Response() { };
             }

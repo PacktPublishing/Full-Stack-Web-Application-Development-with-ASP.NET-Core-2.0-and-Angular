@@ -1,7 +1,9 @@
 ﻿using Macaria.API.Features.Tags;
 using Macaria.Core.Entities;
 using Macaria.Infrastructure.Data;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Moq;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -21,7 +23,11 @@ namespace UnitTests.API
                 .UseInMemoryDatabase(databaseName: "ShouldHandleSaveTagCommandRequest")
                 .Options;
 
-            using (var context = new AppDbContext(options))
+            var mediator = new Mock<IMediator>();
+            mediator.Setup(m => m.Publish(It.IsAny<TagSavedEvent.DomainEvent>(), It.IsAny<CancellationToken>()))
+                .Verifiable();
+
+            using (var context = new AppDbContext(options, mediator.Object))
             {
                 var handler = new SaveTagCommand.Handler(context);
 
@@ -140,7 +146,11 @@ namespace UnitTests.API
                 .UseInMemoryDatabase(databaseName: "ShouldHandleRemoveTagCommandRequest")
                 .Options;
 
-            using (var context = new AppDbContext(options))
+            var mediator = new Mock<IMediator>();
+            mediator.Setup(m => m.Publish(It.IsAny<TagRemovedEvent.DomainEvent>(), It.IsAny<CancellationToken>()))
+                .Verifiable();
+
+            using (var context = new AppDbContext(options, mediator.Object))
             {
                 context.Tags.Add(new Tag()
                 {
@@ -169,7 +179,11 @@ namespace UnitTests.API
                 .UseInMemoryDatabase(databaseName: "ShouldHandleUpdateTagCommandRequest")
                 .Options;
 
-            using (var context = new AppDbContext(options))
+            var mediator = new Mock<IMediator>();
+            mediator.Setup(m => m.Publish(It.IsAny<TagSavedEvent.DomainEvent>(), It.IsAny<CancellationToken>()))
+                .Verifiable();
+
+            using (var context = new AppDbContext(options, mediator.Object))
             {
                 context.Tags.Add(new Tag()
                 {

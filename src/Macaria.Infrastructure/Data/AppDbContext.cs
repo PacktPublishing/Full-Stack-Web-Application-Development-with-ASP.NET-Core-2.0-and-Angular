@@ -1,5 +1,6 @@
 ﻿using Macaria.Core.Entities;
 using Macaria.Core.Interfaces;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
@@ -12,8 +13,11 @@ namespace Macaria.Infrastructure.Data
 {    
     public class AppDbContext : DbContext, IAppDbContext
     {
-        public AppDbContext(DbContextOptions options)
-            :base(options) { }
+        private readonly IMediator _mediator;
+        public AppDbContext(DbContextOptions options, IMediator mediator = default(IMediator))
+            :base(options) {
+            _mediator = mediator;
+        }
 
         public static readonly LoggerFactory ConsoleLoggerFactory
             = new LoggerFactory(new[] {
@@ -25,13 +29,20 @@ namespace Macaria.Infrastructure.Data
         public DbSet<Tag> Tags { get; set; }
         public DbSet<User> Users { get; set; }
         
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken)
-        {            
-            ChangeTracker.DetectChanges();
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
+        {
+            int result = default(int);
 
-            foreach (var entity in ChangeTracker.Entries()
-                .Where(e => e.Entity is ILoggable && ((e.State == EntityState.Added || (e.State == EntityState.Modified))))
-                .Select(x => x.Entity as ILoggable))
+            ChangeTracker.DetectChanges();
+            
+            var domainEventEntities = ChangeTracker.Entries<BaseEntity>()
+                .Select(entityEntry => entityEntry.Entity)
+                .Where(entity => entity.DomainEvents.Any())
+                .ToArray();
+            
+            foreach (var entity in ChangeTracker.Entries<ILoggable>()
+                .Where(e => (e.State == EntityState.Added || (e.State == EntityState.Modified)))
+                .Select(x => x.Entity))
             {
                 var isNew = entity.CreatedOn == default(DateTime);
                 entity.CreatedOn = isNew ? DateTime.UtcNow : entity.CreatedOn;   
@@ -44,7 +55,19 @@ namespace Macaria.Infrastructure.Data
                 item.CurrentValues["IsDeleted"] = true;
             }
 
-            return base.SaveChangesAsync(cancellationToken);
+            result = await base.SaveChangesAsync(cancellationToken);
+
+            foreach (var entity in domainEventEntities)
+            {
+                var events = entity.DomainEvents.ToArray();
+                entity.ClearEvents();
+                foreach (var domainEvent in events)
+                {
+                    await _mediator.Publish(domainEvent);
+                }
+            }
+
+            return result;
         }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -58,6 +58,8 @@ namespace Macaria.API.Features.Notes
                     });
                 }
 
+                note.RaiseDomainEvent(new NoteSavedEvent.DomainEvent(note));
+
                 await _context.SaveChangesAsync(cancellationToken);
 
                 return new Response() { NoteId = note.NoteId };

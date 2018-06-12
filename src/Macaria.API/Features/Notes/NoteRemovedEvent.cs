@@ -24,7 +24,7 @@ namespace Macaria.API.Features.Notes
             public async Task Handle(DomainEvent notification, CancellationToken cancellationToken) {
                 await _hubContext.Clients.All.SendAsync("message", new {
                     Type = "[Note] Removed",
-                    Payload = new { NoteId = notification.NoteId }
+                    Payload = new { notification.NoteId }
                 }, cancellationToken);
             }
         }

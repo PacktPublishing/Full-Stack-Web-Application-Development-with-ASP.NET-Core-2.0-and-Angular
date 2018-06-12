@@ -24,7 +24,7 @@ namespace Macaria.API.Features.Tags
             public async Task Handle(DomainEvent notification, CancellationToken cancellationToken) {
                 await _hubContext.Clients.All.SendAsync("message", new {
                     Type = "[Tag] Removed",
-                    Payload = new { TagId = notification.TagId }
+                    Payload = new { notification.TagId }
                 }, cancellationToken);
             }
         }

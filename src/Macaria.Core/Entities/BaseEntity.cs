@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Macaria.Core.Entities
 {
-    public class BaseEntity: ILoggable
+    public class BaseEntity
     {
         public BaseEntity() => _domainEvents = new List<INotification>();
         public DateTime CreatedOn { get; set; }

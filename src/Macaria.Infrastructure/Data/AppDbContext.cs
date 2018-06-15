@@ -49,10 +49,10 @@ namespace Macaria.Infrastructure.Data
                 entity.LastModifiedOn = DateTime.UtcNow;
             }
 
-            foreach (var item in ChangeTracker.Entries().Where(e => e.State == EntityState.Deleted))
+            foreach (var item in ChangeTracker.Entries<BaseEntity>().Where(e => e.State == EntityState.Deleted))
             {
                 item.State = EntityState.Modified;
-                item.CurrentValues["IsDeleted"] = true;
+                item.Entity.IsDeleted = true;
             }
 
             result = await base.SaveChangesAsync(cancellationToken);
@@ -73,9 +73,6 @@ namespace Macaria.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Note>()
-                .HasQueryFilter(e => !e.IsDeleted);
-
-            modelBuilder.Entity<NoteTag>()
                 .HasQueryFilter(e => !e.IsDeleted);
 
             modelBuilder.Entity<Tag>()

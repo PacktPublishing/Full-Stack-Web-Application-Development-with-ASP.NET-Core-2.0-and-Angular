@@ -1,8 +1,0 @@
-﻿{
-  "Data": {
-    "DefaultConnection": {
-      "ConnectionString": "Data Source=(LocalDb)\\MSSQLLocalDB;Initial Catalog=MacariaIntegrationTests;Integrated Security=SSPI;"
-    }
-  },
-  "isTest": "true"
-}

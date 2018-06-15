@@ -2,6 +2,7 @@
 using Macaria.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace Macaria.Infrastructure.Extensions
 {
@@ -12,6 +13,7 @@ namespace Macaria.Infrastructure.Extensions
         {
             services.AddScoped<IAppDbContext, AppDbContext>();
 
+            
             services.AddDbContext<AppDbContext>(options =>
             {                
                 options

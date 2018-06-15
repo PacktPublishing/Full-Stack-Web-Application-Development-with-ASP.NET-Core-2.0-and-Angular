@@ -130,7 +130,6 @@ namespace IntegrationTests.Features
         [Fact]
         public async Task ShouldUpdateNote()
         {
-
             using (var server = CreateServer())
             {
                 var context = server.Host.Services.GetService(typeof(AppDbContext)) as AppDbContext;

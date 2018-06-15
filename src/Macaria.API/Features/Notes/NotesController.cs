@@ -17,7 +17,15 @@ namespace Macaria.API.Features.Notes
         [HttpGet("slug/{slug}")]
         public async Task<ActionResult<GetNoteBySlugQuery.Response>> GetBySlug([FromRoute]GetNoteBySlugQuery.Request request)
             => await _mediator.Send(request);
- 
+
+        [HttpGet("deleted")]
+        public async Task<ActionResult<GetDeletedNotesQuery.Response>> GetDeleted()
+            => await _mediator.Send(new GetDeletedNotesQuery.Request());
+
+        [HttpPost("undelete")]
+        public async Task UnDelete(UndoNoteDeleteCommand.Request request)
+            => await _mediator.Send(request);
+
         [HttpPost]
         public async Task<ActionResult<SaveNoteCommand.Response>> Save(SaveNoteCommand.Request request)
             => await _mediator.Send(request);

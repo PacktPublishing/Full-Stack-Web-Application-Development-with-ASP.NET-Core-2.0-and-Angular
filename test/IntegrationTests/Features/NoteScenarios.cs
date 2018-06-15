@@ -4,9 +4,11 @@ using Macaria.Core.Entities;
 using Macaria.Core.Extensions;
 using Macaria.Infrastructure.Data;
 using Microsoft.AspNetCore.SignalR.Client;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -82,6 +84,64 @@ namespace IntegrationTests.Features
             }
         }
 
+        [Fact]
+        public async Task ShouldGetAllDeletedNotes()
+        {
+            using (var server = CreateServer())
+            {
+                var context = server.Host.Services.GetService(typeof(AppDbContext)) as AppDbContext;
+
+                context.Notes.Add(new Note()
+                {
+                    Title = "Title1",
+                    Body = "Body",
+                    IsDeleted = true
+                });
+
+                context.Notes.Add(new Note()
+                {
+                    Title = "Title2",
+                    Body = "Body"
+                });
+
+                context.SaveChanges();
+
+                var response = await server.CreateClient()
+                    .GetAsync<GetDeletedNotesQuery.Response>(Get.DeletedNotes);
+
+                Assert.True(response.Notes.Count() == 1);
+            }
+        }
+
+        [Fact]
+        public async Task ShouldUnDeleteNote()
+        {
+            using (var server = CreateServer())
+            {
+                var context = server.Host.Services.GetService(typeof(AppDbContext)) as AppDbContext;
+
+                var note = new Note()
+                {
+                    Title = "Title1",
+                    Body = "Body",
+                    IsDeleted = true
+                };
+
+                context.Notes.Add(note);
+
+                context.SaveChanges();
+
+                await server.CreateClient()
+                    .PostAsAsync<UndoNoteDeleteCommand.Request, HttpResponseMessage>(Post.UnDelete,new UndoNoteDeleteCommand.Request() {
+                        NoteId = note.NoteId
+                    });
+
+                var response = await server.CreateClient()
+                    .GetAsync<GetNoteByIdQuery.Response>(Get.NoteById(note.NoteId));
+
+                Assert.True(response.Note.NoteId == 1);
+            }
+        }
         [Fact]
         public async Task ShouldGetNoteById()
         {

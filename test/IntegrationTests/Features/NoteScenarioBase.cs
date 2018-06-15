@@ -5,6 +5,7 @@ namespace IntegrationTests.Features
         public static class Get
         {
             public static string Notes = "api/notes";
+            public static string DeletedNotes = "api/notes/deleted";
 
             public static string NoteById(int id)
             {
@@ -20,6 +21,7 @@ namespace IntegrationTests.Features
         public static class Post
         {
             public static string Notes = "api/notes";
+            public static string UnDelete = "api/notes/undelete";
         }
 
         public static class Delete

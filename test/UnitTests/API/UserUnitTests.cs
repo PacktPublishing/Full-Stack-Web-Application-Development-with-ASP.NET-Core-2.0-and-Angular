@@ -56,7 +56,6 @@ namespace UnitTests.API
 
                 Assert.Equal("token", response.AccessToken);
             }
-        }
-        
+        }        
     }
 }

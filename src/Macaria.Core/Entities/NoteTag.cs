@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Macaria.Core.Entities
+﻿namespace Macaria.Core.Entities
 {
     public class NoteTag
     {

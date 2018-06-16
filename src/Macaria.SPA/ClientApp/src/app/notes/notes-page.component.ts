@@ -106,6 +106,11 @@ export class NotesPageComponent {
       onCellClicked: $event => this.handleTitleClick($event)
     },
     {
+      headerName: this._translateService.instant('Last Modified On'),
+      field: 'lastModifiedOn',
+      width:100
+    },
+    {
       cellRenderer: 'deleteRenderer',
       onCellClicked: $event => this.handleDelete($event),
       width: 20

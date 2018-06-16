@@ -40,7 +40,7 @@ namespace Macaria.Infrastructure.Data
                 .Where(entity => entity.DomainEvents.Any())
                 .ToArray();
             
-            foreach (var entity in ChangeTracker.Entries<ILoggable>()
+            foreach (var entity in ChangeTracker.Entries<BaseEntity>()
                 .Where(e => (e.State == EntityState.Added || (e.State == EntityState.Modified)))
                 .Select(x => x.Entity))
             {

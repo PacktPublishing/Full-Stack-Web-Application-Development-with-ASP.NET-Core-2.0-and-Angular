@@ -38,7 +38,7 @@ import { map } from 'rxjs/operators';
     TagsModule,
     UsersModule
   ],
-  providers: [{ provide: baseUrl, useValue: 'http://localhost:4023/' }, {
+  providers: [{ provide: baseUrl, useValue: 'http://localhost:32592/' }, {
     provide: APP_INITIALIZER,
     useFactory: AppModule.onLaunch,
     multi: true,

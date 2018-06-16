@@ -1,4 +1,4 @@
-﻿using Macaria.Core.Interfaces;
+using Macaria.Core.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;

@@ -1,20 +1,28 @@
+using FluentValidation;
 using Macaria.Core.Interfaces;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Macaria.API.Features.Notes
+namespace Macaria.API.Features.Tags
 {
-    public class GetNotesQuery
+    public class GetTagByIdQuery
     {
-        public class Request : IRequest<Response> { }
+        public class Validator : AbstractValidator<Request>
+        {
+            public Validator()
+            {
+                RuleFor(request => request.TagId).NotEqual(default(int));
+            }
+        }
+
+        public class Request : IRequest<Response> {
+            public int TagId { get; set; }
+        }
 
         public class Response
         {
-            public IEnumerable<NoteApiModel> Notes { get; set; }
+            public TagApiModel Tag { get; set; }
         }
 
         public class Handler : IRequestHandler<Request, Response>
@@ -26,7 +34,7 @@ namespace Macaria.API.Features.Notes
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
                 => new Response()
                 {
-                    Notes = await _context.Notes.Select(x => NoteApiModel.FromNote(x, true)).ToListAsync()
+                    Tag = TagApiModel.FromTag(await _context.Tags.FindAsync(request.TagId))
                 };
         }
     }

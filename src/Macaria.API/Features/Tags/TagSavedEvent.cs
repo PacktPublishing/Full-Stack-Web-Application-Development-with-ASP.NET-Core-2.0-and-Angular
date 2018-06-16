@@ -5,14 +5,14 @@ using Microsoft.AspNetCore.SignalR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Macaria.API.Features.Notes
+namespace Macaria.API.Features.Tags
 {
-    public class NoteSavedEvent
+    public class TagSavedEvent
     {
         public class DomainEvent : INotification
         {
-            public DomainEvent(Note note) => Note = note;
-            public Note Note { get; set; }
+            public DomainEvent(Tag tag) => Tag = tag;
+            public Tag Tag { get; set; }
         }
 
         public class Handler : INotificationHandler<DomainEvent>
@@ -24,8 +24,8 @@ namespace Macaria.API.Features.Notes
 
             public async Task Handle(DomainEvent notification, CancellationToken cancellationToken) {
                 await _hubContext.Clients.All.SendAsync("message", new {
-                    Type = "[Note] Saved",
-                    Payload = new { Note = NoteApiModel.FromNote(notification.Note) }
+                    Type = "[Tag] Saved",
+                    Payload = new { Tag = TagApiModel.FromTag(notification.Tag) }
                 }, cancellationToken);
             }
         }

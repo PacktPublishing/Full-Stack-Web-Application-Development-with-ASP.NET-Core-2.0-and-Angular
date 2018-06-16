@@ -6,15 +6,15 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Macaria.API.Features.Notes
+namespace Macaria.API.Features.Tags
 {
-    public class GetNotesQuery
+    public class GetTagsQuery
     {
         public class Request : IRequest<Response> { }
 
         public class Response
         {
-            public IEnumerable<NoteApiModel> Notes { get; set; }
+            public IEnumerable<TagApiModel> Tags { get; set; }
         }
 
         public class Handler : IRequestHandler<Request, Response>
@@ -26,7 +26,7 @@ namespace Macaria.API.Features.Notes
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
                 => new Response()
                 {
-                    Notes = await _context.Notes.Select(x => NoteApiModel.FromNote(x, true)).ToListAsync()
+                    Tags = await _context.Tags.Select(x => TagApiModel.FromTag(x)).ToListAsync()
                 };
         }
     }

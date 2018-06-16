@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+using FluentValidation;
 using Macaria.Core.Interfaces;
 using MediatR;
 using System.Threading;
@@ -22,7 +22,7 @@ namespace Macaria.API.Features.Notes
 
         public class Response { }
 
-        public class Handler : IRequestHandler<Request, Response>
+        public class Handler : IRequestHandler<Request,Response>
         {
             private readonly IAppDbContext _context;
 

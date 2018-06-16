@@ -1,4 +1,4 @@
-﻿using Macaria.API.Features.Tags;
+using Macaria.API.Features.Tags;
 using Macaria.Core.Entities;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Linq;
 namespace Macaria.API.Features.Notes
 {
     public class NoteApiModel
-    {
+    {        
         public int NoteId { get; set; }
         public string Title { get; set; }
         public string Slug { get; set; }

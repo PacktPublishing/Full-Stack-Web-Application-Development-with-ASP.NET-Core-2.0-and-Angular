@@ -1,4 +1,4 @@
-﻿using Macaria.API.Hubs;
+using Macaria.API.Hubs;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading;
@@ -21,10 +21,8 @@ namespace Macaria.API.Features.Notes
             public Handler(IHubContext<AppHub> hubContext)
                 => _hubContext = hubContext;
 
-            public async Task Handle(DomainEvent notification, CancellationToken cancellationToken)
-            {
-                await _hubContext.Clients.All.SendAsync("message", new
-                {
+            public async Task Handle(DomainEvent notification, CancellationToken cancellationToken) {
+                await _hubContext.Clients.All.SendAsync("message", new {
                     Type = "[Note] Removed",
                     Payload = new { notification.NoteId }
                 }, cancellationToken);

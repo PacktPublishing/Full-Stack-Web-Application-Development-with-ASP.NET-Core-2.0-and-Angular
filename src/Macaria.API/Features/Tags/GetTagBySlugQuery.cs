@@ -1,20 +1,21 @@
 using Macaria.Core.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Macaria.API.Features.Notes
+namespace Macaria.API.Features.Tags
 {
-    public class GetNotesQuery
+    public class GetTagBySlugQuery
     {
-        public class Request : IRequest<Response> { }
+        public class Request : IRequest<Response> {
+            public string Slug { get; set; }
+        }
 
         public class Response
         {
-            public IEnumerable<NoteApiModel> Notes { get; set; }
+            public TagApiModel Tag { get; set; }
         }
 
         public class Handler : IRequestHandler<Request, Response>
@@ -26,7 +27,11 @@ namespace Macaria.API.Features.Notes
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
                 => new Response()
                 {
-                    Notes = await _context.Notes.Select(x => NoteApiModel.FromNote(x, true)).ToListAsync()
+                    Tag = TagApiModel.FromTag(await _context.Tags
+                        .Include(x =>x.NoteTags)
+                        .Include("NoteTags.Note")
+                        .Where(x => x.Slug == request.Slug)
+                        .SingleAsync())
                 };
         }
     }

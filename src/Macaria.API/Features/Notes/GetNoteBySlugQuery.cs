@@ -1,4 +1,4 @@
-﻿using Macaria.Core.Interfaces;
+using Macaria.Core.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -9,8 +9,7 @@ namespace Macaria.API.Features.Notes
 {
     public class GetNoteBySlugQuery
     {
-        public class Request : IRequest<Response>
-        {
+        public class Request : IRequest<Response> {
             public string Slug { get; set; }
         }
 

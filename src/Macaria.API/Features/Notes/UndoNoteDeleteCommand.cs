@@ -1,16 +1,16 @@
-﻿using Macaria.Core.Interfaces;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
+using System.Threading;
+using System.Collections.Generic;
+using Macaria.Core.Interfaces;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Macaria.API.Features.Notes
 {
     public class UndoNoteDeleteCommand
     {
-        public class Request : IRequest
-        {
+        public class Request : IRequest {
             public int NoteId { get; set; }
         }
         
@@ -19,7 +19,7 @@ namespace Macaria.API.Features.Notes
             public IAppDbContext _context { get; set; }
             public Handler(IAppDbContext context) => _context = context;
 
-            public async Task<Unit> Handle(Request request, CancellationToken cancellationToken)
+            public async Task Handle(Request request, CancellationToken cancellationToken)
             {
                 var note = await _context.Notes
                     .IgnoreQueryFilters()
@@ -30,9 +30,7 @@ namespace Macaria.API.Features.Notes
 
                 note.RaiseDomainEvent(new NoteSavedEvent.DomainEvent(note));
 
-                await _context.SaveChangesAsync(cancellationToken);
-
-                return Unit.Value;
+                await _context.SaveChangesAsync(cancellationToken);                
             }
         }
     }

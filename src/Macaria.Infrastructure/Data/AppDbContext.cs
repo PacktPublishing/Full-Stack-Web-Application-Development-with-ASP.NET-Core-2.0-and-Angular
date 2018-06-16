@@ -13,7 +13,7 @@ namespace Macaria.Infrastructure.Data
     {
         private IMediator _mediator;
 
-        public AppDbContext(DbContextOptions options, IMediator mediator)
+        public AppDbContext(DbContextOptions options, IMediator mediator = default(IMediator))
             :base(options) {
             _mediator = mediator;
         }

@@ -4,14 +4,19 @@ using System.Threading;
 using System.Threading.Tasks;
 using Macaria.Core.Entities;
 using Macaria.Core.Interfaces;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Macaria.Infrastructure.Data
 {
     public class AppDbContext : DbContext, IAppDbContext
     {
-        public AppDbContext(DbContextOptions options)
-            :base(options) { }
+        private IMediator _mediator;
+
+        public AppDbContext(DbContextOptions options, IMediator mediator)
+            :base(options) {
+            _mediator = mediator;
+        }
 
         public DbSet<Note> Notes { get; set; }
         public DbSet<Tag> Tags { get; set; }
@@ -22,6 +27,12 @@ namespace Macaria.Infrastructure.Data
             int result = default(int);
 
             ChangeTracker.DetectChanges();
+
+            var domainEventEntities = ChangeTracker.Entries<BaseEntity>()
+                .Select(entityEntry => entityEntry.Entity)
+                .Where(entity => entity.DomainEvents.Any())
+                .ToArray();
+
             
             foreach (var entity in ChangeTracker.Entries<BaseEntity>()
                 .Where(e => (e.State == EntityState.Added || (e.State == EntityState.Modified)))
@@ -39,6 +50,16 @@ namespace Macaria.Infrastructure.Data
             }
 
             result = await base.SaveChangesAsync(cancellationToken);
+
+            foreach(var entity in domainEventEntities)
+            {
+                var events = entity.DomainEvents.ToArray();
+                entity.ClearEvents();
+                foreach(var domainEvent in events)
+                {
+                    await _mediator.Publish(domainEvent);
+                }
+            }
 
             return result;
         }

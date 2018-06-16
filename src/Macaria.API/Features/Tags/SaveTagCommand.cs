@@ -40,7 +40,7 @@ namespace Macaria.API.Features.Tags
 
                 tag.Name = request.Tag.Name;
 
-                tag.Slug = request.Tag.Name.GenerateSlug();
+                tag.Slug = request.Tag.Name.ToSlug();
 
                 tag.RaiseDomainEvent(new TagSavedEvent.DomainEvent(tag));
 

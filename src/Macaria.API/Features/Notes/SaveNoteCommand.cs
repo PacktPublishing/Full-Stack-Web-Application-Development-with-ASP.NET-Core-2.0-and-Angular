@@ -46,7 +46,7 @@ namespace Macaria.API.Features.Notes
 
                 note.Title = request.Note.Title;
 
-                note.Slug = request.Note.Title.GenerateSlug();
+                note.Slug = request.Note.Title.ToSlug();
                 
                 note.NoteTags.Clear();
 

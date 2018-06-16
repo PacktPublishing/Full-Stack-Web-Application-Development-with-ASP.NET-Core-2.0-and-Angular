@@ -6,7 +6,7 @@ namespace Macaria.Core.Extensions
 {
     public static class StringExtensions
     {
-        public static string GenerateSlug(this string phrase)
+        public static string ToSlug(this string phrase)
         {
             string str = phrase.RemoveDiacritics().ToLower();         
             str = Regex.Replace(str, @"[^a-z0-9\s-]", "");  

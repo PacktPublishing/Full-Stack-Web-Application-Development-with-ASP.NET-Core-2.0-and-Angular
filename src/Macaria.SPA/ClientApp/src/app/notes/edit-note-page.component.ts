@@ -41,7 +41,8 @@ export class EditNotePageComponent implements IDeactivatable {
           this.selectedItems = this.note.tags.map(x => x.name);
           this.form.patchValue({
             title: this.note.title,
-            body: this.note.body
+            body: this.note.body,
+            tags: this.selectedItems
           });
         });
 

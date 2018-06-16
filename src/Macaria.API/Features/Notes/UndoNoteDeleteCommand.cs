@@ -13,9 +13,7 @@ namespace Macaria.API.Features.Notes
         public class Request : IRequest {
             public int NoteId { get; set; }
         }
-
-
-
+        
         public class Handler : IRequestHandler<Request>
         {
             public IAppDbContext _context { get; set; }
@@ -32,7 +30,7 @@ namespace Macaria.API.Features.Notes
 
                 note.RaiseDomainEvent(new NoteSavedEvent.DomainEvent(note));
 
-                await _context.SaveChangesAsync(cancellationToken);
+                await _context.SaveChangesAsync(cancellationToken);                
             }
         }
     }

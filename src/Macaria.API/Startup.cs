@@ -26,7 +26,7 @@ namespace Macaria.API
             services.AddCustomSignalR();                        
             services.AddCustomSwagger();
             services.AddDataStore(Configuration["Data:DefaultConnection:ConnectionString"]);            
-            services.AddMediatR(typeof(Startup));                        
+            services.AddMediatR(typeof(Startup).Assembly);                        
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));            
         }

@@ -13,4 +13,10 @@
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Macaria.Core\Macaria.Core.csproj" />
+    <ProjectReference Include="..\..\src\Macaria.Infrastructure\Macaria.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\Macaria.API\Macaria.API.csproj" />
+  </ItemGroup>
+
 </Project>

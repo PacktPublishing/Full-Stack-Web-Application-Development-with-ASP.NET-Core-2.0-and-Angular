@@ -2,7 +2,7 @@
 
 namespace Macaria.Core.Entities
 {
-    public class Tag
+    public class Tag: BaseEntity
     {
         public int TagId { get; set; }
         public string Name { get; set; }

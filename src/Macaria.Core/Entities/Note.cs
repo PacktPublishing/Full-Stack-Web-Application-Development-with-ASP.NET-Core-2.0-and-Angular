@@ -2,7 +2,7 @@
 
 namespace Macaria.Core.Entities
 {
-    public class Note
+    public class Note: BaseEntity
     {
         public int NoteId { get; set; }
         public string Title { get; set; }

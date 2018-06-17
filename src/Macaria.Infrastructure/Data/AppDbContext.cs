@@ -43,6 +43,13 @@ namespace Macaria.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<Note>()
+                .HasQueryFilter(e => !e.IsDeleted);
+
+            modelBuilder.Entity<Tag>()
+                .HasQueryFilter(e => !e.IsDeleted);
+            
             modelBuilder.Entity<NoteTag>()
                 .HasOne(nt => nt.Note)
                 .WithMany(n => n.NoteTags)

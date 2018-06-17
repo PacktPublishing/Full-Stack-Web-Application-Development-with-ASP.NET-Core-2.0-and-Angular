@@ -32,8 +32,6 @@ namespace Macaria.Infrastructure.Data
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
         {
             int result = default(int);
-
-            ChangeTracker.DetectChanges();
             
             var domainEventEntities = ChangeTracker.Entries<BaseEntity>()
                 .Select(entityEntry => entityEntry.Entity)

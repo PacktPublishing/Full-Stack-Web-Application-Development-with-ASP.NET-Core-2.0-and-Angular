@@ -1,5 +1,5 @@
 ﻿using Macaria.API.Features.Users;
-using Macaria.Core.Entities;
+using Macaria.Core.Models;
 using Macaria.Core.Identity;
 using Macaria.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;

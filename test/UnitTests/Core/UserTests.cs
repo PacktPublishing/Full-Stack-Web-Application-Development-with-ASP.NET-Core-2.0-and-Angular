@@ -1,4 +1,4 @@
-﻿using Macaria.Core.Entities;
+﻿using Macaria.Core.Models;
 using System;
 using Xunit;
 

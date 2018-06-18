@@ -1,5 +1,5 @@
 using FluentValidation;
-using Macaria.Core.Entities;
+using Macaria.Core.Models;
 using Macaria.Core.Exceptions;
 using Macaria.Core.Identity;
 using Macaria.Core.Interfaces;

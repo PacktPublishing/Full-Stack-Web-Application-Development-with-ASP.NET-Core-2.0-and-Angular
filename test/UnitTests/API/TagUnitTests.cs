@@ -1,5 +1,5 @@
 ﻿using Macaria.API.Features.Tags;
-using Macaria.Core.Entities;
+using Macaria.Core.Models;
 using Macaria.Infrastructure.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -122,7 +122,7 @@ namespace UnitTests.API
 
             using (var context = new AppDbContext(options))
             {                
-                context.Tags.Add(new Macaria.Core.Entities.Tag()
+                context.Tags.Add(new Macaria.Core.Models.Tag()
                 {
                     TagId = 1,
                     Name = "Quinntyne",

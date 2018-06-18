@@ -1,10 +1,12 @@
 ﻿using Macaria.API;
+using Macaria.Infrastructure.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.SignalR.Client;
+using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
@@ -13,10 +15,8 @@ namespace IntegrationTests
 {
     public class ScenarioBase
     {
-        protected IntegrationTestServer CreateServer()
-        {
-            var connectionString = $"Data Source=(LocalDb)\\MSSQLLocalDB;Initial Catalog=MacariaIntegrationTests{Guid.NewGuid()};Integrated Security=SSPI;";
-
+        protected TestServer CreateServer()
+        {            
             var webHostBuilder = new WebHostBuilder()
                     .UseStartup(typeof(Startup))
                     .UseKestrel()
@@ -26,14 +26,20 @@ namespace IntegrationTests
                         config
                         .AddInMemoryCollection(new Dictionary<string, string>
                         {
-                            { "isTest", "true"},
-                            { "Data:DefaultConnection:ConnectionString", connectionString }
+                            { "isTest", "true"}
                         });
                     });
 
-            var testServer = new IntegrationTestServer(webHostBuilder);
+            var testServer = new TestServer(webHostBuilder);
 
-            testServer.ResetDatabase();
+            var services = (IServiceScopeFactory)testServer.Host.Services.GetService(typeof(IServiceScopeFactory));
+
+            using (var scope = services.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+                SeedData.Seed(context);
+            }
 
             return testServer;
         }

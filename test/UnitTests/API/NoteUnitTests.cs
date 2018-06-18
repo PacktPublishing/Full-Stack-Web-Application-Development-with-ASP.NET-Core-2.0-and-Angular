@@ -1,6 +1,6 @@
 using Macaria.API.Features.Notes;
 using Macaria.API.Features.Tags;
-using Macaria.Core.Entities;
+using Macaria.Core.Models;
 using Macaria.Infrastructure.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -130,7 +130,7 @@ namespace UnitTests.API
 
             using (var context = new AppDbContext(options))
             {
-                context.Notes.Add(new Macaria.Core.Entities.Note()
+                context.Notes.Add(new Macaria.Core.Models.Note()
                 {
                     NoteId = 1,
                     Title = "Quinntyne",

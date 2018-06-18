@@ -1,5 +1,5 @@
 using FluentValidation;
-using Macaria.Core.Entities;
+using Macaria.Core.Models;
 using Macaria.Core.Extensions;
 using Macaria.Core.Interfaces;
 using MediatR;

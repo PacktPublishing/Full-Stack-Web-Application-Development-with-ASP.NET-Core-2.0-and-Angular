@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 
-namespace Macaria.Core.Entities
+namespace Macaria.Core.Models
 {
-    public class Tag: BaseEntity
+    public class Tag: Entity
     {
         public int TagId { get; set; }
         public string Name { get; set; }

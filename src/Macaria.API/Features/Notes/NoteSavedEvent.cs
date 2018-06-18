@@ -1,5 +1,5 @@
 using Macaria.API.Hubs;
-using Macaria.Core.Entities;
+using Macaria.Core.Models;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading;

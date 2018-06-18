@@ -1,5 +1,5 @@
 using Macaria.API.Features.Tags;
-using Macaria.Core.Entities;
+using Macaria.Core.Models;
 using System.Collections.Generic;
 using System.Linq;
 

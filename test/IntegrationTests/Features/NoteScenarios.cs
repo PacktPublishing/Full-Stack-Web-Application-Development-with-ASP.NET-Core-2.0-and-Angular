@@ -1,6 +1,6 @@
 using Macaria.API.Features.Notes;
 using Macaria.API.Features.Tags;
-using Macaria.Core.Entities;
+using Macaria.Core.Models;
 using Macaria.Core.Extensions;
 using Macaria.Infrastructure.Data;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -142,6 +142,7 @@ namespace IntegrationTests.Features
                 Assert.True(response.Note.NoteId == 1);
             }
         }
+
         [Fact]
         public async Task ShouldGetNoteById()
         {

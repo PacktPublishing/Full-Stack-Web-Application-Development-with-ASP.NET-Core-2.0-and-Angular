@@ -1,4 +1,4 @@
-﻿using Macaria.Core.Entities;
+﻿using Macaria.Core.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;

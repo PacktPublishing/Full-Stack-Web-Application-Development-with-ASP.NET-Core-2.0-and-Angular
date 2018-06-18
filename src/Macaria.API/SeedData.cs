@@ -1,8 +1,7 @@
-﻿using Macaria.Core.Entities;
+﻿using Macaria.Core.Models;
 using Macaria.Core.Extensions;
 using Macaria.Core.Identity;
 using Macaria.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace Macaria.API
@@ -21,7 +20,7 @@ namespace Macaria.API
         {
             public static void Seed(AppDbContext context)
             {
-                if (context.Users.IgnoreQueryFilters().FirstOrDefault(x => x.Username == "quinntynebrown@gmail.com") == null)
+                if (context.Users.FirstOrDefault(x => x.Username == "quinntynebrown@gmail.com") == null)
                 {
                     var user = new User()
                     {
@@ -30,7 +29,6 @@ namespace Macaria.API
                     user.Password = new PasswordHasher().HashPassword(user.Salt, "P@ssw0rd");
 
                     context.Users.Add(user);
-
                 }
 
                 context.SaveChanges();
@@ -41,10 +39,10 @@ namespace Macaria.API
         {
             public static void Seed(AppDbContext context)
             {
-                if (context.Tags.IgnoreQueryFilters().FirstOrDefault(x => x.Name == "Angular") == null)
+                if (context.Tags.FirstOrDefault(x => x.Name == "Angular") == null)
                     context.Tags.Add(new Tag() { Name = "Angular", Slug = "Angular".ToSlug() });
 
-                if (context.Tags.IgnoreQueryFilters().FirstOrDefault(x => x.Name == "ASP.NET Core") == null)
+                if (context.Tags.FirstOrDefault(x => x.Name == "ASP.NET Core") == null)
                     context.Tags.Add(new Tag() { Name = "ASP.NET Core", Slug = "ASP.NET Core".ToSlug() });
 
                 context.SaveChanges();

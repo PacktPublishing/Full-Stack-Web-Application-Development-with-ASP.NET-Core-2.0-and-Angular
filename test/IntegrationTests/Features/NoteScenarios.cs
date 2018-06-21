@@ -1,13 +1,13 @@
 using Macaria.API.Features.Notes;
 using Macaria.API.Features.Tags;
-using Macaria.Core.Models;
 using Macaria.Core.Extensions;
+using Macaria.Core.Models;
 using Macaria.Infrastructure.Data;
 using Microsoft.AspNetCore.SignalR.Client;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
@@ -47,6 +47,26 @@ namespace IntegrationTests.Features
                 Assert.True(response.NoteId == 1);
 
                 await tcs.Task;
+            }
+        }
+
+        [Fact]
+        public async Task ShouldReturnValidationError()
+        {
+            using (var server = CreateServer())
+            {
+                var response = await server.CreateClient()
+                    .PostAsync(Post.Notes, new SaveNoteCommand.Request()
+                    {
+                        Note = new NoteApiModel()
+                        {
+                            Title = "First Note",
+                            Body = "",
+                            Tags = new List<TagApiModel>() { new TagApiModel() { TagId = 1, Name = "Angular" } }
+                        }
+                    });
+                
+                Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);                
             }
         }
 
@@ -254,5 +274,6 @@ namespace IntegrationTests.Features
                 await tcs.Task;
             }
         }
+
     }
 }

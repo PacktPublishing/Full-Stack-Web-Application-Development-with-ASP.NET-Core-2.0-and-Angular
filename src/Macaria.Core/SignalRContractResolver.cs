@@ -25,6 +25,5 @@ namespace Macaria.Core
 
             return _camelCaseContractResolver.ResolveContract(type);
         }
-
     }
 }

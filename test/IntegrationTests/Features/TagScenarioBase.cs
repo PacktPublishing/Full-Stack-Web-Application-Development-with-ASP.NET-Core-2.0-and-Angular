@@ -7,9 +7,7 @@ namespace IntegrationTests.Features
             public static string Tags = "api/tags";
 
             public static string TagById(int id)
-            {
-                return $"api/tags/{id}";
-            }
+                => $"api/tags/{id}";
         }
 
         public static class Post
@@ -20,9 +18,7 @@ namespace IntegrationTests.Features
         public static class Delete
         {
             public static string Tag(int id)
-            {
-                return $"api/tags/{id}";
-            }
+                => $"api/tags/{id}";
         }
     }
 }

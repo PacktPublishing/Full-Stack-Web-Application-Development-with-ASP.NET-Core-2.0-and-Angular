@@ -1,0 +1,9 @@
+<app-primary-header>
+  {{ "Deleted Notes" | translate }}
+</app-primary-header>
+
+<section class="page-content-container">
+  <app-grid [columnDefs]="columnDefs"
+            [rowData]="notes$ | async">
+  </app-grid>
+</section>

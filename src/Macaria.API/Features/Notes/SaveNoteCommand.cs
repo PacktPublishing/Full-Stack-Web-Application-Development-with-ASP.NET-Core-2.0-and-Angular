@@ -11,10 +11,12 @@ namespace Macaria.API.Features.Notes
 {
     public class SaveNoteCommand
     {
-        public class Validator: AbstractValidator<Request> {
+        public class Validator: AbstractValidator<Request>
+        {
             public Validator()
             {
                 RuleFor(request => request.Note.NoteId).NotNull();
+                RuleFor(request => request.Note.Body).NotNull().NotEmpty();
             }
         }
 

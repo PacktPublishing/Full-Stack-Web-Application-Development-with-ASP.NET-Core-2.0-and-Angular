@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ColDef } from 'ag-grid';
 import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
-import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
+import { filter, map, switchMap, takeUntil, takeWhile, tap } from 'rxjs/operators';
 import { HubClient } from '../core/hub-client';
 import { ConfirmRefreshOverlayComponent } from '../shared/confirm-refresh-overlay.component';
 import { Note } from './note.model';
@@ -58,16 +58,15 @@ export class NotesPageComponent {
   public notes$: BehaviorSubject<Note[]> = new BehaviorSubject([]);
 
   public onDestroy: Subject<void> = new Subject<void>();
-  
+
+  public onNoteDataRetrieved: Subject<void> = new Subject<void>();
+
   ngOnInit() {
     this._notesService
       .get()
-      .pipe(takeUntil(this.onDestroy))
-      .subscribe(x => this.notes$.next(x.notes));
-
-    this._hubClient.messages$
       .pipe(
-        takeUntil(this.onDestroy),
+        map((x: { notes: Note[] }) => this.notes$.next(x.notes)),
+        switchMap(() => this._hubClient.messages$),
         switchMap(messageResult => {
           if (messageResult.type == "[Note] Removed" && this.hasNote(messageResult.payload.noteId))
             return this._handleNoteRemovedMessage$(messageResult);
@@ -76,8 +75,8 @@ export class NotesPageComponent {
             return this._handleNoteSavedMessage$(messageResult);
 
           return of(null);
-        })
-      )
+        }),
+        takeUntil(this.onDestroy))
       .subscribe();
   }
 

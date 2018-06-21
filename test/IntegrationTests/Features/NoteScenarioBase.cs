@@ -8,14 +8,10 @@ namespace IntegrationTests.Features
             public static string DeletedNotes = "api/notes/deleted";
 
             public static string NoteById(int id)
-            {
-                return $"api/notes/{id}";
-            }
+                => $"api/notes/{id}";
 
             public static string NoteBySlug(string slug)
-            {
-                return $"api/notes/slug/{slug}";
-            }
+                => $"api/notes/slug/{slug}";
         }
 
         public static class Post

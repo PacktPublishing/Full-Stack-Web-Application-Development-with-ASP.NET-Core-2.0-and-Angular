@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Macaria.Core.Exceptions;
 using MediatR;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,8 +25,12 @@ namespace Macaria.Core.Behaviours
                 .Where(f => f != null)
                 .ToList();
 
-            if (failures.Count != 0)
-                throw new ValidationException(failures);
+            if (failures.Any())
+            {
+                throw new DomainException(
+                    $"Command Validation Errors for type {typeof(TRequest).Name}",
+                    new ValidationException("ValidationException", failures));
+            }
 
             return next();
         }

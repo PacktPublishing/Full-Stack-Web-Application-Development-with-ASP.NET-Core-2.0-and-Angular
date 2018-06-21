@@ -1,10 +1,9 @@
-import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { baseUrl } from '../core/constants';
-import { Tag } from './tag.model';
+import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { shareReplay, tap } from 'rxjs/operators';
+import { baseUrl } from '../core/constants';
 import { Logger } from '../core/logger.service';
+import { Tag } from './tag.model';
 
 @Injectable()
 export class TagsService {

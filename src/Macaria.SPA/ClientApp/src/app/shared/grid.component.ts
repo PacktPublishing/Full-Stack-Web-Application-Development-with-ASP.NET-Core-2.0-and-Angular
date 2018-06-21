@@ -3,6 +3,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { ColDef } from "ag-grid";
 import { Subject } from "rxjs";
 import { DeleteCellComponent } from "./delete-cell.component";
+import { UnDeleteCellComponent } from "./un-delete-cell.component";
 
 @Component({
   templateUrl: "./grid.component.html",
@@ -32,7 +33,8 @@ export class GridComponent {
   };
 
   public frameworkComponents = {
-    deleteRenderer: DeleteCellComponent
+    deleteRenderer: DeleteCellComponent,
+    unDeleteRenderer: UnDeleteCellComponent
   };
 
   public onGridReady($event) {

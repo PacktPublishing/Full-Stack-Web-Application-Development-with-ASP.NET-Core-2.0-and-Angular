@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using Macaria.Core.Common;
+using System.Security.Cryptography;
 
 namespace Macaria.Core.Models
 {

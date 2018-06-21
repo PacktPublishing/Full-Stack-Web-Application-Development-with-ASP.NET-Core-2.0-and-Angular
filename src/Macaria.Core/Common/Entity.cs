@@ -2,7 +2,7 @@ using MediatR;
 using System;
 using System.Collections.Generic;
 
-namespace Macaria.Core.Models
+namespace Macaria.Core.Common
 {
     public class Entity
     {

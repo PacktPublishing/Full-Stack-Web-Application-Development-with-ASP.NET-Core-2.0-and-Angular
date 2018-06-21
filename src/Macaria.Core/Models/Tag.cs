@@ -1,3 +1,4 @@
+using Macaria.Core.Common;
 using System.Collections.Generic;
 
 namespace Macaria.Core.Models

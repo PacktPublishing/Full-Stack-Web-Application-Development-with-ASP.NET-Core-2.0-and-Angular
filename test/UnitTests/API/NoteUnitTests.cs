@@ -133,8 +133,7 @@ namespace UnitTests.API
                 context.Notes.Add(new Macaria.Core.Models.Note()
                 {
                     NoteId = 1,
-                    Title = "Quinntyne",
-                    
+                    Title = "Quinntyne",                    
                 });
 
                 context.SaveChanges();

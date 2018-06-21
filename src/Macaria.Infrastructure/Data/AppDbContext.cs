@@ -8,6 +8,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Macaria.Core.Common;
 
 namespace Macaria.Infrastructure.Data
 {    

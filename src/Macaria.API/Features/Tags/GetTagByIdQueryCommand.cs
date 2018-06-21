@@ -8,14 +8,6 @@ namespace Macaria.API.Features.Tags
 {
     public class GetTagByIdQuery
     {
-        public class Validator : AbstractValidator<Request>
-        {
-            public Validator()
-            {
-                RuleFor(request => request.TagId).NotEqual(default(int));
-            }
-        }
-
         public class Request : IRequest<Response> {
             public int TagId { get; set; }
         }

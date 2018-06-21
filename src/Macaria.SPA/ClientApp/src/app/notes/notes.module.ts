@@ -11,8 +11,14 @@ import { NotesPageComponent } from './notes-page.component';
 import { EditNotePageComponent } from './edit-note-page.component';
 import { SharedModule } from '../shared/shared.module';
 import { NotesByTagPageComponent } from './notes-by-tag-page.component';
+import { DeletedNotesPageComponent } from './deleted-notes-page.component';
 
-const declarations = [EditNotePageComponent, NotesPageComponent, NotesByTagPageComponent];
+const declarations = [
+  DeletedNotesPageComponent,
+  EditNotePageComponent,
+  NotesPageComponent,
+  NotesByTagPageComponent
+];
 
 const providers = [NotesService];
 

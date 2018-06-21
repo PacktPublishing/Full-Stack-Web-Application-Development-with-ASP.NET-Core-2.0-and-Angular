@@ -26,8 +26,4 @@
     <ProjectReference Include="..\Macaria.Infrastructure\Macaria.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-
-  </ItemGroup>
-
 </Project>

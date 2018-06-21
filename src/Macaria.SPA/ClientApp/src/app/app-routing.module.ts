@@ -14,6 +14,7 @@ import { EditNotePageComponent } from './notes/edit-note-page.component';
 import { AuthGuard } from './core/auth.guard';
 import { NotesByTagPageComponent } from './notes/notes-by-tag-page.component';
 import { CanDeactivateComponentGuard } from './core/can-deactivate-component.guard';
+import { DeletedNotesPageComponent } from './notes/deleted-notes-page.component';
 
 export const routes: Routes = [
   {
@@ -43,6 +44,10 @@ export const routes: Routes = [
       {
         path: 'tags/:slug',
         component: NotesByTagPageComponent
+      },
+      {
+        path: 'notes/deleted',
+        component: DeletedNotesPageComponent
       },
       {
         path: 'notes/:slug',

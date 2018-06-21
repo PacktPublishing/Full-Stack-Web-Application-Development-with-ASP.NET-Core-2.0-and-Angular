@@ -44,6 +44,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { GridComponent } from './grid.component';
 import { AreYouSureOverlayComponent } from './are-you-sure-overlay.component';
 import { ConfirmRefreshOverlayComponent } from './confirm-refresh-overlay.component';
+import { UnDeleteCellComponent } from './un-delete-cell.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { ConfirmRefreshOverlayComponent } from './confirm-refresh-overlay.compon
     DeleteCellComponent,
     GridComponent,
     PrimaryHeaderComponent,
-    QuillTextEditorComponent
+    QuillTextEditorComponent,
+    UnDeleteCellComponent
   ],
   imports: [
     MatAutocompleteModule,
@@ -94,7 +96,7 @@ import { ConfirmRefreshOverlayComponent } from './confirm-refresh-overlay.compon
     ReactiveFormsModule,
     TranslateModule,
 
-    AgGridModule.withComponents([DeleteCellComponent])
+    AgGridModule.withComponents([DeleteCellComponent, UnDeleteCellComponent])
   ],
   exports: [
     MatAutocompleteModule,

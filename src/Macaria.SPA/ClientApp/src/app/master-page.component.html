@@ -9,6 +9,7 @@
   <mat-sidenav #drawer class="sidenav" mode="side" (click)="drawer.close()">
     <button mat-button routerLink="/">{{ "Create Note" | translate }}</button>
     <button mat-button routerLink="/notes">{{ "Notes" | translate }}</button>
+    <button mat-button routerLink="/notes/deleted">{{ "Deleted Notes" | translate }}</button>
     <button mat-button routerLink="/tags">{{ "Tags" | translate }}</button>
     <button mat-button routerLink="/settings">{{ "Settings" | translate }}</button>
     <button mat-button routerLink="/login">{{ "Logout" | translate }}</button>

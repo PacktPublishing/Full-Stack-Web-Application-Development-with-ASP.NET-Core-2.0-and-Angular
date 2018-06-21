@@ -1,4 +1,3 @@
-using Macaria.API.Hubs;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading;
@@ -16,9 +15,9 @@ namespace Macaria.API.Features.Notes
 
         public class Handler : INotificationHandler<DomainEvent>
         {
-            private readonly IHubContext<AppHub> _hubContext;
+            private readonly IHubContext<IntegrationEventsHub> _hubContext;
 
-            public Handler(IHubContext<AppHub> hubContext)
+            public Handler(IHubContext<IntegrationEventsHub> hubContext)
                 => _hubContext = hubContext;
 
             public async Task Handle(DomainEvent notification, CancellationToken cancellationToken) {

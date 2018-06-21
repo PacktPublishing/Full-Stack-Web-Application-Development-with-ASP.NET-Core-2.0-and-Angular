@@ -1,5 +1,7 @@
-﻿
-using Macaria.API.Hubs;
+﻿using FluentValidation;
+using Macaria.API.Features;
+using Macaria.API.Features.Notes;
+using Macaria.API.Features.Tags;
 using Macaria.Core.Behaviours;
 using Macaria.Core.Extensions;
 using Macaria.Core.Identity;
@@ -8,7 +10,6 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using static System.Convert;
 
 namespace Macaria.API
 {
@@ -20,28 +21,31 @@ namespace Macaria.API
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
-        {            
-            services.AddCustomMvc();
-            services.AddCustomSecurity(Configuration);
-            services.AddCustomSignalR();                        
-            services.AddCustomSwagger();
-            services.AddDataStore(Configuration["Data:DefaultConnection:ConnectionString"], ToBoolean(Configuration["isTest"]));            
-            services.AddMediatR(typeof(Startup).Assembly);                        
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));            
+        {
+            services.AddCustomMvc()
+                .AddCustomSecurity(Configuration)
+                .AddCustomSignalR()
+                .AddCustomSwagger()
+                .AddDataStore(Configuration["Data:DefaultConnection:ConnectionString"],Configuration.GetValue<bool>("isTest"))
+                .AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>))
+                .AddTransient<IValidator<SaveNoteCommand.Request>, SaveNoteCommand.Validator>()
+                .AddTransient<IValidator<RemoveNoteCommand.Request>, RemoveNoteCommand.Validator>()
+                .AddTransient<IValidator<SaveTagCommand.Request>, SaveTagCommand.Validator>()
+                .AddTransient<IValidator<RemoveTagCommand.Request>, RemoveTagCommand.Validator>()
+                .AddMediatR(typeof(Startup).Assembly);
         }
-        
+
         public void Configure(IApplicationBuilder app)
         {
-            if (ToBoolean(Configuration["isTest"]))
+            if(Configuration.GetValue<bool>("isTest"))
                 app.UseMiddleware<AutoAuthenticationMiddleware>();
                     
-            app.UseAuthentication();            
-            app.UseCors("CorsPolicy");            
-            app.UseMvc();
-            app.UseSignalR(routes => routes.MapHub<AppHub>("/hub"));
-            app.UseSwagger();
-            app.UseSwaggerUI(options 
+            app.UseAuthentication()            
+                .UseCors("CorsPolicy")            
+                .UseMvc()
+                .UseSignalR(routes => routes.MapHub<IntegrationEventsHub>("/hub"))
+                .UseSwagger()
+                .UseSwaggerUI(options 
                 => options.SwaggerEndpoint("/swagger/v1/swagger.json", "Macaria API"));
         }        
     }

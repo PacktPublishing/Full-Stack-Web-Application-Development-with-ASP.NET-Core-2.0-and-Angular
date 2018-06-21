@@ -2,6 +2,7 @@
 using Macaria.API.Features;
 using Macaria.API.Features.Notes;
 using Macaria.API.Features.Tags;
+using Macaria.API.Features.Users;
 using Macaria.Core.Behaviours;
 using Macaria.Core.Extensions;
 using Macaria.Core.Identity;
@@ -28,6 +29,7 @@ namespace Macaria.API
                 .AddCustomSwagger()
                 .AddDataStore(Configuration["Data:DefaultConnection:ConnectionString"],Configuration.GetValue<bool>("isTest"))
                 .AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>))
+                .AddTransient<IValidator<AuthenticateCommand.Request>, AuthenticateCommand.Validator>()
                 .AddTransient<IValidator<SaveNoteCommand.Request>, SaveNoteCommand.Validator>()
                 .AddTransient<IValidator<RemoveNoteCommand.Request>, RemoveNoteCommand.Validator>()
                 .AddTransient<IValidator<SaveTagCommand.Request>, SaveTagCommand.Validator>()

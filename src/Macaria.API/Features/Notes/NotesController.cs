@@ -14,7 +14,7 @@ namespace Macaria.API.Features.Notes
         private readonly IMediator _mediator;
 
         public NotesController(IMediator mediator) 
-            => _mediator = _mediator ?? throw new ArgumentNullException(nameof(mediator));
+            => _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         
         [HttpGet("slug/{slug}")]
         public async Task<ActionResult<GetNoteBySlugQuery.Response>> GetBySlug([FromRoute]GetNoteBySlugQuery.Request request)

@@ -31,7 +31,7 @@ export class HubClient {
           .withUrl(`${this._baseUrl}hub?token=${this._storage.get({ name: accessTokenKey })}`)
           .build();
 
-      this._connection.on('message', value => {
+      this._connection.on('events', value => {
         this._logger.trace(`HubClient`, JSON.stringify(value));
 
         this._ngZone.run(() => this.messages$.next(value));

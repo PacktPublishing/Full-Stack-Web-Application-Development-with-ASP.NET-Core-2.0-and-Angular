@@ -36,7 +36,7 @@ export class NotesPageComponent {
         map(dialogResult => { return { messageResult, dialogResult } }),
         filter(x => x.dialogResult == true),
         map(x => {
-          const removedNoteId = x.messageResult.payload.noteId;
+          const removedNoteId = x.messageResult.payload.note.noteId;
           const index = this.notes$.value.findIndex(y => y.noteId == removedNoteId);
           if (index > -1) {
             const notes = this.notes$.value;
@@ -67,11 +67,11 @@ export class NotesPageComponent {
       .pipe(
         map((x: { notes: Note[] }) => this.notes$.next(x.notes)),
         switchMap(() => this._hubClient.messages$),
-        switchMap(messageResult => {
-          if (messageResult.type == "[Note] Removed" && this.hasNote(messageResult.payload.noteId))
+        switchMap(messageResult => {          
+          if (messageResult.type == "NoteRemoved" && this.hasNote(messageResult.payload.note.noteId))
             return this._handleNoteRemovedMessage$(messageResult);
 
-          if (messageResult.type == "[Note] Saved")
+          if (messageResult.type == "NoteSaved")
             return this._handleNoteSavedMessage$(messageResult);
 
           return of(null);

@@ -1,6 +1,6 @@
 ﻿using Macaria.API.Features.Users;
-using Macaria.Core.Models;
 using Macaria.Core.Identity;
+using Macaria.Core.Models;
 using Macaria.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Moq;
@@ -13,12 +13,12 @@ namespace UnitTests.API
     public class UserUnitTests
     {
         protected readonly Mock<IPasswordHasher> _passwordHasherMock;
-        protected readonly Mock<ITokenProvider> _tokenProvider;
+        protected readonly Mock<ISecurityTokenFactory> _securityTokenFactory;
 
         public UserUnitTests()
         {
             _passwordHasherMock = new Mock<IPasswordHasher>();
-            _tokenProvider = new Mock<ITokenProvider>();
+            _securityTokenFactory = new Mock<ISecurityTokenFactory>();
 
             _passwordHasherMock.Setup(x => x.HashPassword(It.IsAny<byte[]>(), "password"))
                 .Returns("password");
@@ -26,7 +26,7 @@ namespace UnitTests.API
             _passwordHasherMock.Setup(x => x.HashPassword(It.IsAny<byte[]>(),"changePassword"))
                 .Returns("passwordChanged");
 
-            _tokenProvider.Setup(x => x.Get("quinntynebrown@gmail.com")).Returns("token");
+            _securityTokenFactory.Setup(x => x.Create("quinntynebrown@gmail.com")).Returns("token");
         }
 
         [Fact]
@@ -46,7 +46,7 @@ namespace UnitTests.API
 
                 context.SaveChanges();
 
-                var handler = new AuthenticateCommand.Handler(context, _tokenProvider.Object, _passwordHasherMock.Object);
+                var handler = new AuthenticateCommand.Handler(context, _securityTokenFactory.Object, _passwordHasherMock.Object);
 
                 var response = await handler.Handle(new AuthenticateCommand.Request()
                 {

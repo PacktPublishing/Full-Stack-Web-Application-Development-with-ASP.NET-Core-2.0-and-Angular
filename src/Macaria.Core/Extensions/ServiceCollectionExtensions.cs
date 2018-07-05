@@ -78,7 +78,7 @@ namespace Macaria.Core.Extensions
                 .AllowAnyHeader()
                 .AllowCredentials()));
             
-            services.TryAddSingleton<ITokenProvider, TokenProvider>();
+            services.TryAddSingleton<ISecurityTokenFactory, SecurityTokenFactory>();
 
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
 

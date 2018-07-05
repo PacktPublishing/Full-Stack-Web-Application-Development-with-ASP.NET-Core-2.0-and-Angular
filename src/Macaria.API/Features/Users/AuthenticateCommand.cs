@@ -1,5 +1,4 @@
 using FluentValidation;
-using Macaria.Core.Models;
 using Macaria.Core.Exceptions;
 using Macaria.Core.Identity;
 using Macaria.Core.Interfaces;
@@ -37,12 +36,15 @@ namespace Macaria.API.Features.Users
         {
             private readonly IAppDbContext _context;
             private readonly IPasswordHasher _passwordHasher;
-            private readonly ITokenProvider _tokenProvider;
+            private readonly ISecurityTokenFactory _securityTokenFactory;
 
-            public Handler(IAppDbContext context, ITokenProvider tokenProvider, IPasswordHasher passwordHasher)
+            public Handler(
+                IAppDbContext context, 
+                ISecurityTokenFactory securityTokenFactory, 
+                IPasswordHasher passwordHasher)
             {
                 _context = context;
-                _tokenProvider = tokenProvider;
+                _securityTokenFactory = securityTokenFactory;
                 _passwordHasher = passwordHasher;
             }
 
@@ -54,23 +56,15 @@ namespace Macaria.API.Features.Users
                 if (user == null)
                     throw new DomainException();
 
-                if (!ValidateUser(user, _passwordHasher.HashPassword(user.Salt, request.Password)))
+                if (user.Password != _passwordHasher.HashPassword(user.Salt, request.Password))
                     throw new DomainException();
 
                 return new Response()
                 {
-                    AccessToken = _tokenProvider.Get(request.Username),
+                    AccessToken = _securityTokenFactory.Create(request.Username),
                     UserId = user.UserId
                 };
-            }
-
-            public bool ValidateUser(User user, string transformedPassword)
-            {
-                if (user == null || transformedPassword == null)
-                    return false;
-
-                return user.Password == transformedPassword;
-            }
+            }            
         }
     }
 }

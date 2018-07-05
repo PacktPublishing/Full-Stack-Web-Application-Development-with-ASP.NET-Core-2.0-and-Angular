@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Macaria.API.Features.Users
@@ -12,7 +13,8 @@ namespace Macaria.API.Features.Users
     {
         private readonly IMediator _mediator;
 
-        public UsersController(IMediator mediator) => _mediator = mediator;
+        public UsersController(IMediator mediator)
+            => _mediator = _mediator ?? throw new ArgumentNullException(nameof(mediator));
         
         [AllowAnonymous]
         [HttpPost("token")]

@@ -6,16 +6,16 @@ namespace Macaria.Core.Identity
     public class AutoAuthenticationMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ITokenProvider _tokenProvider;
+        private readonly ISecurityTokenFactory _securityTokenFactory;
 
-        public AutoAuthenticationMiddleware(ITokenProvider tokenProvider, RequestDelegate next) {
+        public AutoAuthenticationMiddleware(ISecurityTokenFactory securityTokenFactory, RequestDelegate next) {
             _next = next;
-            _tokenProvider = tokenProvider;
+            _securityTokenFactory = securityTokenFactory;
         }
 
         public async Task Invoke(HttpContext httpContext)
         {
-            var token = _tokenProvider.Get("quinntynebrown@gmail.com");
+            var token = _securityTokenFactory.Create("quinntynebrown@gmail.com");
             httpContext.Request.Headers.Add("Authorization", $"Bearer {token}");
             await _next.Invoke(httpContext);            
         }

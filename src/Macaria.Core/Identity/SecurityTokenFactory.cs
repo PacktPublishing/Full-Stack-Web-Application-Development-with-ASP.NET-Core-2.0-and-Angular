@@ -8,18 +8,13 @@ using System.Text;
 
 namespace Macaria.Core.Identity
 {
-    public interface ITokenProvider
+    public class SecurityTokenFactory : ISecurityTokenFactory
     {
-        string Get(string username);
-    }
-
-    public class TokenProvider : ITokenProvider
-    {
-        private IConfiguration _configuration;
-        public TokenProvider(IConfiguration configuration)
+        private readonly IConfiguration _configuration;
+        public SecurityTokenFactory(IConfiguration configuration)
             => _configuration = configuration;
         
-        public string Get(string uniqueName)
+        public string Create(string uniqueName)
         {
             var now = DateTime.UtcNow;
             var nowDateTimeOffset = new DateTimeOffset(now);

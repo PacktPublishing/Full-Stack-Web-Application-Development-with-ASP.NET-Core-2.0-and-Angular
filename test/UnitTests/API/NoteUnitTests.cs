@@ -1,10 +1,12 @@
 using Macaria.API.Features.Notes;
 using Macaria.API.Features.Tags;
+using Macaria.Core.DomainEvents;
 using Macaria.Core.Models;
 using Macaria.Infrastructure.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Moq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -24,7 +26,7 @@ namespace UnitTests.API
                 .Options;
 
             var mediator = new Mock<IMediator>();
-            mediator.Setup(m => m.Publish(It.IsAny<NoteSavedEvent.DomainEvent>(), It.IsAny<CancellationToken>()))
+            mediator.Setup(m => m.Publish(It.IsAny<NoteSaved>(), It.IsAny<CancellationToken>()))
                 .Verifiable();
 
             using (var context = new AppDbContext(options, mediator.Object))
@@ -150,7 +152,7 @@ namespace UnitTests.API
         public async Task ShouldHandleRemoveNoteCommandRequest()
         {
             var mediator = new Mock<IMediator>();
-            mediator.Setup(m => m.Publish(It.IsAny<NoteRemovedEvent.DomainEvent>(), It.IsAny<CancellationToken>()))
+            mediator.Setup(m => m.Publish(It.IsAny<NoteRemoved>(), It.IsAny<CancellationToken>()))
                 .Verifiable();
 
             var options = new DbContextOptionsBuilder<AppDbContext>()
@@ -168,10 +170,10 @@ namespace UnitTests.API
                 context.SaveChanges();
 
                 var handler = new RemoveNoteCommand.Handler(context);
-
+                
                 await handler.Handle(new RemoveNoteCommand.Request()
                 {
-                    NoteId =  1 
+                    NoteId = 1
                 }, default(CancellationToken));
 
                 Assert.Equal(0, context.Notes.Count());
@@ -186,7 +188,7 @@ namespace UnitTests.API
                 .Options;
 
             var mediator = new Mock<IMediator>();
-            mediator.Setup(m => m.Publish(It.IsAny<NoteSavedEvent.DomainEvent>(), It.IsAny<CancellationToken>()))
+            mediator.Setup(m => m.Publish(It.IsAny<NoteSaved>(), It.IsAny<CancellationToken>()))
                 .Verifiable();
 
             using (var context = new AppDbContext(options, mediator.Object))

@@ -42,7 +42,7 @@ namespace Macaria.API.Features.Tags
 
                 tag.Slug = request.Tag.Name.ToSlug();
 
-                tag.RaiseDomainEvent(new TagSavedEvent.DomainEvent(tag));
+                tag.RaiseDomainEvent(new Core.DomainEvents.TagSaved(tag));
 
                 await _context.SaveChangesAsync(cancellationToken);
 

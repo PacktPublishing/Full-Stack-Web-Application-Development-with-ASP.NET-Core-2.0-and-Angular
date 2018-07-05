@@ -30,9 +30,8 @@ namespace Macaria.API.Features.Notes
                 {
                     Note = NoteApiModel.FromNote(await _context.Notes
                         .Include(x => x.NoteTags)
-                        .Include("NoteTags.Tag")
-                        .Where(x => x.Slug == request.Slug)
-                        .SingleAsync())
+                        .ThenInclude(x => x.Tag)
+                        .SingleAsync(x => x.Slug == request.Slug))
                 };
             }
         }

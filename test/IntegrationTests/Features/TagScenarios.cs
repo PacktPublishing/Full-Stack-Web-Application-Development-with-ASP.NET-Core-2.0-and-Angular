@@ -19,9 +19,9 @@ namespace IntegrationTests.Features
             {
                 var hubConnection = GetHubConnection(server.CreateHandler());
 
-                hubConnection.On<dynamic>("message", (result) =>
+                hubConnection.On<dynamic>("events", (result) =>
                 {
-                    Assert.Equal("[Tag] Saved", $"{result.type}");
+                    Assert.Equal("TagSaved", $"{result.type}");
                     Assert.Equal(3, Convert.ToInt16(result.payload.tag.tagId));
                     tcs.SetResult(true);
                 });
@@ -91,10 +91,10 @@ namespace IntegrationTests.Features
             {
                 var hubConnection = GetHubConnection(server.CreateHandler());
 
-                hubConnection.On<dynamic>("message", (result) =>
+                hubConnection.On<dynamic>("events", (result) =>
                 {
-                    Assert.Equal("[Tag] Removed", $"{result.type}");
-                    Assert.Equal(1, Convert.ToInt16(result.payload.tagId));
+                    Assert.Equal("TagRemoved", $"{result.type}");
+                    Assert.Equal(1, Convert.ToInt16(result.payload.tag.tagId));
                     tcs.SetResult(true);
                 });
 

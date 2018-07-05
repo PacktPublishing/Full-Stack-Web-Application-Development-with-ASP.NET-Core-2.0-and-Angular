@@ -32,7 +32,7 @@ namespace Macaria.API.Features.Notes
             {
                 var note = await _context.Notes.FindAsync(request.NoteId);
                 _context.Notes.Remove(note);
-                note.RaiseDomainEvent(new NoteRemovedEvent.DomainEvent(note.NoteId));
+                note.RaiseDomainEvent(new Core.DomainEvents.NoteRemoved(note));
                 await _context.SaveChangesAsync(cancellationToken);
                 return new Response() { };
             }

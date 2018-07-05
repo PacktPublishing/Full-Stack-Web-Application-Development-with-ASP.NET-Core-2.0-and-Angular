@@ -15,6 +15,7 @@ namespace Macaria.API.Features.Tags
                 RuleFor(request => request.TagId).NotEqual(0);
             }
         }
+
         public class Request : IRequest<Response>
         {
             public int TagId { get; set; }
@@ -32,7 +33,7 @@ namespace Macaria.API.Features.Tags
             {
                 var tag = await _context.Tags.FindAsync(request.TagId);
                 _context.Tags.Remove(tag);
-                tag.RaiseDomainEvent(new TagRemovedEvent.DomainEvent(tag.TagId));
+                tag.RaiseDomainEvent(new Core.DomainEvents.TagRemoved(tag));
                 await _context.SaveChangesAsync(cancellationToken);
                 return new Response() { };
             }

@@ -16,16 +16,19 @@ using System.Threading.Tasks;
 
 namespace Macaria.Core.Extensions
 {
+    public static class CorsDefaults
+    {
+        public static readonly string Policy = "CorsPolicy";
+    }
+
     public static class ServiceCollectionExtensions
     {        
-        public static IServiceCollection AddCustomMvc(this IServiceCollection services)
+        public static IMvcBuilder AddCustomMvc(this IServiceCollection services)
         {
-            services.AddMvc(options =>
+            return services.AddMvc(options =>
             {
                 options.Filters.Add(typeof(HttpGlobalExceptionFilter));
             }).AddControllersAsServices();
-
-            return services;
         }
 
         public static IServiceCollection AddCustomSignalR(this IServiceCollection services)
@@ -69,7 +72,7 @@ namespace Macaria.Core.Extensions
         
         public static IServiceCollection AddCustomSecurity(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddCors(options => options.AddPolicy("CorsPolicy",
+            services.AddCors(options => options.AddPolicy(CorsDefaults.Policy,
                 builder => builder.AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader()

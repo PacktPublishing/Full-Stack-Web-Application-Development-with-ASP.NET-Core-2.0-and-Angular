@@ -1,8 +1,5 @@
-﻿using FluentValidation;
+﻿using FluentValidation.AspNetCore;
 using Macaria.API.Features;
-using Macaria.API.Features.Notes;
-using Macaria.API.Features.Tags;
-using Macaria.API.Features.Users;
 using Macaria.Core.Behaviours;
 using Macaria.Core.Extensions;
 using Macaria.Core.Identity;
@@ -24,16 +21,14 @@ namespace Macaria.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCustomMvc()
+                .AddFluentValidation(cfg => { cfg.RegisterValidatorsFromAssemblyContaining<Startup>(); });
+
+            services
                 .AddCustomSecurity(Configuration)
                 .AddCustomSignalR()
                 .AddCustomSwagger()
                 .AddDataStore(Configuration["Data:DefaultConnection:ConnectionString"],Configuration.GetValue<bool>("isTest"))
                 .AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>))
-                .AddTransient<IValidator<AuthenticateCommand.Request>, AuthenticateCommand.Validator>()
-                .AddTransient<IValidator<SaveNoteCommand.Request>, SaveNoteCommand.Validator>()
-                .AddTransient<IValidator<RemoveNoteCommand.Request>, RemoveNoteCommand.Validator>()
-                .AddTransient<IValidator<SaveTagCommand.Request>, SaveTagCommand.Validator>()
-                .AddTransient<IValidator<RemoveTagCommand.Request>, RemoveTagCommand.Validator>()
                 .AddMediatR(typeof(Startup).Assembly);
         }
 
@@ -43,12 +38,15 @@ namespace Macaria.API
                 app.UseMiddleware<AutoAuthenticationMiddleware>();
                     
             app.UseAuthentication()            
-                .UseCors("CorsPolicy")            
+                .UseCors(CorsDefaults.Policy)            
                 .UseMvc()
                 .UseSignalR(routes => routes.MapHub<IntegrationEventsHub>("/hub"))
                 .UseSwagger()
-                .UseSwaggerUI(options 
-                => options.SwaggerEndpoint("/swagger/v1/swagger.json", "Macaria API"));
+                .UseSwaggerUI(options =>
+                {
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Macaria API");
+                    options.RoutePrefix = string.Empty;
+                });
         }        
     }
 }

@@ -39,7 +39,7 @@ namespace Macaria.API.Features.Notes
             {
                 var note = await _context.Notes
                     .Include(x => x.NoteTags)
-                    .Include("NoteTags.Tag")
+                    .ThenInclude(x => x.Tag)
                     .SingleOrDefaultAsync(x => request.Note.NoteId == x.NoteId);
 
                 if (note == null) _context.Notes.Add(note = new Note());
@@ -60,7 +60,7 @@ namespace Macaria.API.Features.Notes
                     });
                 }
 
-                note.RaiseDomainEvent(new NoteSavedEvent.DomainEvent(note));
+                note.RaiseDomainEvent(new Core.DomainEvents.NoteSaved(note));
 
                 await _context.SaveChangesAsync(cancellationToken);
 

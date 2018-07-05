@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
+using System.Reflection;
 
 namespace IntegrationTests
 {
@@ -54,8 +55,7 @@ namespace IntegrationTests
                             .Build();
 
         protected IConfiguration GetConfiguration() => new ConfigurationBuilder()
-                .SetBasePath(Path.GetFullPath(@"../../../../../src/Macaria.API/"))
-                .AddJsonFile("appsettings.json", optional: false)
+                .AddUserSecrets(typeof(Startup).GetTypeInfo().Assembly)
                 .Build();
     }    
 }

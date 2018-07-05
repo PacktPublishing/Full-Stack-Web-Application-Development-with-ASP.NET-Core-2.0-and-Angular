@@ -1,4 +1,5 @@
 ﻿using Macaria.API.Features.Tags;
+using Macaria.Core.DomainEvents;
 using Macaria.Core.Models;
 using Macaria.Infrastructure.Data;
 using MediatR;
@@ -24,7 +25,7 @@ namespace UnitTests.API
                 .Options;
 
             var mediator = new Mock<IMediator>();
-            mediator.Setup(m => m.Publish(It.IsAny<TagSavedEvent.DomainEvent>(), It.IsAny<CancellationToken>()))
+            mediator.Setup(m => m.Publish(It.IsAny<TagSaved>(), It.IsAny<CancellationToken>()))
                 .Verifiable();
 
             using (var context = new AppDbContext(options, mediator.Object))
@@ -147,7 +148,7 @@ namespace UnitTests.API
                 .Options;
 
             var mediator = new Mock<IMediator>();
-            mediator.Setup(m => m.Publish(It.IsAny<TagRemovedEvent.DomainEvent>(), It.IsAny<CancellationToken>()))
+            mediator.Setup(m => m.Publish(It.IsAny<TagRemoved>(), It.IsAny<CancellationToken>()))
                 .Verifiable();
 
             using (var context = new AppDbContext(options, mediator.Object))
@@ -180,7 +181,7 @@ namespace UnitTests.API
                 .Options;
 
             var mediator = new Mock<IMediator>();
-            mediator.Setup(m => m.Publish(It.IsAny<TagSavedEvent.DomainEvent>(), It.IsAny<CancellationToken>()))
+            mediator.Setup(m => m.Publish(It.IsAny<TagSaved>(), It.IsAny<CancellationToken>()))
                 .Verifiable();
 
             using (var context = new AppDbContext(options, mediator.Object))

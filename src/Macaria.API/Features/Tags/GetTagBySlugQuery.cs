@@ -28,10 +28,9 @@ namespace Macaria.API.Features.Tags
                 => new Response()
                 {
                     Tag = TagApiModel.FromTag(await _context.Tags
-                        .Include(x =>x.NoteTags)
-                        .Include("NoteTags.Note")
-                        .Where(x => x.Slug == request.Slug)
-                        .SingleAsync())
+                        .Include(x => x.NoteTags)
+                        .ThenInclude(x => x.Note)
+                        .SingleAsync(x => x.Slug == request.Slug))
                 };
         }
     }

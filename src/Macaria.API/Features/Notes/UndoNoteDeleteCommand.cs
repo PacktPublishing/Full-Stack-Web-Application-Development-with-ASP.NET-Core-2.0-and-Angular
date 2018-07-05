@@ -28,7 +28,7 @@ namespace Macaria.API.Features.Notes
 
                 note.IsDeleted = false;
 
-                note.RaiseDomainEvent(new NoteSavedEvent.DomainEvent(note));
+                note.RaiseDomainEvent(new Core.DomainEvents.NoteSaved(note));
 
                 await _context.SaveChangesAsync(cancellationToken);                
             }

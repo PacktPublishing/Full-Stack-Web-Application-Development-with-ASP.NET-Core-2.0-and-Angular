@@ -1,5 +1,6 @@
 using Macaria.API.Features.Notes;
 using Macaria.API.Features.Tags;
+using Macaria.Core.Common;
 using Macaria.Core.Extensions;
 using Macaria.Core.Models;
 using Macaria.Infrastructure.Data;
@@ -25,9 +26,9 @@ namespace IntegrationTests.Features
             {
                 var hubConnection = GetHubConnection(server.CreateHandler());
 
-                hubConnection.On<dynamic>("message", (result) =>
+                hubConnection.On<dynamic>("events", (result) =>
                 {
-                    Assert.Equal("[Note] Saved", $"{result.type}");
+                    Assert.Equal("NoteSaved", $"{result.type}");
                     Assert.Equal(1, Convert.ToInt16(result.payload.note.noteId));
                     tcs.SetResult(true);
                 });
@@ -257,10 +258,10 @@ namespace IntegrationTests.Features
 
                 var hubConnection = GetHubConnection(server.CreateHandler());
 
-                hubConnection.On<dynamic>("message", (result) =>
+                hubConnection.On<dynamic>("events", (result) =>
                 {
-                    Assert.Equal("[Note] Removed", $"{result.type}");
-                    Assert.Equal(1, Convert.ToInt16(result.payload.noteId));
+                    Assert.Equal("NoteRemoved", $"{result.type}");
+                    Assert.Equal(1, Convert.ToInt16(result.payload.note.noteId));
                     tcs.SetResult(true);
                 });
 

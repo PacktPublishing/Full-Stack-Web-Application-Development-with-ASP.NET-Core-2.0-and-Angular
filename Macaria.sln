@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macaria.Infrastructure", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macaria.API", "src\Macaria.API\Macaria.API.csproj", "{F5A9E809-6726-418F-BB21-BBFD3A00EE02}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macaria.SPA", "src\Macaria.SPA\Macaria.SPA.csproj", "{BFF787FE-AA10-47BD-AB65-5A2F68C26AC8}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{CDC868AF-A53E-4820-8B1E-5223D61532BF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTests", "test\IntegrationTests\IntegrationTests.csproj", "{5C59A849-6FAA-44A8-8779-3F420C41640A}"
@@ -76,6 +74,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Macaria.SPA", "src\Macaria.SPA\Macaria.SPA.csproj", "{4E5DAAC5-0380-48D1-93B7-E6955D9FB6C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -94,10 +94,6 @@ Global
 		{F5A9E809-6726-418F-BB21-BBFD3A00EE02}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5A9E809-6726-418F-BB21-BBFD3A00EE02}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5A9E809-6726-418F-BB21-BBFD3A00EE02}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BFF787FE-AA10-47BD-AB65-5A2F68C26AC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BFF787FE-AA10-47BD-AB65-5A2F68C26AC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BFF787FE-AA10-47BD-AB65-5A2F68C26AC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BFF787FE-AA10-47BD-AB65-5A2F68C26AC8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5C59A849-6FAA-44A8-8779-3F420C41640A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5C59A849-6FAA-44A8-8779-3F420C41640A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C59A849-6FAA-44A8-8779-3F420C41640A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -106,6 +102,10 @@ Global
 		{388C9059-F1B5-42FB-BB1D-9BCA61AAC1C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{388C9059-F1B5-42FB-BB1D-9BCA61AAC1C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{388C9059-F1B5-42FB-BB1D-9BCA61AAC1C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E5DAAC5-0380-48D1-93B7-E6955D9FB6C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E5DAAC5-0380-48D1-93B7-E6955D9FB6C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E5DAAC5-0380-48D1-93B7-E6955D9FB6C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E5DAAC5-0380-48D1-93B7-E6955D9FB6C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

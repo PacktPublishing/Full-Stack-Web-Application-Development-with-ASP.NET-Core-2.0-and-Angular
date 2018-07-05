@@ -1,11 +1,9 @@
-import { Injectable, NgZone, Inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Inject, Injectable, NgZone } from '@angular/core';
+import { HubConnection, HubConnectionBuilder, IHttpConnectionOptions } from '@aspnet/signalr';
 import { Subject } from 'rxjs';
-import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
-import { LocalStorageService } from './local-storage.service';
 import { accessTokenKey, baseUrl } from './constants';
-import { filter } from 'rxjs/operators';
 import { Logger } from './logger.service';
+import { LocalStorageService } from './local-storage.service';
 
 @Injectable()
 export class HubClient {
@@ -19,25 +17,32 @@ export class HubClient {
     private _ngZone: NgZone
   ) {}
   
-  public messages$: Subject<any> = new Subject();
-
+  public events$: Subject<any> = new Subject();
+  
   public connect(): Promise<any> {    
     if (this._connect) return this._connect;
 
-    this._connect = new Promise(resolve => {
+    var options: IHttpConnectionOptions = {
+      logger: this._logger,
+      accessTokenFactory: () => this._storage.get({
+        name: accessTokenKey
+      }),
+      logMessageContent: true
+    };
+
+    this._connect = new Promise((resolve,reject) => {
       this._connection =
-        this._connection || new HubConnectionBuilder()
-          .configureLogging(this._logger)
-          .withUrl(`${this._baseUrl}hub?token=${this._storage.get({ name: accessTokenKey })}`)
+        this._connection || new HubConnectionBuilder()          
+          .withUrl(`${this._baseUrl}hub`, options)
           .build();
 
-      this._connection.on('events', value => {
-        this._logger.trace(`HubClient`, JSON.stringify(value));
-
-        this._ngZone.run(() => this.messages$.next(value));
+      this._connection.on('events', value => {        
+        this._ngZone.run(() => this.events$.next(value));
       });
-
-      this._connection.start().then(() => resolve());
+      
+      this._connection.start()
+        .then(() => resolve())
+        .catch(() => reject());
     });
 
     return this._connect;

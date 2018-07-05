@@ -1,3 +1,4 @@
+using Macaria.Core;
 using Macaria.Core.DomainEvents;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;

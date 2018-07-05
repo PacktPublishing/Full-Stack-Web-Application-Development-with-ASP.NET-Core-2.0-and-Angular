@@ -66,7 +66,7 @@ export class NotesPageComponent {
       .get()
       .pipe(
         map((x: { notes: Note[] }) => this.notes$.next(x.notes)),
-        switchMap(() => this._hubClient.messages$),
+        switchMap(() => this._hubClient.events$),
         switchMap(messageResult => {          
           if (messageResult.type == "NoteRemoved" && this.hasNote(messageResult.payload.note.noteId))
             return this._handleNoteRemovedMessage$(messageResult);

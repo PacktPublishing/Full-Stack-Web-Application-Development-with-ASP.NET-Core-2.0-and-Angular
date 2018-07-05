@@ -1,6 +1,4 @@
 ﻿using MediatR;
-using System;
-
 namespace Macaria.Core.Common
 {
     public class DomainEvent<T>: INotification

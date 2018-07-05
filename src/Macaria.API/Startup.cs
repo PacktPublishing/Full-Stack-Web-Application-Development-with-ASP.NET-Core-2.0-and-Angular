@@ -1,5 +1,5 @@
 ﻿using FluentValidation.AspNetCore;
-using Macaria.API.Features;
+using Macaria.Core;
 using Macaria.Core.Behaviours;
 using Macaria.Core.Extensions;
 using Macaria.Core.Identity;

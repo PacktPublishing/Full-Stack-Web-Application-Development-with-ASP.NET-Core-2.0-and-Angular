@@ -3,6 +3,10 @@ using Macaria.Core.Extensions;
 using Macaria.Core.Identity;
 using Macaria.Infrastructure.Data;
 using System.Linq;
+using System.Reflection;
+using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.EntityFrameworkCore;
 
 namespace Macaria.API
 {
@@ -47,6 +51,20 @@ namespace Macaria.API
 
                 context.SaveChanges();
             }
+        }
+    }
+
+    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
+    {
+        public AppDbContext CreateDbContext(string[] args)
+        {
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                .AddUserSecrets(typeof(Startup).GetTypeInfo().Assembly)
+                .Build();
+
+            return new AppDbContext(new DbContextOptionsBuilder<AppDbContext>()
+                .UseSqlServer(configuration["Data:DefaultConnection:ConnectionString"])
+                .Options);
         }
     }
 }

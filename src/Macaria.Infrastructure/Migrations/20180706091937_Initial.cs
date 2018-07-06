@@ -52,8 +52,8 @@ namespace Macaria.Infrastructure.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     UserId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Username = table.Column<string>(nullable: false),
-                    Password = table.Column<string>(nullable: false),
+                    Username = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: true),
                     Salt = table.Column<byte[]>(nullable: true)
                 },
                 constraints: table =>
@@ -65,14 +65,12 @@ namespace Macaria.Infrastructure.Migrations
                 name: "NoteTag",
                 columns: table => new
                 {
-                    NoteTagId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     NoteId = table.Column<int>(nullable: false),
                     TagId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_NoteTag", x => x.NoteTagId);
+                    table.PrimaryKey("PK_NoteTag", x => new { x.NoteId, x.TagId });
                     table.ForeignKey(
                         name: "FK_NoteTag_Notes_NoteId",
                         column: x => x.NoteId,
@@ -86,11 +84,6 @@ namespace Macaria.Infrastructure.Migrations
                         principalColumn: "TagId",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_NoteTag_NoteId",
-                table: "NoteTag",
-                column: "NoteId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_NoteTag_TagId",

@@ -10,18 +10,18 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Macaria.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20180615164012_Initial")]
+    [Migration("20180706091937_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.0-rtm-30799")
+                .HasAnnotation("ProductVersion", "2.1.1-rtm-30846")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Macaria.Core.Entities.Note", b =>
+            modelBuilder.Entity("Macaria.Core.Models.Note", b =>
                 {
                     b.Property<int>("NoteId")
                         .ValueGeneratedOnAdd()
@@ -44,26 +44,20 @@ namespace Macaria.Infrastructure.Migrations
                     b.ToTable("Notes");
                 });
 
-            modelBuilder.Entity("Macaria.Core.Entities.NoteTag", b =>
+            modelBuilder.Entity("Macaria.Core.Models.NoteTag", b =>
                 {
-                    b.Property<int>("NoteTagId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<int>("NoteId");
 
                     b.Property<int>("TagId");
 
-                    b.HasKey("NoteTagId");
-
-                    b.HasIndex("NoteId");
+                    b.HasKey("NoteId", "TagId");
 
                     b.HasIndex("TagId");
 
                     b.ToTable("NoteTag");
                 });
 
-            modelBuilder.Entity("Macaria.Core.Entities.Tag", b =>
+            modelBuilder.Entity("Macaria.Core.Models.Tag", b =>
                 {
                     b.Property<int>("TagId")
                         .ValueGeneratedOnAdd()
@@ -84,7 +78,7 @@ namespace Macaria.Infrastructure.Migrations
                     b.ToTable("Tags");
                 });
 
-            modelBuilder.Entity("Macaria.Core.Entities.User", b =>
+            modelBuilder.Entity("Macaria.Core.Models.User", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
@@ -96,27 +90,25 @@ namespace Macaria.Infrastructure.Migrations
 
                     b.Property<DateTime>("LastModifiedOn");
 
-                    b.Property<string>("Password")
-                        .IsRequired();
+                    b.Property<string>("Password");
 
                     b.Property<byte[]>("Salt");
 
-                    b.Property<string>("Username")
-                        .IsRequired();
+                    b.Property<string>("Username");
 
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Macaria.Core.Entities.NoteTag", b =>
+            modelBuilder.Entity("Macaria.Core.Models.NoteTag", b =>
                 {
-                    b.HasOne("Macaria.Core.Entities.Note", "Note")
+                    b.HasOne("Macaria.Core.Models.Note", "Note")
                         .WithMany("NoteTags")
                         .HasForeignKey("NoteId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Macaria.Core.Entities.Tag", "Tag")
+                    b.HasOne("Macaria.Core.Models.Tag", "Tag")
                         .WithMany("NoteTags")
                         .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade);

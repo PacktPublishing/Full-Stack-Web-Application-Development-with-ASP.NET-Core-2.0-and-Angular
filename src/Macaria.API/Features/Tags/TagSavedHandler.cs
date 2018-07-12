@@ -1,4 +1,5 @@
 using Macaria.Core;
+using Macaria.Core.ApiModels;
 using Macaria.Core.DomainEvents;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
@@ -21,7 +22,7 @@ namespace Macaria.API.Features.Tags
             new
             {
                 type = @event.EventType,
-                payload = new { tag = TagApiModel.FromTag(@event.Payload) }
+                payload = new { tag = @event.Payload }
             }
             , cancellationToken);
         }

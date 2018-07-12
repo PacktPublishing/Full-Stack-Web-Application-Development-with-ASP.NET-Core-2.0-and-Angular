@@ -1,3 +1,4 @@
+using Macaria.Core.ApiModels;
 using Macaria.Core.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

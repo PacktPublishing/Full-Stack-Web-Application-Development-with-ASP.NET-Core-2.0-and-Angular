@@ -12,6 +12,6 @@
         {
             public const string TagSaved = nameof(TagSaved);
             public const string TagRemoved = nameof(TagRemoved);
-        }
+        }        
     }
 }

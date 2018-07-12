@@ -1,6 +1,6 @@
 using Macaria.Core.Models;
 
-namespace Macaria.API.Features.Users
+namespace Macaria.Core.ApiModels
 {
     public class UserApiModel
     {

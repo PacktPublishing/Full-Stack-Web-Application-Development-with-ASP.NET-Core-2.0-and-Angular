@@ -1,4 +1,5 @@
 using FluentValidation;
+using Macaria.Core.ApiModels;
 using Macaria.Core.Interfaces;
 using MediatR;
 using System.Threading;

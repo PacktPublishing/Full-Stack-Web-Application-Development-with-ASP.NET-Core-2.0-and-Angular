@@ -5,6 +5,7 @@ using Macaria.Core.Interfaces;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using Macaria.Core.ApiModels;
 
 namespace Macaria.API.Features.Tags
 {

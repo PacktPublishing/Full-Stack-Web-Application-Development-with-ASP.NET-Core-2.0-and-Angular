@@ -1,7 +1,6 @@
-﻿using Macaria.Infrastructure.Data;
+﻿using Macaria.Infrastructure.Extensions;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
@@ -29,22 +28,17 @@ namespace Macaria.API
 
             using (var scope = services.CreateScope())
             {
-                var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-
                 if (args.Contains("ci"))
                     args = new string[4] { "dropdb", "migratedb", "seeddb", "stop" };
 
                 if (args.Contains("dropdb"))
-                    context.Database.EnsureDeleted();
+                    scope.DropDataBase();
 
                 if (args.Contains("migratedb"))
-                    context.Database.Migrate();
+                    scope.MigrateDatabase();
 
                 if (args.Contains("seeddb"))
-                {
-                    context.Database.EnsureCreated();
-                    SeedData.Seed(context);            
-                }
+                    scope.SeedData();
                 
                 if (args.Contains("stop"))
                     Environment.Exit(0);

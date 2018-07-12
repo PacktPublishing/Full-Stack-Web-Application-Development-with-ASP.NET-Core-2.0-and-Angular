@@ -62,7 +62,13 @@ namespace Macaria.Infrastructure.Data
                 entity.ClearEvents();
                 foreach (var domainEvent in events)
                 {
-                    await _mediator.Publish(domainEvent);
+                    try
+                    {
+                        await _mediator.Publish(domainEvent);
+                    }catch(Exception e)
+                    {
+                        throw e;
+                    }
                 }
             }
             

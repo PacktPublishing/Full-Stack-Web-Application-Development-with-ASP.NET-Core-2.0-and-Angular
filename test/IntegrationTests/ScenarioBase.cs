@@ -1,5 +1,6 @@
 ﻿using Macaria.API;
 using Macaria.Infrastructure.Data;
+using Macaria.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -36,10 +37,8 @@ namespace IntegrationTests
             var services = (IServiceScopeFactory)testServer.Host.Services.GetService(typeof(IServiceScopeFactory));
 
             using (var scope = services.CreateScope())
-            {
-                var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-
-                SeedData.Seed(context);
+            {                
+                scope.SeedData();
             }
 
             return testServer;

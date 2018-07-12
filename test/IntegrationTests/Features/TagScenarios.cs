@@ -1,4 +1,5 @@
 using Macaria.API.Features.Tags;
+using Macaria.Core.ApiModels;
 using Macaria.Core.Extensions;
 using Microsoft.AspNetCore.SignalR.Client;
 using System;

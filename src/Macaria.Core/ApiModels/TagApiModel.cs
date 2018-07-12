@@ -1,9 +1,8 @@
-using Macaria.API.Features.Notes;
 using Macaria.Core.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Macaria.API.Features.Tags
+namespace Macaria.Core.ApiModels
 {
     public class TagApiModel
     {        

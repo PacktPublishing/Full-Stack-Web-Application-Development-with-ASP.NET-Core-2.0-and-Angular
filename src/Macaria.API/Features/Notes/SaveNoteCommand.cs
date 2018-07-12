@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
+using Macaria.Core.ApiModels;
 
 namespace Macaria.API.Features.Notes
 {

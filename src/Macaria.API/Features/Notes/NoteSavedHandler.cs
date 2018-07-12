@@ -1,4 +1,5 @@
 using Macaria.Core;
+using Macaria.Core.ApiModels;
 using Macaria.Core.DomainEvents;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
@@ -20,7 +21,7 @@ namespace Macaria.API.Features.Notes
             .SendAsync("events", 
             new {
                 type = @event.EventType,
-                payload = new { note = NoteApiModel.FromNote(@event.Payload) } }
+                payload = new { note = @event.Payload } }
             , cancellationToken);
         }
     }

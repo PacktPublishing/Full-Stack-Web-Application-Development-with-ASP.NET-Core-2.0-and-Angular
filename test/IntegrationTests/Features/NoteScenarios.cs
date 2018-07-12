@@ -1,5 +1,6 @@
 using Macaria.API.Features.Notes;
 using Macaria.API.Features.Tags;
+using Macaria.Core.ApiModels;
 using Macaria.Core.Common;
 using Macaria.Core.Extensions;
 using Macaria.Core.Models;
@@ -24,6 +25,10 @@ namespace IntegrationTests.Features
 
             using (var server = CreateServer())
             {
+                var context = server.Host.Services.GetService(typeof(AppDbContext)) as AppDbContext;
+
+                context.SaveChanges();
+
                 var hubConnection = GetHubConnection(server.CreateHandler());
 
                 hubConnection.On<dynamic>("events", (result) =>
@@ -208,7 +213,8 @@ namespace IntegrationTests.Features
                 Assert.True(response.Note.NoteId != default(int));
             }
         }
-        
+
+
         [Fact]
         public async Task ShouldUpdateNote()
         {

@@ -1,5 +1,6 @@
 using Macaria.API.Features.Notes;
 using Macaria.API.Features.Tags;
+using Macaria.Core.ApiModels;
 using Macaria.Core.DomainEvents;
 using Macaria.Core.Models;
 using Macaria.Infrastructure.Data;

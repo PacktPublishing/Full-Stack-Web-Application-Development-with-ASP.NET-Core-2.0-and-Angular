@@ -16,7 +16,7 @@ namespace Macaria.API.Features.Notes
         
         public class Handler : IRequestHandler<Request>
         {
-            public IAppDbContext _context { get; set; }
+            private readonly IAppDbContext _context;
             public Handler(IAppDbContext context) => _context = context;
 
             public async Task Handle(Request request, CancellationToken cancellationToken)

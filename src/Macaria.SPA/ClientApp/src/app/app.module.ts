@@ -25,7 +25,7 @@ import { map } from 'rxjs/operators';
   declarations: [AppComponent, AnonymousMasterPageComponent, MasterPageComponent],
   imports: [
     AgGridModule,
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+    BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
 
@@ -38,7 +38,7 @@ import { map } from 'rxjs/operators';
     TagsModule,
     UsersModule
   ],
-  providers: [{ provide: baseUrl, useValue: 'http://localhost:48283/' }, {
+  providers: [{ provide: baseUrl, useValue: 'http://localhost:48279/' }, {
     provide: APP_INITIALIZER,
     useFactory: AppModule.onLaunch,
     multi: true,

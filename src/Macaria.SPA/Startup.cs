@@ -18,11 +18,21 @@ namespace Macaria.SPA
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                OnPrepareResponse = (context) =>
+                {
+                    context.Context.Response.Headers["Cache-Control"] =
+                        "no-cache, no-store, must-revalidate";
+                    context.Context.Response.Headers["Expires"] =
+                        "0";
+                }
+            });
+
             app.UseSpaStaticFiles();
             app.UseSpa(spa =>
             {
-                spa.Options.SourcePath = "ClientApp";                
+                spa.Options.SourcePath = "ClientApp";
                 if (env.IsDevelopment())
                     spa.UseAngularCliServer("start");
             });

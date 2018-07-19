@@ -15,13 +15,11 @@ namespace Macaria.API.Features.Tags
             => _hubContext = hubContext;
 
         public async Task Handle(TagSaved @event, CancellationToken cancellationToken)
-        {
-            await _hubContext.Clients.All
+            => await _hubContext.Clients.All
             .SendAsync("events", new
             {
                 type = nameof(TagSaved),
                 payload = @event
             }, cancellationToken);
-        }
     }
 }

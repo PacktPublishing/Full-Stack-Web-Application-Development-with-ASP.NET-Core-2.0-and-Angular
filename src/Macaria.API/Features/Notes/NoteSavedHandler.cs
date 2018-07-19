@@ -15,13 +15,11 @@ namespace Macaria.API.Features.Notes
             => _hubContext = hubContext;
 
         public async Task Handle(NoteSaved @event, CancellationToken cancellationToken)
-        {
-            await _hubContext.Clients.All
+            => await _hubContext.Clients.All
             .SendAsync("events", new
             {
                 type = nameof(NoteSaved),
                 payload = @event
             }, cancellationToken);
-        }
     }
 }

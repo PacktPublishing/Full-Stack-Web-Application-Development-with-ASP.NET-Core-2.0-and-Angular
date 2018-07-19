@@ -1,7 +1,6 @@
 using Macaria.Core.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -25,15 +24,13 @@ namespace Macaria.API.Features.Notes
             public Handler(IAppDbContext context) => _context = context;
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
-            {
-                return new Response()
+                => new Response()
                 {
                     Note = NoteDto.FromNote(await _context.Notes
                         .Include(x => x.NoteTags)
                         .ThenInclude(x => x.Tag)
                         .SingleAsync(x => x.Slug == request.Slug))
                 };
-            }
         }
     }
 }

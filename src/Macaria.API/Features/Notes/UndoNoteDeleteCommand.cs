@@ -1,12 +1,11 @@
-using MediatR;
-using System.Threading.Tasks;
-using System.Threading;
-using System.Collections.Generic;
+using Macaria.Core.DomainEvents;
 using Macaria.Core.Interfaces;
-using System.Linq;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
-using Macaria.Core.DomainEvents;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Macaria.API.Features.Notes
 {

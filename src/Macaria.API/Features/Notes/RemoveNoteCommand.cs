@@ -1,4 +1,5 @@
 using FluentValidation;
+using Macaria.Core.DomainEvents;
 using Macaria.Core.Interfaces;
 using MediatR;
 using System;
@@ -33,7 +34,7 @@ namespace Macaria.API.Features.Notes
             {
                 var note = await _context.Notes.FindAsync(request.NoteId);
                 _context.Notes.Remove(note);
-                note.RaiseDomainEvent(new Core.DomainEvents.NoteRemoved(note.NoteId));
+                note.RaiseDomainEvent(new NoteRemoved(note.NoteId));
                 await _context.SaveChangesAsync(cancellationToken);
                 return new Response() { };
             }

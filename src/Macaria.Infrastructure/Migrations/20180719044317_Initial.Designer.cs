@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Macaria.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20180706091937_Initial")]
+    [Migration("20180719044317_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,9 +23,8 @@ namespace Macaria.Infrastructure.Migrations
 
             modelBuilder.Entity("Macaria.Core.Models.Note", b =>
                 {
-                    b.Property<int>("NoteId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("NoteId")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Body");
 
@@ -46,9 +45,9 @@ namespace Macaria.Infrastructure.Migrations
 
             modelBuilder.Entity("Macaria.Core.Models.NoteTag", b =>
                 {
-                    b.Property<int>("NoteId");
+                    b.Property<Guid>("NoteId");
 
-                    b.Property<int>("TagId");
+                    b.Property<Guid>("TagId");
 
                     b.HasKey("NoteId", "TagId");
 
@@ -59,9 +58,8 @@ namespace Macaria.Infrastructure.Migrations
 
             modelBuilder.Entity("Macaria.Core.Models.Tag", b =>
                 {
-                    b.Property<int>("TagId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("TagId")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CreatedOn");
 
@@ -80,9 +78,8 @@ namespace Macaria.Infrastructure.Migrations
 
             modelBuilder.Entity("Macaria.Core.Models.User", b =>
                 {
-                    b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CreatedOn");
 

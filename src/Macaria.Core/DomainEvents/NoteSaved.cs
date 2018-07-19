@@ -1,15 +1,13 @@
 using Macaria.Core.Common;
-using Macaria.Core.Models;
+using System;
 
 namespace Macaria.Core.DomainEvents
 {
-    public class NoteSaved: DomainEvent<Note>
+    public class NoteSaved: DomainEvent
     {
-        public NoteSaved(Note note)
-        {
-            Payload =  note;
-            EventType = EventTypes.Notes.NoteSaved;
-        }
+        public NoteSaved(Guid noteId) => NoteId = noteId;
+
+        public Guid NoteId { get; set; }
     }
     
 }

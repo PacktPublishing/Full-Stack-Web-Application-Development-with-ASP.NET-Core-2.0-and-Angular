@@ -1,22 +1,23 @@
 using Macaria.API.Features.Tags;
 using Macaria.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Macaria.API.Features.Notes
 {
-    public class NoteApiModel
+    public class NoteDto
     {        
-        public int NoteId { get; set; }
+        public Guid NoteId { get; set; }
         public string Title { get; set; }
         public string Slug { get; set; }
         public string Body { get; set; }
         public string LastModifiedOn { get; set; }
-        public ICollection<TagApiModel> Tags = new HashSet<TagApiModel>();
+        public ICollection<TagDto> Tags = new HashSet<TagDto>();
 
-        public static NoteApiModel FromNote(Note note, bool includeTags = true)
+        public static NoteDto FromNote(Note note, bool includeTags = true)
         {
-            var model = new NoteApiModel
+            var model = new NoteDto
             {
                 NoteId = note.NoteId,
                 Title = note.Title,
@@ -26,7 +27,7 @@ namespace Macaria.API.Features.Notes
             };
 
             if (includeTags)
-                model.Tags = note.NoteTags.Select(x => TagApiModel.FromTag(x.Tag)).ToList();
+                model.Tags = note.NoteTags.Select(x => TagDto.FromTag(x.Tag)).ToList();
 
             return model;
         }

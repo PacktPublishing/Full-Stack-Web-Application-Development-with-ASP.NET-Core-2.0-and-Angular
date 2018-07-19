@@ -25,11 +25,11 @@ namespace IntegrationTests.Features
             using (var server = CreateServer())
             {
                 var hubConnection = GetHubConnection(server.CreateHandler());
-
+                
                 hubConnection.On<dynamic>("events", (result) =>
                 {
                     Assert.Equal("NoteSaved", $"{result.type}");
-                    Assert.Equal(1, Convert.ToInt16(result.payload.note.noteId));
+                    Assert.NotEqual(default(Guid), new Guid($"{result.payload.noteId}"));
                     tcs.SetResult(true);
                 });
 
@@ -37,15 +37,14 @@ namespace IntegrationTests.Features
 
                 var response = await server.CreateClient()
                     .PostAsAsync<SaveNoteCommand.Request, SaveNoteCommand.Response>(Post.Notes, new SaveNoteCommand.Request() {
-                        Note = new NoteApiModel()
+                        Note = new NoteDto()
                         {
                             Title = "First Note",
-                            Body = "<p>Something Important</p>",
-                            Tags = new List<TagApiModel>() { new TagApiModel() { TagId = 1, Name = "Angular" } }
+                            Body = "<p>Something Important</p>"
                         }
                     });
 
-                Assert.True(response.NoteId == 1);
+                Assert.NotEqual(default(Guid), response.NoteId);
 
                 await tcs.Task;
             }
@@ -59,11 +58,11 @@ namespace IntegrationTests.Features
                 var response = await server.CreateClient()
                     .PostAsync(Post.Notes, new SaveNoteCommand.Request()
                     {
-                        Note = new NoteApiModel()
+                        Note = new NoteDto()
                         {
                             Title = "First Note",
                             Body = "",
-                            Tags = new List<TagApiModel>() { new TagApiModel() { TagId = 1, Name = "Angular" } }
+                            Tags = new List<TagDto>() { new TagDto() { TagId = Guid.NewGuid(), Name = "Angular" } }
                         }
                     });
                 
@@ -141,6 +140,7 @@ namespace IntegrationTests.Features
             {
                 var context = server.Host.Services.GetService(typeof(AppDbContext)) as AppDbContext;
 
+                
                 var note = new Note()
                 {
                     Title = "Title1",
@@ -160,7 +160,7 @@ namespace IntegrationTests.Features
                 var response = await server.CreateClient()
                     .GetAsync<GetNoteByIdQuery.Response>(Get.NoteById(note.NoteId));
 
-                Assert.True(response.Note.NoteId == 1);
+                Assert.True(response.Note.NoteId == note.NoteId);
             }
         }
 
@@ -170,19 +170,20 @@ namespace IntegrationTests.Features
             using (var server = CreateServer())
             {
                 var context = server.Host.Services.GetService(typeof(AppDbContext)) as AppDbContext;
-
-                context.Notes.Add(new Note()
+                var note = new Note()
                 {
                     Title = "Title",
                     Body = "Body",
-                });
+                };
+
+                context.Notes.Add(note);
 
                 context.SaveChanges();
 
                 var response = await server.CreateClient()
-                    .GetAsync<GetNoteByIdQuery.Response>(Get.NoteById(1));
+                    .GetAsync<GetNoteByIdQuery.Response>(Get.NoteById(note.NoteId));
 
-                Assert.True(response.Note.NoteId != default(int));
+                Assert.True(response.Note.NoteId != default(Guid));
             }
         }
 
@@ -192,20 +193,21 @@ namespace IntegrationTests.Features
             using (var server = CreateServer())
             {
                 var context = server.Host.Services.GetService(typeof(AppDbContext)) as AppDbContext;
-
-                context.Notes.Add(new Note()
+                var note = new Note()
                 {
                     Title = "Title",
                     Body = "Body",
                     Slug = "title"
-                });
+                };
+
+                context.Notes.Add(note);
 
                 context.SaveChanges();
 
                 var response = await server.CreateClient()
                     .GetAsync<GetNoteBySlugQuery.Response>(Get.NoteBySlug("title"));
 
-                Assert.True(response.Note.NoteId != default(int));
+                Assert.True(response.Note.NoteId != default(Guid));
             }
         }
         
@@ -216,26 +218,28 @@ namespace IntegrationTests.Features
             {
                 var context = server.Host.Services.GetService(typeof(AppDbContext)) as AppDbContext;
 
-                context.Notes.Add(new Note()
+                var note = new Note()
                 {
                     Title = "Title",
-                    Body = "Body",
-                });
+                    Body = "Body"
+                };
+
+                context.Notes.Add(note);
 
                 context.SaveChanges();
 
                 var saveResponse = await server.CreateClient()
                     .PostAsAsync<SaveNoteCommand.Request, SaveNoteCommand.Response>(Post.Notes, new SaveNoteCommand.Request()
                     {
-                        Note = new NoteApiModel()
+                        Note = new NoteDto()
                         {
-                            NoteId = 1,
+                            NoteId = note.NoteId,
                             Title = "Title",
                             Body = "Body"
                         }
                     });
 
-                Assert.True(saveResponse.NoteId == 1);
+                Assert.Equal(note.NoteId, saveResponse.NoteId);
             }
         }
         
@@ -248,11 +252,13 @@ namespace IntegrationTests.Features
             {
                 var context = server.Host.Services.GetService(typeof(AppDbContext)) as AppDbContext;
 
-                context.Notes.Add(new Note()
+                var note = new Note()
                 {
                     Title = "Title",
                     Body = "Body"
-                });
+                };
+
+                context.Notes.Add(note);
 
                 context.SaveChanges();            
 
@@ -261,14 +267,14 @@ namespace IntegrationTests.Features
                 hubConnection.On<dynamic>("events", (result) =>
                 {
                     Assert.Equal("NoteRemoved", $"{result.type}");
-                    Assert.Equal(1, Convert.ToInt16(result.payload.note.noteId));
+                    Assert.Equal(note.NoteId, new Guid($"{result.payload.noteId}"));
                     tcs.SetResult(true);
                 });
 
                 await hubConnection.StartAsync();
 
                 var response = await server.CreateClient()
-                    .DeleteAsync(Delete.Note(1));
+                    .DeleteAsync(Delete.Note(note.NoteId));
 
                 response.EnsureSuccessStatusCode();
 

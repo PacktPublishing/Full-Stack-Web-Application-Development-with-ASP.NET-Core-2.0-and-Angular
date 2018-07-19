@@ -1,15 +1,11 @@
 using Macaria.Core.Common;
-using Macaria.Core.Models;
+using System;
 
 namespace Macaria.Core.DomainEvents
 {
-    public class TagRemoved: DomainEvent<Tag>
+    public class TagRemoved: DomainEvent
     {
-        public TagRemoved(Tag tag)
-        {
-            Payload = tag;
-            EventType = EventTypes.Tags.TagRemoved;
-        }
+        public TagRemoved(Guid tagId) => TagId = tagId;
+        public Guid TagId { get; set; }
     }
-    
 }

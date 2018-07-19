@@ -1,5 +1,6 @@
 using Macaria.API.Features.Users;
 using Macaria.Core.Extensions;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -19,7 +20,7 @@ namespace IntegrationTests.Features
                         Password = "P@ssw0rd"
                     });
 
-                Assert.True(response.UserId == 1);
+                Assert.NotEqual(default(Guid), response.UserId);
                 Assert.True(response.AccessToken != default(string));
             }
         }

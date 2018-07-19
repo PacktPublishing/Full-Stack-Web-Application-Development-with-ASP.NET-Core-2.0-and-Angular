@@ -1,3 +1,5 @@
+using System;
+
 namespace IntegrationTests.Features
 {
     public class NoteScenarioBase: ScenarioBase
@@ -7,7 +9,7 @@ namespace IntegrationTests.Features
             public static string Notes = "api/notes";
             public static string DeletedNotes = "api/notes/deleted";
 
-            public static string NoteById(int id)
+            public static string NoteById(Guid id)
                 => $"api/notes/{id}";
 
             public static string NoteBySlug(string slug)
@@ -22,7 +24,7 @@ namespace IntegrationTests.Features
 
         public static class Delete
         {
-            public static string Note(int id)
+            public static string Note(Guid id)
                 => $"api/notes/{id}";            
         }
     }

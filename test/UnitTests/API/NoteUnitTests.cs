@@ -33,24 +33,25 @@ namespace UnitTests.API
             {
                 var handler = new SaveNoteCommand.Handler(context);
 
-                context.Tags.Add(new Tag()
+                var tag = new Tag()
                 {
-                    TagId = 1,
                     Name = "Angular"
-                });
+                };
+
+                context.Tags.Add(tag);
 
                 context.SaveChanges();
 
                 var response = await handler.Handle(new SaveNoteCommand.Request()
                 {
-                    Note = new NoteApiModel()
+                    Note = new NoteDto()
                     {
                         Title = "Quinntyne",
-                        Tags = new List<TagApiModel>() { new TagApiModel() { TagId = 1 } }
+                        Tags = new List<TagDto>() { TagDto.FromTag(tag) }
                     }
                 }, default(CancellationToken));
 
-                Assert.Equal(1, response.NoteId);
+                Assert.NotEqual(default(Guid), response.NoteId);
             }
         }
 
@@ -63,12 +64,12 @@ namespace UnitTests.API
 
             using (var context = new AppDbContext(options))
             {
-                context.Notes.Add(new Note()
+                var note = new Note()
                 {
-                    NoteId = 1,
-                    Title = "Quinntyne",
+                    Title = "Quinntyne"
+                };
 
-                });
+                context.Notes.Add(note);
 
                 context.SaveChanges();
 
@@ -76,7 +77,7 @@ namespace UnitTests.API
 
                 var response = await handler.Handle(new GetNoteByIdQuery.Request()
                 {
-                    NoteId = 1
+                    NoteId = note.NoteId
                 }, default(CancellationToken));
 
                 Assert.Equal("Quinntyne", response.Note.Title);
@@ -92,22 +93,24 @@ namespace UnitTests.API
 
             using (var context = new AppDbContext(options))
             {
-                context.Tags.Add(new Tag()
+                var tag = new Tag()
                 {
-                    TagId = 1,
                     Name = "Angular",
                     Slug = "angular"
-                });
+                };
 
-                context.Notes.Add(new Note()
+                context.Tags.Add(tag);
+
+                var note = new Note()
                 {
-                    NoteId = 1,
                     Title = "Quinntyne",
                     Slug = "quinntyne",
                     NoteTags = new List<NoteTag>() {
-                        new NoteTag() { TagId = 1 }
+                        new NoteTag() { TagId = tag.TagId }
                     }
-                });
+                };
+
+                context.Notes.Add(note);
 
                 context.SaveChanges();
 
@@ -132,9 +135,8 @@ namespace UnitTests.API
 
             using (var context = new AppDbContext(options))
             {
-                context.Notes.Add(new Macaria.Core.Models.Note()
+                context.Notes.Add(new Note()
                 {
-                    NoteId = 1,
                     Title = "Quinntyne",                    
                 });
 
@@ -161,11 +163,12 @@ namespace UnitTests.API
 
             using (var context = new AppDbContext(options, mediator.Object))
             {
-                context.Notes.Add(new Note()
+                var note = new Note()
                 {
-                    NoteId = 1,
-                    Title = "Quinntyne",
-                });
+                    Title = "Quinntyne"
+                };
+
+                context.Notes.Add(note);
 
                 context.SaveChanges();
 
@@ -173,7 +176,7 @@ namespace UnitTests.API
                 
                 await handler.Handle(new RemoveNoteCommand.Request()
                 {
-                    NoteId = 1
+                    NoteId = note.NoteId
                 }, default(CancellationToken));
 
                 Assert.Equal(0, context.Notes.Count());
@@ -193,11 +196,12 @@ namespace UnitTests.API
 
             using (var context = new AppDbContext(options, mediator.Object))
             {
-                context.Notes.Add(new Note()
+                var note = new Note()
                 {
-                    NoteId = 1,
-                    Title = "Quinntyne"
-                });
+                    Title = "FooBar"
+                };
+
+                context.Notes.Add(note);
 
                 context.SaveChanges();
 
@@ -205,15 +209,15 @@ namespace UnitTests.API
 
                 var response = await handler.Handle(new SaveNoteCommand.Request()
                 {
-                    Note = new NoteApiModel()
+                    Note = new NoteDto()
                     {
-                        NoteId = 1,
+                        NoteId = note.NoteId,
                         Title = "Quinntyne"
                     }
                 }, default(CancellationToken));
 
-                Assert.Equal(1, response.NoteId);
-                Assert.Equal("Quinntyne", context.Notes.Single(x => x.NoteId == 1).Title);
+                Assert.Equal(note.NoteId, response.NoteId);
+                Assert.Equal("Quinntyne", context.Notes.Single(x => x.NoteId == note.NoteId).Title);
             }
         }
     }

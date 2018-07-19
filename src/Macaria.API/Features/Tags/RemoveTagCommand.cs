@@ -1,6 +1,8 @@
 using FluentValidation;
+using Macaria.Core.DomainEvents;
 using Macaria.Core.Interfaces;
 using MediatR;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,13 +14,13 @@ namespace Macaria.API.Features.Tags
         {
             public Validator()
             {
-                RuleFor(request => request.TagId).NotEqual(0);
+                RuleFor(request => request.TagId).NotEqual(default(Guid));
             }
         }
 
         public class Request : IRequest<Response>
         {
-            public int TagId { get; set; }
+            public Guid TagId { get; set; }
         }
 
         public class Response { }
@@ -33,7 +35,7 @@ namespace Macaria.API.Features.Tags
             {
                 var tag = await _context.Tags.FindAsync(request.TagId);
                 _context.Tags.Remove(tag);
-                tag.RaiseDomainEvent(new Core.DomainEvents.TagRemoved(tag));
+                tag.RaiseDomainEvent(new TagRemoved(tag.TagId));
                 await _context.SaveChangesAsync(cancellationToken);
                 return new Response() { };
             }

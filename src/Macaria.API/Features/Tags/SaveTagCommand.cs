@@ -5,6 +5,7 @@ using Macaria.Core.Interfaces;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using System;
 
 namespace Macaria.API.Features.Tags
 {
@@ -18,12 +19,12 @@ namespace Macaria.API.Features.Tags
         }
 
         public class Request : IRequest<Response> {
-            public TagApiModel Tag { get; set; }
+            public TagDto Tag { get; set; }
         }
 
         public class Response
         {			
-            public int TagId { get; set; }
+            public Guid TagId { get; set; }
         }
 
         public class Handler : IRequestHandler<Request, Response>
@@ -42,7 +43,7 @@ namespace Macaria.API.Features.Tags
 
                 tag.Slug = request.Tag.Name.ToSlug();
 
-                tag.RaiseDomainEvent(new Core.DomainEvents.TagSaved(tag));
+                tag.RaiseDomainEvent(new Core.DomainEvents.TagSaved(tag.TagId));
 
                 await _context.SaveChangesAsync(cancellationToken);
 

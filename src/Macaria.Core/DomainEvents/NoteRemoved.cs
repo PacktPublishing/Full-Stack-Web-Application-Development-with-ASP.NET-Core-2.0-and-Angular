@@ -1,14 +1,14 @@
 using Macaria.Core.Common;
-using Macaria.Core.Models;
+using System;
 
 namespace Macaria.Core.DomainEvents
 {
-    public class NoteRemoved: DomainEvent<Note>
+    public class NoteRemoved: DomainEvent
     {
-        public NoteRemoved(Note note)
+        public NoteRemoved(Guid noteId)
         {
-            Payload = note;
-            EventType = EventTypes.Notes.NoteRemoved;
+            NoteId = noteId;
         }
+        public Guid NoteId { get; set; }
     }
 }

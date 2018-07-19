@@ -14,7 +14,7 @@ namespace Macaria.API.Features.Tags
 
         public class Response
         {
-            public IEnumerable<TagApiModel> Tags { get; set; }
+            public IEnumerable<TagDto> Tags { get; set; }
         }
 
         public class Handler : IRequestHandler<Request, Response>
@@ -26,7 +26,7 @@ namespace Macaria.API.Features.Tags
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
                 => new Response()
                 {
-                    Tags = await _context.Tags.Select(x => TagApiModel.FromTag(x)).ToListAsync()
+                    Tags = await _context.Tags.Select(x => TagDto.FromTag(x)).ToListAsync()
                 };
         }
     }

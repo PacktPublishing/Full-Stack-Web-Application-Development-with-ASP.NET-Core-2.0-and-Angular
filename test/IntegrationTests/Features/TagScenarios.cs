@@ -18,25 +18,25 @@ namespace IntegrationTests.Features
             using (var server = CreateServer())
             {
                 var hubConnection = GetHubConnection(server.CreateHandler());
+                
+                await hubConnection.StartAsync();
 
                 hubConnection.On<dynamic>("events", (result) =>
                 {
                     Assert.Equal("TagSaved", $"{result.type}");
-                    Assert.Equal(3, Convert.ToInt16(result.payload.tag.tagId));
+                    Assert.NotEqual(default(Guid), new Guid($"{result.payload.tagId}"));
                     tcs.SetResult(true);
                 });
 
-                await hubConnection.StartAsync();
-
                 var response = await server.CreateClient()
                     .PostAsAsync<SaveTagCommand.Request, SaveTagCommand.Response>(Post.Tags, new SaveTagCommand.Request() {
-                        Tag = new TagApiModel()
+                        Tag = new TagDto()
                         {
                             Name = "C#"
                         }
                     });
-
-                Assert.True(response.TagId == 3);
+                
+                Assert.NotEqual(default(Guid), response.TagId);
             }
 
             await tcs.Task;
@@ -59,11 +59,14 @@ namespace IntegrationTests.Features
         {
             using (var server = CreateServer())
             {
-                var response = await server.CreateClient()
-                    .GetAsync<GetTagByIdQuery.Response>(Get.TagById(1));
+                var tag = (await server.CreateClient()
+                    .GetAsync<GetTagsQuery.Response>(Get.Tags)).Tags.First();
 
-                Assert.True(response.Tag.TagId == 1);
-                Assert.True(response.Tag.Name == "Angular");
+                var response = await server.CreateClient()
+                    .GetAsync<GetTagByIdQuery.Response>(Get.TagById(tag.TagId));
+
+                Assert.True(response.Tag.TagId == tag.TagId);
+                Assert.True(response.Tag.Name == tag.Name);
             }
         }
         
@@ -72,13 +75,16 @@ namespace IntegrationTests.Features
         {
             using (var server = CreateServer())
             {
+                var tag = (await server.CreateClient()
+                    .GetAsync<GetTagsQuery.Response>(Get.Tags)).Tags.First();
+
                 var saveResponse = await server.CreateClient()
                     .PostAsAsync<SaveTagCommand.Request, SaveTagCommand.Response>(Post.Tags, new SaveTagCommand.Request()
                     {
-                        Tag = new TagApiModel() { TagId = 1, Name = "Angular 6" }
+                        Tag = new TagDto() { TagId = tag.TagId, Name = "Angular 6" }
                     });
 
-                Assert.True(saveResponse.TagId == 1);
+                Assert.True(saveResponse.TagId == tag.TagId);
             }
         }
         
@@ -94,13 +100,17 @@ namespace IntegrationTests.Features
                 hubConnection.On<dynamic>("events", (result) =>
                 {
                     Assert.Equal("TagRemoved", $"{result.type}");
-                    Assert.Equal(1, Convert.ToInt16(result.payload.tag.tagId));
+                    Assert.NotEqual(default(Guid), new Guid($"{result.payload.tagId}"));
                     tcs.SetResult(true);
                 });
 
                 await hubConnection.StartAsync();
+
+                var tag = (await server.CreateClient()
+                    .GetAsync<GetTagsQuery.Response>(Get.Tags)).Tags.First();
+
                 var response = await server.CreateClient()
-                    .DeleteAsync(Delete.Tag(1));
+                    .DeleteAsync(Delete.Tag(tag.TagId));
 
                 response.EnsureSuccessStatusCode();
             }

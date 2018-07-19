@@ -5,13 +5,15 @@ using System.Collections.Generic;
 using Macaria.Core.Interfaces;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System;
+using Macaria.Core.DomainEvents;
 
 namespace Macaria.API.Features.Notes
 {
     public class UndoNoteDeleteCommand
     {
         public class Request : IRequest {
-            public int NoteId { get; set; }
+            public Guid NoteId { get; set; }
         }
         
         public class Handler : IRequestHandler<Request>
@@ -28,7 +30,7 @@ namespace Macaria.API.Features.Notes
 
                 note.IsDeleted = false;
 
-                note.RaiseDomainEvent(new Core.DomainEvents.NoteSaved(note));
+                note.RaiseDomainEvent(new NoteSaved(note.NoteId));
 
                 await _context.SaveChangesAsync(cancellationToken);                
             }

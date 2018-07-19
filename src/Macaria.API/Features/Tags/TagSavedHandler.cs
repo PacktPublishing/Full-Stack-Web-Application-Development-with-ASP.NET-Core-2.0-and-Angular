@@ -17,13 +17,11 @@ namespace Macaria.API.Features.Tags
         public async Task Handle(TagSaved @event, CancellationToken cancellationToken)
         {
             await _hubContext.Clients.All
-            .SendAsync("events",
-            new
+            .SendAsync("events", new
             {
-                type = @event.EventType,
-                payload = new { tag = TagApiModel.FromTag(@event.Payload) }
-            }
-            , cancellationToken);
+                type = nameof(TagSaved),
+                payload = @event
+            }, cancellationToken);
         }
     }
 }

@@ -6,6 +6,8 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
+using System;
+using Macaria.Core.DomainEvents;
 
 namespace Macaria.API.Features.Notes
 {
@@ -21,12 +23,12 @@ namespace Macaria.API.Features.Notes
         }
 
         public class Request : IRequest<Response> {
-            public NoteApiModel Note { get; set; }
+            public NoteDto Note { get; set; }
         }
 
         public class Response
         {			
-            public int NoteId { get; set; }
+            public Guid NoteId { get; set; }
         }
 
         public class Handler : IRequestHandler<Request, Response>
@@ -60,7 +62,7 @@ namespace Macaria.API.Features.Notes
                     });
                 }
 
-                note.RaiseDomainEvent(new Core.DomainEvents.NoteSaved(note));
+                note.RaiseDomainEvent(new NoteSaved(note.NoteId));
 
                 await _context.SaveChangesAsync(cancellationToken);
 

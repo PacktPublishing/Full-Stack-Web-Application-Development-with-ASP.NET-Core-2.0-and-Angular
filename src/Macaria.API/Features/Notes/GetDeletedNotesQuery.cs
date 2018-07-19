@@ -14,7 +14,7 @@ namespace Macaria.API.Features.Notes
 
         public class Response
         {
-            public IEnumerable<NoteApiModel> Notes { get; set; }
+            public IEnumerable<NoteDto> Notes { get; set; }
         }
 
         public class Handler : IRequestHandler<Request, Response>
@@ -28,7 +28,7 @@ namespace Macaria.API.Features.Notes
                     Notes = await _context.Notes
                     .IgnoreQueryFilters()
                     .Where(x => x.IsDeleted)
-                    .Select(x => NoteApiModel.FromNote(x, false))
+                    .Select(x => NoteDto.FromNote(x, false))
                     .ToListAsync()
                 };
         }

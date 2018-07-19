@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Macaria.Infrastructure.Migrations
@@ -15,8 +14,7 @@ namespace Macaria.Infrastructure.Migrations
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     LastModifiedOn = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    NoteId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    NoteId = table.Column<Guid>(nullable: false),
                     Title = table.Column<string>(nullable: true),
                     Slug = table.Column<string>(nullable: true),
                     Body = table.Column<string>(nullable: true)
@@ -33,8 +31,7 @@ namespace Macaria.Infrastructure.Migrations
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     LastModifiedOn = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    TagId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    TagId = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Slug = table.Column<string>(nullable: true)
                 },
@@ -50,8 +47,7 @@ namespace Macaria.Infrastructure.Migrations
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     LastModifiedOn = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    UserId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<Guid>(nullable: false),
                     Username = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true),
                     Salt = table.Column<byte[]>(nullable: true)
@@ -65,8 +61,8 @@ namespace Macaria.Infrastructure.Migrations
                 name: "NoteTag",
                 columns: table => new
                 {
-                    NoteId = table.Column<int>(nullable: false),
-                    TagId = table.Column<int>(nullable: false)
+                    NoteId = table.Column<Guid>(nullable: false),
+                    TagId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {

@@ -5,6 +5,7 @@ using Macaria.Infrastructure.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Moq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -34,13 +35,13 @@ namespace UnitTests.API
 
                 var response = await handler.Handle(new SaveTagCommand.Request()
                 {
-                    Tag = new TagApiModel()
+                    Tag = new TagDto()
                     {
                         Name = "Quinntyne"
                     }
                 }, default(CancellationToken));
 
-                Assert.Equal(1, response.TagId);
+                Assert.NotEqual(default(Guid),response.TagId);
             }
         }
 
@@ -53,12 +54,9 @@ namespace UnitTests.API
 
             using (var context = new AppDbContext(options))
             {
-                context.Tags.Add(new Tag()
-                {
-                    TagId = 1,
-                    Name = "Quinntyne",
-                    
-                });
+                var tag = new Tag() { Name = "Quinntyne" };
+
+                context.Tags.Add(tag);
 
                 context.SaveChanges();
 
@@ -66,7 +64,7 @@ namespace UnitTests.API
 
                 var response = await handler.Handle(new GetTagByIdQuery.Request()
                 {
-                    TagId = 1
+                    TagId = tag.TagId
                 }, default(CancellationToken));
 
                 Assert.Equal("Quinntyne", response.Tag.Name);
@@ -82,21 +80,21 @@ namespace UnitTests.API
 
             using (var context = new AppDbContext(options))
             {
-                context.Notes.Add(new Note()
+                var note = new Note()
                 {
-                    NoteId = 1,
                     Title = "Angular",
                     Slug = "angular"
-                });
+                };
+
+                context.Notes.Add(note);
 
                 context.Tags.Add(new Tag()
                 {
-                    TagId = 1,
                     Name = "Routing",
                     Slug = "routing",
                     NoteTags = new List<NoteTag>()
                     {
-                        new NoteTag() { NoteId = 1 }
+                        new NoteTag() { NoteId = note.NoteId }
                     }
                 });
                 
@@ -125,7 +123,7 @@ namespace UnitTests.API
             {                
                 context.Tags.Add(new Macaria.Core.Models.Tag()
                 {
-                    TagId = 1,
+                    TagId = Guid.NewGuid(),
                     Name = "Quinntyne",
                     
                 });
@@ -153,12 +151,12 @@ namespace UnitTests.API
 
             using (var context = new AppDbContext(options, mediator.Object))
             {
-                context.Tags.Add(new Tag()
+                var tag = new Tag()
                 {
-                    TagId = 1,
-                    Name = "Quinntyne",
-                    
-                });
+                    Name = "Quinntyne"
+                };
+
+                context.Tags.Add(tag);
 
                 context.SaveChanges();
 
@@ -166,7 +164,7 @@ namespace UnitTests.API
 
                 await handler.Handle(new RemoveTagCommand.Request()
                 {
-                    TagId =  1 
+                    TagId = tag.TagId
                 }, default(CancellationToken));
 
                 Assert.Equal(0, context.Tags.Count());
@@ -180,15 +178,18 @@ namespace UnitTests.API
                 .UseInMemoryDatabase(databaseName: "ShouldHandleUpdateTagCommandRequest")
                 .Options;
 
+
             var mediator = new Mock<IMediator>();
             mediator.Setup(m => m.Publish(It.IsAny<TagSaved>(), It.IsAny<CancellationToken>()))
                 .Verifiable();
 
             using (var context = new AppDbContext(options, mediator.Object))
             {
+                var id = Guid.NewGuid();
+
                 context.Tags.Add(new Tag()
                 {
-                    TagId = 1,
+                    TagId = id,
                     Name = "Quinntyne",
                     
                 });
@@ -199,15 +200,15 @@ namespace UnitTests.API
 
                 var response = await handler.Handle(new SaveTagCommand.Request()
                 {
-                    Tag = new TagApiModel()
+                    Tag = new TagDto()
                     {
-                        TagId = 1,
+                        TagId = id,
                         Name = "Quinntyne"
                     }
                 }, default(CancellationToken));
 
-                Assert.Equal(1, response.TagId);
-                Assert.Equal("Quinntyne", context.Tags.Single(x => x.TagId == 1).Name);
+                Assert.Equal(id, response.TagId);
+                Assert.Equal("Quinntyne", context.Tags.Single(x => x.TagId == id).Name);
             }
         }
     }

@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace Macaria.Core.Common
 {
-    public class Entity
+    public class AggregateRoot
     {
-        public Entity() => _domainEvents = new List<INotification>();
+        public AggregateRoot() => _domainEvents = new List<INotification>();
         public DateTime CreatedOn { get; set; }
         public DateTime LastModifiedOn { get; set; }
         public bool IsDeleted { get; set; }

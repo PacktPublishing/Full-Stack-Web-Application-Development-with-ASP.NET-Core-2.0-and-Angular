@@ -4,6 +4,7 @@ using Macaria.Core.Identity;
 using Macaria.Core.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -29,7 +30,7 @@ namespace Macaria.API.Features.Users
         public class Response
         {
             public string AccessToken { get; set; }
-            public int UserId { get; set; }
+            public Guid UserId { get; set; }
         }
 
         public class Handler : IRequestHandler<Request, Response>
@@ -52,13 +53,13 @@ namespace Macaria.API.Features.Users
             {
                 var user = await _context.Users
                     .SingleOrDefaultAsync(x => x.Username.ToLower() == request.Username.ToLower());
-
+                
                 if (user == null)
                     throw new DomainException();
 
                 if (user.Password != _passwordHasher.HashPassword(user.Salt, request.Password))
                     throw new DomainException();
-
+                
                 return new Response()
                 {
                     AccessToken = _securityTokenFactory.Create(request.Username),

@@ -15,7 +15,7 @@ namespace Macaria.API.Features.Notes
 
         public class Response
         {
-            public NoteApiModel Note { get; set; }
+            public NoteDto Note { get; set; }
         }
 
         public class Handler : IRequestHandler<Request, Response>
@@ -28,7 +28,7 @@ namespace Macaria.API.Features.Notes
             {
                 return new Response()
                 {
-                    Note = NoteApiModel.FromNote(await _context.Notes
+                    Note = NoteDto.FromNote(await _context.Notes
                         .Include(x => x.NoteTags)
                         .ThenInclude(x => x.Tag)
                         .SingleAsync(x => x.Slug == request.Slug))

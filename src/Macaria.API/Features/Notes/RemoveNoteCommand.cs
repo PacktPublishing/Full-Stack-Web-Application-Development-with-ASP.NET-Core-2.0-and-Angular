@@ -1,6 +1,7 @@
 using FluentValidation;
 using Macaria.Core.Interfaces;
 using MediatR;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,12 +13,12 @@ namespace Macaria.API.Features.Notes
         {
             public Validator()
             {
-                RuleFor(request => request.NoteId).NotEqual(0);
+                RuleFor(request => request.NoteId).NotEqual(default(Guid));
             }
         }
         public class Request : IRequest<Response>
         {
-            public int NoteId { get; set; }
+            public Guid NoteId { get; set; }
         }
 
         public class Response { }
@@ -32,7 +33,7 @@ namespace Macaria.API.Features.Notes
             {
                 var note = await _context.Notes.FindAsync(request.NoteId);
                 _context.Notes.Remove(note);
-                note.RaiseDomainEvent(new Core.DomainEvents.NoteRemoved(note));
+                note.RaiseDomainEvent(new Core.DomainEvents.NoteRemoved(note.NoteId));
                 await _context.SaveChangesAsync(cancellationToken);
                 return new Response() { };
             }

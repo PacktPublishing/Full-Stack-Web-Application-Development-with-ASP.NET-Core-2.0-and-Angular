@@ -1,14 +1,11 @@
 using Macaria.Core.Common;
-using Macaria.Core.Models;
+using System;
 
 namespace Macaria.Core.DomainEvents
 {
-    public class TagSaved: DomainEvent<Tag>
-    {
-        public TagSaved(Tag tag)
-        {
-            Payload = tag;
-            EventType = EventTypes.Tags.TagSaved;
-        }
+    public class TagSaved: DomainEvent {
+        public TagSaved(Guid tagId) => TagId = tagId;
+        public Guid TagId { get; set; }
     }
+    
 }

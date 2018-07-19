@@ -15,7 +15,7 @@ namespace Macaria.API.Features.Tags
 
         public class Response
         {
-            public TagApiModel Tag { get; set; }
+            public TagDto Tag { get; set; }
         }
 
         public class Handler : IRequestHandler<Request, Response>
@@ -27,7 +27,7 @@ namespace Macaria.API.Features.Tags
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
                 => new Response()
                 {
-                    Tag = TagApiModel.FromTag(await _context.Tags
+                    Tag = TagDto.FromTag(await _context.Tags
                         .Include(x => x.NoteTags)
                         .ThenInclude(x => x.Note)
                         .SingleAsync(x => x.Slug == request.Slug))

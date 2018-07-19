@@ -1,6 +1,7 @@
 using FluentValidation;
 using Macaria.Core.Interfaces;
 using MediatR;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,12 +10,12 @@ namespace Macaria.API.Features.Tags
     public class GetTagByIdQuery
     {
         public class Request : IRequest<Response> {
-            public int TagId { get; set; }
+            public Guid TagId { get; set; }
         }
 
         public class Response
         {
-            public TagApiModel Tag { get; set; }
+            public TagDto Tag { get; set; }
         }
 
         public class Handler : IRequestHandler<Request, Response>
@@ -26,7 +27,7 @@ namespace Macaria.API.Features.Tags
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
                 => new Response()
                 {
-                    Tag = TagApiModel.FromTag(await _context.Tags.FindAsync(request.TagId))
+                    Tag = TagDto.FromTag(await _context.Tags.FindAsync(request.TagId))
                 };
         }
     }

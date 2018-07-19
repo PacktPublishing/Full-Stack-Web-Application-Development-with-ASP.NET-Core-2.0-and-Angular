@@ -34,12 +34,12 @@ namespace Macaria.Infrastructure.Data
         {
             int result = default(int);
             
-            var domainEventEntities = ChangeTracker.Entries<Entity>()
+            var domainEventEntities = ChangeTracker.Entries<AggregateRoot>()
                 .Select(entityEntry => entityEntry.Entity)
                 .Where(entity => entity.DomainEvents.Any())
                 .ToArray();
             
-            foreach (var entity in ChangeTracker.Entries<Entity>()
+            foreach (var entity in ChangeTracker.Entries<AggregateRoot>()
                 .Where(e => (e.State == EntityState.Added || (e.State == EntityState.Modified)))
                 .Select(x => x.Entity))
             {
@@ -48,7 +48,7 @@ namespace Macaria.Infrastructure.Data
                 entity.LastModifiedOn = DateTime.UtcNow;
             }
 
-            foreach (var item in ChangeTracker.Entries<Entity>().Where(e => e.State == EntityState.Deleted))
+            foreach (var item in ChangeTracker.Entries<AggregateRoot>().Where(e => e.State == EntityState.Deleted))
             {
                 item.State = EntityState.Modified;
                 item.Entity.IsDeleted = true;

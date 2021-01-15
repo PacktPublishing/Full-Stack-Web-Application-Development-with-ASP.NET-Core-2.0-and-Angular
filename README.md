@@ -1,8 +1,3 @@
-## $5 Tech Unlocked 2021!
-[Buy and download this product for only $5 on PacktPub.com](https://www.packtpub.com/)
------
-*The $5 campaign         runs from __December 15th 2020__ to __January 13th 2021.__*
-
 # Full-Stack-Web-Application-Development-with-ASP.NET-Core-2.1-and-Angular
 Full Stack Web Application Development with ASP.NET Core 2.1 and Angular [Video], Published by Packt
 
